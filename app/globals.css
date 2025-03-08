@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&family=Oswald:wght@200..700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-barn-red: #780000;
+  --color-fire-brick: #c1121f;
+  --color-papaya-whip: #fdf0d5;
+  --color-prussian-blue: #003049;
+  --color-air-superiority-blue: #669bbc;
+
+  --bg-primary: var(--color-papaya-whip);
+  --bg-secondary: var(--color-prussian-blue);
+  --bg-accent: var(--color-fire-brick);
+
+  --font-sans: "Noto Sans", sans-serif;
+  --font-heading: "Oswald", sans-serif;
+}
+
+body {
+  background-color: var(--papaya-whip);
+  color: var(--prussian-blue);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--fire-brick);
+  font-family: var(--font-heading);
+}
