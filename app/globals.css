@@ -43,4 +43,6 @@ body {
   font-family: var(--font-sans);
 }
 
-/*  */
+.oswald {
+  font-family: "Oswald", sans-serif;
+}

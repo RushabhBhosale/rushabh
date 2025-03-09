@@ -36,7 +36,7 @@ const Navbar = () => {
    };
 
    return (
-      <div className="w-screen z-50 py-3 md:px-10 px-4 fixed top-0">
+      <div className="w-screen z-50 py-3 md:px-8 lg:px-10 px-4 fixed top-0">
          <div className="flex justify-between items-center">
             <div className="font-bold text-xl">Rushabh</div>
 
