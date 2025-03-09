@@ -36,18 +36,18 @@ const Navbar = () => {
    };
 
    return (
-      <div className="w-screen py-3 md:px-10 px-4 fixed top-0">
+      <div className="w-screen z-50 py-3 md:px-10 px-4 fixed top-0">
          <div className="flex justify-between items-center">
             <div className="font-bold text-xl">Rushabh</div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex shadow-md bg-papaya-whip px-10 py-2 rounded-full">
+            <div className="hidden md:flex shadow-md bg-base-300 px-10 py-2 rounded-full">
                {navItems.map(({ name, path }) => (
                   <button
                      key={name}
                      onClick={() => handleNavigation(path)}
                      className={`cursor-pointer px-5 py-2 rounded-full transition-all duration-500 
-                     ${pathname === path ? "bg-fire-brick text-white" : ""}`}
+                     ${pathname === path ? "bg-neutral text-neutral-content" : ""}`}
                   >
                      {name}
                   </button>
@@ -55,13 +55,13 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Icon */}
-            <div className="md:hidden">
+            <div className="md:hidden z-0">
                <Menu className="w-8 h-8 cursor-pointer" onClick={() => setIsOpen(true)} />
             </div>
 
             {/* Contact Button */}
             <div className="hidden md:block">
-               <button className="px-6 py-2 rounded-full bg-transparent border-[1px] border-black hover:bg-white transition-all duration-150 text-black">
+               <button className="px-6 py-2 rounded-full bg-transparent border-[1px] border-black hover:bg-base-200 transition-all duration-150 text-black">
                   Contact
                </button>
             </div>
@@ -76,10 +76,10 @@ const Navbar = () => {
                      initial={{ x: "100%" }}
                      animate={{ x: 0 }}
                      exit={{ x: "100%" }}
-                     transition={{ type: "spring", stiffness: 120, damping: 15 }}
-                     className="w-64 h-full bg-papaya-whip shadow-lg p-6 flex flex-col"
+                     transition={{ type: "tween", stiffness: 120, damping: 15 }}
+                     className="w-64 h-full bg-base-300 shadow-lg p-6 flex flex-col"
                   >
-                     <div className="flex justify-between items-center mb-6">
+                     <div className="flex z-50 justify-between items-center mb-6">
                         <h2 className="text-lg font-bold">Menu</h2>
                         <X className="w-8 h-8 cursor-pointer" onClick={() => setIsOpen(false)} />
                      </div>
@@ -89,7 +89,7 @@ const Navbar = () => {
                            key={name}
                            onClick={() => handleNavigation(path)}
                            className={`py-3 px-4 rounded-md transition-all duration-500 cursor-pointer text-left 
-                           ${pathname === path ? "bg-fire-brick text-white" : ""}`}
+                            ${pathname === path ? "bg-neutral text-neutral-content" : ""}`}
                         >
                            {name}
                         </button>
