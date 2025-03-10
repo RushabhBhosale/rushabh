@@ -38,9 +38,8 @@ const Navbar = () => {
    return (
       <div className="w-screen z-50 py-3 md:px-8 lg:px-10 px-4 fixed top-0">
          <div className="flex justify-between items-center">
-            <div className="font-bold text-xl">Rushabh</div>
+            <div className="font-bold text-xl bg-base-100 rounded-full px-3 py-2">Rushabh</div>
 
-            {/* Desktop Navigation */}
             <div className="hidden md:flex shadow-md bg-base-300 px-10 py-2 rounded-full">
                {navItems.map(({ name, path }) => (
                   <button
@@ -54,20 +53,17 @@ const Navbar = () => {
                ))}
             </div>
 
-            {/* Mobile Menu Icon */}
             <div className="md:hidden z-0">
                <Menu className="w-8 h-8 cursor-pointer" onClick={() => setIsOpen(true)} />
             </div>
 
-            {/* Contact Button */}
             <div className="hidden md:block">
-               <button className="px-6 py-2 rounded-full bg-transparent border-[1px] border-black hover:bg-base-200 transition-all duration-150 text-black">
+               <button className="px-6 py-2 rounded-full border-[1px] border-black hover:bg-base-200 transition-all duration-150 bg-base-100 text-black">
                   Contact
                </button>
             </div>
          </div>
 
-         {/* Mobile Sidebar */}
          <AnimatePresence>
             {isOpen && (
                <div className="fixed inset-0 bg-black/50 z-50 flex justify-end">

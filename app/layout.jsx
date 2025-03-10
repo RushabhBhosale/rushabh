@@ -1,17 +1,10 @@
-import { Noto_Sans, Oswald } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-const oswald = Oswald({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["200", "300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -23,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${notoSans.variable} ${oswald.variable} antialiased`}>
+      <body className={`${notoSans.variable} antialiased`}>
         {children}
       </body>
     </html>

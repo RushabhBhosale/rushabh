@@ -6,7 +6,7 @@ const Hero = () => {
       {
          src: "/hero-1.avif",
          size: "w-64 h-64 sm:w-80 sm:h-80",
-         position: "xl:left-48 md:left-32 top-1/2 -translate-y-1/2",
+         position: "xl:left-48 md:left-32 top-1/2 -translate-y-1/2 z-[2]",
          text: "Follow Your Dream",
       },
       {
@@ -18,13 +18,13 @@ const Hero = () => {
       {
          src: "/hero-2.avif",
          size: "w-40 h-40 sm:w-48 sm:h-48",
-         position: "xl:left-[450px] md:left-[320px] xl:-bottom-24 md:-bottom-64 -rotate-6",
+         position: "xl:left-[450px] md:left-[320px] xl:-bottom-27 md:-bottom-64 -rotate-6 z-[3]",
          text: "Coding is Life",
       },
       {
          src: "/hero-4.jpg",
          size: "w-28 h-28 sm:w-36 sm:h-36",
-         position: "left-24 bottom-24 rotate-[15deg]",
+         position: "left-24 bottom-24 rotate-[15deg] z-[3]",
          text: "Luffy - The Future Pirate King",
       },
    ];
@@ -36,10 +36,10 @@ const Hero = () => {
                Software Developer
             </span>
 
-            <h1 className="text-primary-content xl:text-5xl lg:text-4xl md:4xl text-3xl font-extrabold leading-tight">
-               Hey, I'm Rushabh.<br />
-               Coding by day, <br />
-               Anime & Movies by night.
+            <h1 className="text-primary-content/30 xl:text-5xl lg:text-4xl md:4xl text-3xl font-extrabold leading-tight">
+               Hey, I'm <span className="text-primary-content">Rushabh</span><br />
+               <span className="text-primary-content">Coding</span> by day, <br />
+               <span className="text-primary-content">Anime & Movies</span> by night.
             </h1>
 
             <p className="text-lg text-base-content">
@@ -59,7 +59,7 @@ const Hero = () => {
             {heroImages.map((img, index) => (
                <div
                   key={index}
-                  className={`absolute ${img.size} ${img.position} rounded-3xl shadow-lg transition-all duration-350 group hover:scale-105 hover:rotate-0 hover:z-50 overflow-hidden`}
+                  className={`absolute ${img.size} ${img.position} rounded-3xl shadow-lg transition-all duration-350 group hover:scale-105 hover:rotate-0 hover:z-50 overflow-hidden animate-float`}
                >
                   <Image
                      src={img.src}
