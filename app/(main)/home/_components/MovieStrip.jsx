@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const About = () => {
+const MovieStrip = () => {
    const images = [
       "/hero-1.avif",
       "/hero-2.avif",
@@ -29,4 +29,4 @@ const About = () => {
    );
 };
 
-export default About;
+export default MovieStrip;

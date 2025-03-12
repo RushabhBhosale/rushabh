@@ -30,7 +30,17 @@ const Hero = () => {
    ];
 
    return (
-      <div className="md:h-screen w-screen my-23 md:mt-0 flex md:flex-row flex-col md:gap-24 items-center px-6 md:px-8 lg:px-10 relative">
+      <div className="md:h-screen w-screen my-23 mt-0 flex md:flex-row flex-col md:gap-24 items-center px-6 md:px-8 lg:px-10 relative">
+         <div className="md:hidden w-screen flex justify-center mb-6">
+            <div className="relative w-full h-76 overflow-hidden">
+               <Image
+                  src="/hero-1.avif"
+                  alt="Follow Your Dream"
+                  fill
+                  className="object-cover object-left-top"
+               />
+            </div>
+         </div>
          <div className="w-full md:w-1/2 flex flex-col justify-center gap-6">
             <span className="text-sm uppercase text-error tracking-[0.3rem]">
                Software Developer
