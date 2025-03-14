@@ -43,27 +43,28 @@ const Hero = () => {
          </div>
          <div className="w-full md:w-1/2 flex flex-col justify-center gap-6">
             <span className="text-sm uppercase text-error tracking-[0.3rem]">
-               Software Developer
+               Full-Stack Developer & Dreamer
             </span>
 
-            <h1 data-cursor-size="70" className="text-primary-content/30 xl:text-5xl lg:text-4xl md:4xl text-3xl font-extrabold leading-tight">
-               Hey, I'm <span data-cursor-size="70" className="text-primary-content">Rushabh</span><br />
-               <span data-cursor-size="70" className="text-primary-content">Coding</span> by day, <br />
-               <span data-cursor-size="70" className="text-primary-content">Anime & Movies</span> by night.
+            <h1 className="text-primary-content/30 xl:text-5xl lg:text-4xl md:text-4xl text-3xl font-extrabold leading-tight">
+               Hey, I'm <span className="text-primary-content">Rushabh</span>.
+               <br /> I <span className="text-primary-content">craft code</span> by day, <span className="text-primary-content">chase adventures</span> by night.
             </h1>
 
             <p className="text-lg text-base-content">
-               I transform ideas into engaging digital experiences that are both beautiful and functional.
-               Ready to create something amazing together?
+               I turn caffeine into clean, functional, and beautiful digital experiences. Whether it's a website, an app, or something entirely out of this world, I’m here to bring your ideas to life. When I’m not debugging or designing, you’ll find me binge-watching anime, exploring hidden gems in movies, or dreaming about my next travel destination—because the world is too big to stay in one place. 🌍✨ Let’s build something unforgettable together. 🚀
             </p>
 
             <div className="flex gap-4">
-               <button data-cursor-size="50" className="btn btn-primary px-6 py-3 text-lg">Contact Me</button>
-               <button className="btn btn-outline btn-primary px-6 py-3 text-lg">
-                  View Projects
+               <button data-cursor-size="50" className="btn btn-primary px-6 py-3 text-lg hover:scale-105 transition-transform">
+                  Let's Build Magic
+               </button>
+               <button className="btn btn-outline btn-primary px-6 py-3 text-lg hover:scale-105 transition-transform">
+                  Explore My Journey
                </button>
             </div>
          </div>
+
 
          <div className="relative w-full md:w-1/2 hidden md:block">
             {heroImages.map((img, index) => (

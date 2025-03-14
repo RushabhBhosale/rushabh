@@ -43,6 +43,7 @@ const Navbar = () => {
             <div className="hidden md:flex shadow-md bg-base-300 px-10 py-2 rounded-full">
                {navItems.map(({ name, path }) => (
                   <button
+                     data-cursor-size="50"
                      key={name}
                      onClick={() => handleNavigation(path)}
                      className={`cursor-pointer px-5 py-2 rounded-full transition-all duration-500 

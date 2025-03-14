@@ -4,7 +4,7 @@ import { Mail, Send } from "lucide-react";
 
 const Footer = () => {
    return (
-      <footer className="w-full bg-neutral text-neutral-content py-10 px-6 relative z-[1]">
+      <footer className="w-full bg-neutral text-neutral-content py-10 px-6 relative z-0">
          <div className="container mx-auto flex flex-col items-center text-center relative">
             <h1 data-cursor-size="70" className="text-3xl md:text-4xl font-semibold uppercase mb-4">
                Explore the <span className="text-primary">Unknown</span>, Share the <span className="text-secondary">Journey</span>
