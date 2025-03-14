@@ -35,6 +35,9 @@
   --border: 1.5px;
   --depth: 1;
   --noise: 1;
+  --cursor-size: 32px;
+  --cursor-x: 0px;
+  --cursor-y: 0px;
 }
 
 body {

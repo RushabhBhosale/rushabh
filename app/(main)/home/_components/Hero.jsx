@@ -46,10 +46,10 @@ const Hero = () => {
                Software Developer
             </span>
 
-            <h1 className="text-primary-content/30 xl:text-5xl lg:text-4xl md:4xl text-3xl font-extrabold leading-tight">
-               Hey, I'm <span className="text-primary-content">Rushabh</span><br />
-               <span className="text-primary-content">Coding</span> by day, <br />
-               <span className="text-primary-content">Anime & Movies</span> by night.
+            <h1 data-cursor-size="70" className="text-primary-content/30 xl:text-5xl lg:text-4xl md:4xl text-3xl font-extrabold leading-tight">
+               Hey, I'm <span data-cursor-size="70" className="text-primary-content">Rushabh</span><br />
+               <span data-cursor-size="70" className="text-primary-content">Coding</span> by day, <br />
+               <span data-cursor-size="70" className="text-primary-content">Anime & Movies</span> by night.
             </h1>
 
             <p className="text-lg text-base-content">
@@ -58,7 +58,7 @@ const Hero = () => {
             </p>
 
             <div className="flex gap-4">
-               <button className="btn btn-primary px-6 py-3 text-lg">Contact Me</button>
+               <button data-cursor-size="50" className="btn btn-primary px-6 py-3 text-lg">Contact Me</button>
                <button className="btn btn-outline btn-primary px-6 py-3 text-lg">
                   View Projects
                </button>

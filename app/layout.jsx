@@ -1,5 +1,6 @@
 import { Noto_Sans } from "next/font/google";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${notoSans.variable} antialiased`}>
+        <CustomCursor />
         {children}
       </body>
     </html>
