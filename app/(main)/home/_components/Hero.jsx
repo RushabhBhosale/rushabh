@@ -31,14 +31,20 @@ const Hero = () => {
 
    return (
       <div className="md:h-screen w-screen my-23 mt-0 flex md:flex-row flex-col md:gap-24 items-center px-6 md:px-8 lg:px-10 relative">
-         <div className="md:hidden w-screen flex justify-center mb-6">
-            <div className="relative w-full h-76 overflow-hidden">
+         <div className="md:hidden w-screen flex justify-center mb-6 p-2 pt-0">
+            <div className="relative w-full h-64 overflow-hidden rounded-2xl mt-20">
                <Image
                   src="/hero-1.avif"
                   alt="Follow Your Dream"
                   fill
-                  className="object-cover object-left-top"
+                  className="object-cover"
+                  priority
                />
+               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                  <div className="absolute bottom-6 left-6">
+                     <p className="text-white text-xl font-bold">Follow Your Dream</p>
+                  </div>
+               </div>
             </div>
          </div>
          <div className="w-full md:w-1/2 flex flex-col justify-center gap-6">
@@ -52,10 +58,14 @@ const Hero = () => {
             </h1>
 
             <p className="text-lg text-base-content">
-               I turn caffeine into clean, functional, and beautiful digital experiences. Whether it's a website, an app, or something entirely out of this world, I’m here to bring your ideas to life. When I’m not debugging or designing, you’ll find me binge-watching anime, exploring hidden gems in movies, or dreaming about my next travel destination—because the world is too big to stay in one place. 🌍✨ Let’s build something unforgettable together. 🚀
+               <span className="block sm:hidden">
+                  I turn caffeine into clean, functional, and beautiful digital experiences. Whether it's a website, an app, or something entirely out of this world, I’m here to bring ideas to life. 🚀
+               </span>
+               <span className="hidden sm:block">
+                  I turn caffeine into clean, functional, and beautiful digital experiences. Whether it's a website, an app, or something entirely out of this world, I’m here to bring your ideas to life. When I’m not debugging or designing, you’ll find me binge-watching anime, exploring hidden gems in movies, or dreaming about my next travel destination—because the world is too big to stay in one place. 🌍✨ Let’s build something unforgettable together. 🚀
+               </span>
             </p>
-
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
                <button data-cursor-size="50" className="btn btn-primary px-6 py-3 text-lg hover:scale-105 transition-transform">
                   Let's Build Magic
                </button>
