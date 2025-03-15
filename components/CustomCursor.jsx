@@ -33,7 +33,7 @@ const CustomCursor = () => {
 
    return (
       <motion.div
-         className="fixed pointer-events-none mix-blend-difference hidden md:block z-[99] bg-white text-black rounded-full"
+         className="fixed pointer-events-none mix-blend-difference hidden xl:block z-[99] bg-white text-black rounded-full"
          style={{
             x: springX,
             y: springY,

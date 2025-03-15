@@ -30,9 +30,9 @@ const Hero = () => {
    ];
 
    return (
-      <div className="md:h-screen w-screen my-23 mt-0 flex md:flex-row flex-col md:gap-24 items-center px-6 md:px-8 lg:px-10 relative">
-         <div className="md:hidden w-screen flex justify-center mb-6 p-2 pt-0">
-            <div className="relative w-full h-64 overflow-hidden rounded-2xl mt-20">
+      <div className="w-screen mb-23 xl:mt-13 mt-0 flex xl:flex-row flex-col lg:gap-12 xl:gap-24 items-center px-6 md:px-8 lg:px-10 relative">
+         <div className="xl:hidden w-screen flex justify-center mb-6 p-2 pt-0">
+            <div className="relative w-full lg:h-84 md:h-76 h-64 overflow-hidden rounded-2xl">
                <Image
                   src="/hero-1.avif"
                   alt="Follow Your Dream"
@@ -47,7 +47,7 @@ const Hero = () => {
                </div>
             </div>
          </div>
-         <div className="w-full md:w-1/2 flex flex-col justify-center gap-6">
+         <div className="w-full xl:w-1/2 flex flex-col justify-center gap-6">
             <span className="text-sm uppercase text-error tracking-[0.3rem]">
                Full-Stack Developer & Dreamer
             </span>
@@ -76,7 +76,7 @@ const Hero = () => {
          </div>
 
 
-         <div className="relative w-full md:w-1/2 hidden md:block">
+         <div className="relative w-full md:w-1/2 hidden xl:block">
             {heroImages.map((img, index) => (
                <div
                   key={index}
