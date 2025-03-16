@@ -21,13 +21,6 @@ const Home = () => {
          </div>
          <LastTrip />
          <Watching />
-         <div className="my-16 py-10 bg-base-100 text-primary-content text-center">
-            <p className="mt-4 text-lg sm:text-xl md:text-2xl opacity-90 font-noto max-w-3xl mx-auto">
-               I once tried learning Japanese so I could watch anime without subtitles and travel to Japan...
-               Made it as far as <span className="text-primary font-bold">‘Nani?!’</span> and <span className="text-primary font-bold">‘Arigato’</span>
-               before my brain called it quits. 😂🇯🇵
-            </p>
-         </div>
       </div>
    )
 }

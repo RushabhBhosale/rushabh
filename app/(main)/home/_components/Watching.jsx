@@ -175,11 +175,7 @@ const WatchingSection = () => {
                                  fill
                                  className="object-cover"
                               />
-                              <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-                                 <div className="bg-black/60 rounded-full h-16 w-16 flex items-center justify-center">
-                                    <Eye className="h-8 w-8 text-white animate-pulse" />
-                                 </div>
-                              </div>
+
                               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
                                  <div className="flex items-center">
                                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/80 text-white">
