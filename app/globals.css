@@ -41,7 +41,7 @@
 }
 
 body {
-  background-color: var(--color-base-100);
+  background-color: var(--ghost-white);
   color: var(--prussian-blue);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -61,4 +61,34 @@ body {
 
 .animate-float {
   animation: float 5s ease-in-out infinite;
+}
+
+button {
+  cursor: pointer;
+}
+
+.font-oswald {
+  font-family: "Oswald", sans-serif;
+}
+
+.text-shadow-white {
+  text-shadow: 2px 2px 4px rgba(128, 128, 128, 0.74);
+}
+
+.text-shadow-black {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.74);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
 }

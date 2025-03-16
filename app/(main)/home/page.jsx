@@ -1,12 +1,14 @@
 import React from 'react'
 import Hero from './_components/Hero'
 import Bento from './_components/Bento'
+import LastTrip from './_components/LastTrip'
+import Watching from './_components/Watching'
 
 const Home = () => {
    return (
       <div className='overflow-hidden'>
          <Hero />
-         <div className='my-24 bg-base-200 py-8 text-primary-content'>
+         <div className='my-16 bg-base-100 py-8 text-primary-content'>
             <div className='text-center px-3 max-w-4xl mx-auto'>
                <h1 data-cursor-size="70" className='text-2xl sm:text-3xl md:text-4xl xl:text-5xl uppercase font-bold text-base-content leading-tight'>
                   More Than Just Code
@@ -16,6 +18,15 @@ const Home = () => {
                </p>
             </div>
             <Bento />
+         </div>
+         <LastTrip />
+         <Watching />
+         <div className="my-16 py-10 bg-base-100 text-primary-content text-center">
+            <p className="mt-4 text-lg sm:text-xl md:text-2xl opacity-90 font-noto max-w-3xl mx-auto">
+               I once tried learning Japanese so I could watch anime without subtitles and travel to Japan...
+               Made it as far as <span className="text-primary font-bold">‘Nani?!’</span> and <span className="text-primary font-bold">‘Arigato’</span>
+               before my brain called it quits. 😂🇯🇵
+            </p>
          </div>
       </div>
    )
