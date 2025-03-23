@@ -1,0 +1,27 @@
+.contat {
+  content: "";
+}
+
+.contat::before,
+.contat::after {
+  position: absolute;
+  content: "";
+  width: 24px;
+  aspect-ratio: 1;
+  background: radial-gradient(
+      circle 24px at bottom left,
+      #0000 98%,
+      oklch(97.788% 0.004 56.375)
+    )
+    top left;
+}
+
+.contat::before {
+  top: 0;
+  left: -24px;
+}
+
+.contat::after {
+  right: 0;
+  bottom: -24px;
+}

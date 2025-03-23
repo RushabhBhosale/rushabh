@@ -36,11 +36,11 @@ const Navbar = () => {
    };
 
    return (
-      <div className="w-screen z-50 py-3 md:px-8 lg:px-10 px-4 fixed top-0 bg-base-100">
+      <div className="w-screen z-50 py-1 md:px-8 lg:px-10 px-4 fixed top-0 bg-base-100">
          <div className="flex justify-between items-center">
             <div className="font-bold text-xl bg-base-100 rounded-full px-3 py-2">Rushabh</div>
 
-            <div className="hidden md:flex shadow-md bg-base-300 px-10 py-2 rounded-full">
+            <div className="hidden md:flex bg-base-100 px-10 py-2 rounded-full">
                {navItems.map(({ name, path }) => (
                   <button
                      data-cursor-size="50"
@@ -74,7 +74,7 @@ const Navbar = () => {
                      animate={{ x: 0 }}
                      exit={{ x: "100%" }}
                      transition={{ type: "tween", stiffness: 120, damping: 15 }}
-                     className="w-64 h-full bg-base-300 shadow-lg p-6 flex flex-col"
+                     className="w-64 h-full bg-base-100 p-6 flex flex-col"
                   >
                      <div className="flex z-50 justify-between items-center mb-6">
                         <h2 className="text-lg font-bold">Menu</h2>

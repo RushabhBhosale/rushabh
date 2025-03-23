@@ -83,7 +83,7 @@ const CustomCursor = ({
       <AnimatePresence>
          {isVisible && (
             <motion.div
-               className="fixed pointer-events-none hidden xl:block z-[99] items-center justify-center"
+               className="fixed pointer-events-none hidden z-[99] items-center justify-center"
                style={{
                   x: springX,
                   y: springY,
