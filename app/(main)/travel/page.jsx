@@ -21,83 +21,84 @@ export default function Home() {
    }
 
    return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-teal-50 text-gray-800 flex items-center justify-center px-4 py-8">
-         <div className="w-full max-w-2xl space-y-6">
-            {/* Header */}
-            <div className="text-center space-y-1">
-               <h1 className="text-3xl font-bold tracking-tight text-gray-900">🧳 AI Trip Planner</h1>
-               <p className="text-gray-500 text-sm">Your journey, pass-style!</p>
-            </div>
-
-            {/* Input Form */}
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 space-y-3">
-               <input
-                  className="w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm placeholder-gray-400"
-                  placeholder="Where to? (e.g. Japan)"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-               />
-               <input
-                  type="number"
-                  min={1}
-                  className="w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm placeholder-gray-400"
-                  placeholder="How many days?"
-                  value={days}
-                  onChange={(e) => setDays(parseInt(e.target.value))}
-               />
+      <main className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-teal-50 text-gray-800">
+         {/* Hero Section */}
+         <section className="relative bg-cover bg-center h-screen" style={{ backgroundImage: "url('/path-to-your-image.jpg')" }}>
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+               <h1 className="text-5xl font-bold">Plan Your Dream Trip</h1>
+               <p className="mt-4 text-lg">Let AI craft the perfect itinerary for you</p>
                <button
-                  className="w-full bg-teal-600 hover:bg-teal-700 text-white p-2 rounded-lg font-medium transition-all duration-200 text-sm shadow-md"
-                  onClick={generate}
-                  disabled={loading}
+                  onClick={() => document.getElementById('itinerary-input').scrollIntoView({ behavior: 'smooth' })}
+                  className="mt-6 px-6 py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg shadow-md"
                >
-                  {loading ? "Planning..." : "Get My Pass"}
+                  Get Started
                </button>
             </div>
+         </section>
 
-            {/* Travel Pass-Style Itinerary */}
-            {itinerary.length > 0 && (
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  {itinerary.map((day, idx) => (
-                     <div
-                        key={idx}
-                        className="relative bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md hover:border-teal-300"
+         {/* Itinerary Input Section */}
+         <section id="itinerary-input" className="py-12">
+            <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+               <h2 className="text-2xl font-bold text-center mb-6">Create Your Itinerary</h2>
+               <div className="space-y-4">
+                  <div className="flex items-center border-b border-teal-500 py-2">
+                     <span className="text-teal-500 text-lg mr-3">📍</span>
+                     <input
+                        type="text"
+                        placeholder="Enter destination"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                     />
+                  </div>
+                  <div className="flex items-center border-b border-teal-500 py-2">
+                     <span className="text-teal-500 text-lg mr-3">📆</span>
+                     <input
+                        type="number"
+                        min="1"
+                        placeholder="Number of days"
+                        value={days}
+                        onChange={(e) => setDays(parseInt(e.target.value))}
+                        className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                     />
+                  </div>
+                  <div className="text-center">
+                     <button
+                        onClick={generate}
+                        disabled={loading}
+                        className="mt-4 px-6 py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg shadow-md"
                      >
-                        {/* Pass Header */}
-                        <div className="bg-teal-600 text-white p-2 flex justify-between items-center">
-                           <span className="text-sm font-semibold">Day {day.day}</span>
-                           <span className="text-xs bg-white text-teal-600 px-2 py-1 rounded-full">
-                              {location}
-                           </span>
-                        </div>
+                        {loading ? 'Planning...' : 'Generate Itinerary'}
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </section>
 
-                        {/* Content */}
-                        <div className="p-4 flex flex-col gap-2">
-                           {day.image && (
-                              <img
-                                 src={day.image}
-                                 alt={day.title}
-                                 className="h-24 w-full object-cover rounded-md"
-                              />
-                           )}
-                           <h2 className="text-lg font-semibold text-gray-900">{day.title}</h2>
-                           <ul className="list-none text-gray-600 text-sm space-y-1">
-                              {day.activities.map((activity, i) => (
-                                 <li key={i} className="flex items-start">
-                                    <span className="text-teal-500 mr-1">➤</span> {activity}
+         {/* Itinerary Display Section */}
+         {itinerary.length > 0 && (
+            <section className="py-12">
+               <div className="max-w-4xl mx-auto">
+                  <h2 className="text-2xl font-bold text-center mb-6">Your Itinerary</h2>
+                  <div className="space-y-6">
+                     {itinerary.map((day) => (
+                        <div key={day.day} className="bg-white p-6 rounded-lg shadow-lg">
+                           <h3 className="text-xl font-semibold">Day {day.day}: {day.title}</h3>
+                           <ul className="mt-4 space-y-2">
+                              {day.activities.map((activity, index) => (
+                                 <li key={index} className="flex items-start">
+                                    <span className="text-teal-500 mr-2">✔️</span>
+                                    <p>{activity}</p>
                                  </li>
                               ))}
                            </ul>
                         </div>
-
-                        {/* Pass Footer */}
-                        <div className="bg-gray-100 p-2 text-center text-xs text-gray-500">
-                           Travel Pass #{idx + 1}
-                        </div>
-                     </div>
-                  ))}
+                     ))}
+                  </div>
                </div>
-            )}
-         </div>
+            </section>
+         )}
       </main>
    )
 }

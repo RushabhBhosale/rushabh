@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Mail, Send } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
    return (
@@ -32,6 +33,9 @@ const Footer = () => {
                <span className="text-neutral-content">|</span>
                <span className="text-neutral-content">Crafted with ❤️</span>
             </p>
+         </div>
+         <div className="max-w-7xl h-20 relative mx-auto">
+            <Image src="/footer.gif" alt="anime" fill className="object-contain object-center scale-105" />
          </div>
       </footer>
    );

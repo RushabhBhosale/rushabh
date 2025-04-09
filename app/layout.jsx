@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${notoSans.variable} antialiased`}>
-        {/* <CustomCursor /> */}
+        <CustomCursor />
         {children}
       </body>
     </html>

@@ -10,7 +10,7 @@ const CustomCursor = ({
    stiffness = 500,
    damping = 30
 }) => {
-   const cursorX = useMotionValue(-100); // Start offscreen
+   const cursorX = useMotionValue(-100);
    const cursorY = useMotionValue(-100);
    const size = useMotionValue(defaultSize);
    const opacity = useMotionValue(0);
@@ -18,7 +18,6 @@ const CustomCursor = ({
    const [cursorText, setCursorText] = useState("");
    const [cursorColor, setCursorColor] = useState(defaultColor);
 
-   // Create smoother springs for all animated values
    const springX = useSpring(cursorX, { stiffness, damping });
    const springY = useSpring(cursorY, { stiffness, damping });
    const springSize = useSpring(size, { stiffness, damping });
@@ -38,7 +37,6 @@ const CustomCursor = ({
       const handleHover = (e) => {
          const target = e.target;
 
-         // Check for interactive elements
          const isInteractive =
             target.tagName.toLowerCase() === "a" ||
             target.tagName.toLowerCase() === "button" ||
@@ -47,7 +45,6 @@ const CustomCursor = ({
             target.closest("a") ||
             target.dataset.cursorInteractive === "true";
 
-         // Set custom size if specified, otherwise use default or hover effect
          if (target.dataset.cursorSize) {
             size.set(parseInt(target.dataset.cursorSize));
          } else if (isInteractive) {
@@ -56,10 +53,8 @@ const CustomCursor = ({
             size.set(defaultSize);
          }
 
-         // Handle custom cursor text
          setCursorText(target.dataset.cursorText || "");
 
-         // Handle custom cursor color
          setCursorColor(target.dataset.cursorColor || defaultColor);
       };
 
@@ -83,7 +78,7 @@ const CustomCursor = ({
       <AnimatePresence>
          {isVisible && (
             <motion.div
-               className="fixed pointer-events-none hidden z-[99] items-center justify-center"
+               className="fixed hidden pointer-events-none z-[99] items-center justify-center"
                style={{
                   x: springX,
                   y: springY,
