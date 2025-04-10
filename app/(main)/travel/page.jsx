@@ -9,7 +9,7 @@ export default function Home() {
 
    const generate = async () => {
       setLoading(true)
-      const res = await fetch("/api/generate-itinerary", {
+      const res = await fetch("/api/deepseek/generate-itinerary", {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify({ location, days }),

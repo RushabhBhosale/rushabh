@@ -27,7 +27,7 @@ const Navbar = () => {
       { name: "About", path: "/about" },
       { name: "Travel", path: "/travel" },
       { name: "Cinema", path: "/cinema" },
-      { name: "Contact", path: "/contact" },
+      { name: "Code", path: "/code" },
    ];
 
    const handleNavigation = (path) => {
