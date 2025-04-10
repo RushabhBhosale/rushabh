@@ -19,6 +19,7 @@ export default function ValidationSchemaGenerator() {
    ])
    const [schema, setSchema] = useState("")
    const [loading, setLoading] = useState(false)
+   const language = "javascript"
 
    const updateField = (index, key, value) => {
       const updated = [...fields]
