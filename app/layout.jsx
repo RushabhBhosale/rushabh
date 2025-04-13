@@ -1,6 +1,7 @@
 import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
+import ParallaxWrapper from "@/components/ParallaxProvider";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${notoSans.variable} antialiased`}>
         <CustomCursor />
-        {children}
+        <ParallaxWrapper>
+          {children}
+        </ParallaxWrapper>
       </body>
     </html>
   );
