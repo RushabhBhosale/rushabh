@@ -1,12 +1,7 @@
-import ThemeToggler from "@/components/ThemeToggler";
-import React from "react";
+import { redirect } from "next/navigation";
 
-const Home = () => {
-  return (
-    <div>
-      <ThemeToggler />
-    </div>
-  );
+const Main = () => {
+  redirect("/home");
 };
 
-export default Home;
+export default Main;
