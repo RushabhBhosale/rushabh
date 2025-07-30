@@ -1,0 +1,59 @@
+"use client";
+import React, { useEffect, useState } from "react";
+
+const phrases = [
+  `const user = "Rushabh";`,
+  `// React Developer`,
+  `return "frontend magic"`,
+  `Travel Japan`,
+  `import skills from 'life';`,
+  `console.log("Success 🚀");`,
+  `<Component />`,
+  `useEffect(() => {}, []);`,
+  `theme: "dark",`,
+  `skills.push("Next.js")`,
+  `#Tailwind FTW`,
+  `npm i motivation`,
+  `function build() {}`,
+  `let code = life();`,
+  `@media (you: interested)`,
+  `flex + grid = ❤️`,
+  `deploy("vercel")`,
+  `export default Dream`,
+];
+
+const FloatingCodeSnippets = () => {
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTick((prev) => prev + 1), 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      {Array.from({ length: 100 }).map((_, i) => {
+        const top = Math.random() * 90;
+        const left = Math.random() * 90;
+        const rotate = Math.random() * 20 - 10;
+        const phrase = phrases[(i + tick) % phrases.length];
+
+        return (
+          <div
+            key={i + "-" + tick}
+            className="absolute text-[10px] font-mono opacity-10 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              ["--tw-rotate" as any]: `${rotate}deg`,
+            }}
+          >
+            {phrase}
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+export default FloatingCodeSnippets;
