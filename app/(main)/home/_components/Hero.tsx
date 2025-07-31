@@ -15,7 +15,8 @@ const Hero = () => {
         </div>
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground my-4 leading-tight quote">
-          Hi, I'm Rushabh Bhosale <br /> $ git commit -m "Built something cool"
+          Hi, I&apos;m Rushabh Bhosale <br /> $ git commit -m &quot;Built
+          something cool&quot;
         </h1>
 
         <div className="relative mb-4 mx-auto w-40 h-24 sm:w-44 sm:h-28 rounded-3xl overflow-hidden border border-border shadow-sm">

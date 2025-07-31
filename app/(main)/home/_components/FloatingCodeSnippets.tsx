@@ -38,7 +38,7 @@ const FloatingCodeSnippets = () => {
             style={{
               top: `${top}%`,
               left: `${left}%`,
-              ["--tw-rotate" as any]: `${rotate}deg`,
+              ["--tw-rotate" as string]: `${rotate}deg`,
             }}
           >
             {phrase}
