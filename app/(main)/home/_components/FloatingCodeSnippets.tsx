@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const phrases = [
   `const user = "Rushabh";`,
@@ -33,12 +33,12 @@ const FloatingCodeSnippets = () => {
 
         return (
           <div
-            key={i}
-            className="absolute text-[10px] font-mono opacity-5 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
+            key={i + "-"}
+            className="absolute text-[10px] font-mono opacity-10 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
             style={{
               top: `${top}%`,
               left: `${left}%`,
-              ["--tw-rotate" as string]: `${rotate}deg`,
+              ["--tw-rotate" as any]: `${rotate}deg`,
             }}
           >
             {phrase}
