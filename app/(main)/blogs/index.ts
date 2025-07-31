@@ -1,0 +1,16 @@
+export const blogPosts = [
+  {
+    slug: "automated-blog-n8n-ai",
+    title: "How I Automated My Blog Using n8n + AI",
+    date: "2025-07-07",
+    description:
+      "A deep dive into how I used n8n, OpenAI, and markdown pipelines to fully automate my blog publishing workflow.",
+  },
+  {
+    slug: "movie-watchlist-app",
+    title: "Building My Own Movie Watchlist App",
+    date: "2025-07-31",
+    description:
+      "From design to deployment, here's how I built a full-featured movie watchlist with recommendations and real-time sync.",
+  },
+];

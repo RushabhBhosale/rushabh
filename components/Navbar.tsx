@@ -39,9 +39,9 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed left-1/2 -translate-x-1/2 md:top-4 z-50 backdrop-blur-md bg-black/40 dark:bg-accent dark:text-white md:rounded-full px-6 py-3 lg:w-3xl md:w-2xl w-full mx-auto">
+      <nav className="fixed left-1/2 -translate-x-1/2 md:top-4 z-50 backdrop-blur-2xl bg-black/40 dark:bg-accent/40 dark:text-white md:rounded-full px-6 py-3 lg:w-3xl md:w-2xl w-full mx-auto">
         <div className="flex items-center justify-between gap-4">
-          <div className="font-semibold text-lg heading tracking-wide">
+          <div className="font-semibold text-lg heading text-white tracking-wide">
             Rushabh
           </div>
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const phrases = [
   `const user = "Rushabh";`,
@@ -23,25 +23,18 @@ const phrases = [
 ];
 
 const FloatingCodeSnippets = () => {
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => setTick((prev) => prev + 1), 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <>
       {Array.from({ length: 100 }).map((_, i) => {
         const top = Math.random() * 90;
         const left = Math.random() * 90;
         const rotate = Math.random() * 20 - 10;
-        const phrase = phrases[(i + tick) % phrases.length];
+        const phrase = phrases[i % phrases.length];
 
         return (
           <div
-            key={i + "-" + tick}
-            className="absolute text-[10px] font-mono opacity-10 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
+            key={i}
+            className="absolute text-[10px] font-mono opacity-5 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
             style={{
               top: `${top}%`,
               left: `${left}%`,

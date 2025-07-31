@@ -1,0 +1,72 @@
+import { CodeBlock } from "@/components/CodeBlock";
+import CustomImage from "@/components/CustomImage";
+import Cta from "@/components/Cta";
+
+# How I Automated My Blog Using n8n + AI
+
+_Published on July 31, 2025 • 8 min read_
+
+I love writing. But I hate the grind: researching keywords, formatting markdown, resizing images, and pushing it to my CMS.
+
+So… I automated everything.
+
+Now I just type a blog idea into the automation — 10 minutes later, I’ve got a fully formatted, AI-written post in my website.  
+Image, title, metadata — done.
+
+## My Workflow
+
+n8n takes over. It handles:
+
+- Keyword suggestions
+- AI title generation
+- Gmail Verify the titles or ask to rewrite
+- Image fetching
+- Blog content creation
+- Post to my website
+
+All on autopilot.
+
+<CustomImage
+  src="/n8n.png"
+  alt="n8n workflow diagram showing the complete blog automation process"
+/>
+
+## Keyword Ideas Without SEO Tools (as they are paid)
+
+To fetch keyword suggestions, n8n calls Google Suggest with a basic HTTP request and extracts data using regex.
+
+<CodeBlock language="javascript" filename="google-keyword-fetch.js">
+  {`// n8n HTTP Request Node
+const topic = $('Google Sheets').first().$node["Blog Ideas"].json["Topic"];
+const url = \`http://suggestqueries.google.com/complete/search?client=firefox&q=\${encodeURIComponent(topic)}\`;`}
+</CodeBlock>
+
+## Title Generation with Mistral
+
+The topic is fed to OpenRouter (Mistral 7B), which responds with 5 possible blog titles.
+
+If I reply to the email with:
+
+- `rewrite`: it generates 5 new titles
+- `1` to `5`: it locks that title and continues
+
+## Auto Image + Overlay
+
+Using the Unsplash API + an image processing service, it:
+
+- Grabs a relevant image
+- Adds a title overlay (styled)
+- Saves it to the correct path with proper dimensions
+
+## AI Blog Draft
+
+Once the title’s locked, another OpenRouter call generates ~800 words of markdown content in my tone.
+
+No fluff. Just usable content.
+
+That’s it. From idea ➝ published post.  
+All automated. All mine.
+
+Let me know if you'd like to see the full n8n workflow exported 👀
+
+<Cta />
