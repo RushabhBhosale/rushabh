@@ -13,11 +13,9 @@ const Blogs = () => {
           <Link
             key={post.slug}
             href={`/blogs/${post.slug}`}
-            className="group border border-border rounded-xl p-6 hover:bg-muted/40 transition"
+            className="group border border-border rounded-xl p-6 bg-muted dark:bg-muted/30 shadow-2xl/10"
           >
-            <h2 className="text-xl font-semibold group-hover:text-primary transition">
-              {post.title}
-            </h2>
+            <h2 className="text-xl font-semibold">{post.title}</h2>
             <p className="text-muted-foreground text-sm mt-1">
               {new Date(post.date).toLocaleDateString("en-IN", {
                 year: "numeric",

@@ -5,6 +5,7 @@ const phrases = [
   `const user = "Rushabh";`,
   `// React Developer`,
   `return "frontend magic"`,
+  `Anime for life`,
   `Travel Japan`,
   `import skills from 'life';`,
   `console.log("Success 🚀");`,

@@ -6,7 +6,7 @@ import FloatingCodeSnippets from "./FloatingCodeSnippets";
 
 const Hero = () => {
   return (
-    <div className="w-full flex flex-col justify-center items-center bg-hero-light dark:bg-hero-dark bg-no-repeat bg-cover bg-center transition-colors relative px-4 overflow-hidden">
+    <div className="w-full flex flex-col justify-center items-center bg-hero-light dark:bg-hero-dark bg-no-repeat bg-cover bg-center transition-colors relative px-4 overflow-hidden min-h-[70vh] md:min-h-[80vh]">
       <FloatingCodeSnippets />
 
       <div className="w-full max-w-[720px] text-center relative z-10">
@@ -35,7 +35,7 @@ const Hero = () => {
           build mobile apps using React Native, Java, and Ionic.
         </p>
 
-        <div className="flex flex-col gap-3 sm:flex-row justify-center mb-6">
+        <div className="flex gap-3 flex-row justify-center mb-6">
           <Link href="/">
             <Button className="gap-x-2">
               Contact Me <Send size={18} />

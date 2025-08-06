@@ -13,4 +13,11 @@ export const blogPosts = [
     description:
       "From design to deployment, here's how I built a full-featured movie watchlist with recommendations and real-time sync.",
   },
+  {
+    slug: "nativewind-not-working",
+    title: "NativeWind styles not getting applied in my RN app!!",
+    date: "2025-08-06",
+    description:
+      "Tailwind classes mysteriously stopped working in my NativeWind project — here's how I fixed it by restructuring the app.",
+  },
 ];

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=Playwright&family=Quicksand:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=Quicksand:wght@500;700&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -44,7 +44,7 @@
 :root {
   --font-heading: "Quicksand", sans-serif;
   --font-body: "DM Sans", sans-serif;
-  --font-accent: "Playwright", cursive;
+  --font-accent: "Playwright", "Pacifico", cursive;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -120,6 +120,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@font-face {
+  font-family: "Playwright";
+  src: url("/public/fonts/PlaywriteAUNSW-VariableFont_wght.ttf") format("woff2");
+  font-display: swap;
 }
 
 h1,

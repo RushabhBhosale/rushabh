@@ -31,7 +31,9 @@ const SkillsSection = () => {
         {skills.map((skill) => (
           <span
             key={skill}
-            className="px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-medium"
+            className="px-4 py-2 bg-muted rounded-full text-xs md:text-sm font-medium tracking-widest text-white
+                 shadow-[0_0_8px_rgba(255,255,255,0.2)] ring-1 ring-white/10 backdrop-blur-sm
+                 md:shadow-none md:ring-0 md:backdrop-blur-0"
           >
             {skill}
           </span>

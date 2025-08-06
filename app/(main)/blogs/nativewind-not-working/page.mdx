@@ -1,0 +1,142 @@
+import { CodeBlock } from "@/components/CodeBlock";
+import CustomImage from "@/components/CustomImage";
+import Cta from "@/components/Cta";
+
+# NativeWind styles not getting applied in my RN app!!
+
+_Published on August 6, 2025 • 5 min read_
+
+NativeWind is amazing — write Tailwind classes right inside your React Native components.  
+But one day, my styles just... stopped working. No errors. No logs. No clue.
+
+I wasted hours debugging it — turns out, the solution was surprisingly simple:  
+**Create an `/app` folder and move everything inside.**
+
+Let me walk you through what happened 👇
+
+---
+
+#### What Was Working (Initially)
+
+Here was my working `tailwind.config.js`:
+
+<CodeBlock language="javascript" filename="tailwind.config.js">
+  {`/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./App.{js,jsx,ts,tsx}",
+    "./**/*.{js,jsx,ts,tsx}",
+    "./screens/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+    "./navigation/**/*.{js,jsx,ts,tsx}",
+  ],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};`}
+</CodeBlock>
+
+And my folder structure looked like this:
+
+/App.js
+/screens
+/components
+/navigation
+
+Everything worked perfectly… for a while.
+
+---
+
+### The Problem
+
+After a couple of hours, Tailwind styles **randomly stopped applying**.
+
+No changes to config.  
+No major code refactor.  
+Just randomly… broke.
+
+I tried:
+
+- Restarting Metro
+- Clearing cache
+- Reinstalling Tailwind + NativeWind
+- Verifying paths
+- Adding more content globs
+
+Still nothing.
+
+But I did notice one thing:  
+**The issue started happening right after I integrated React Navigation.**
+
+That seemed to mess with how NativeWind or Metro was reading file changes.
+
+---
+
+#### The Fix: Create an App Folder
+
+Out of desperation, I created a new `app/` folder and moved all my screens, components, and navigation files into it. Then updated the config like this:
+
+<CodeBlock language="javascript" filename="tailwind.config.js">
+  {`/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./App.{js,jsx,ts,tsx}",
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./app/screens/**/*.{js,jsx,ts,tsx}",
+    "./app/components/**/*.{js,jsx,ts,tsx}",
+    "./app/navigation/**/*.{js,jsx,ts,tsx}",
+  ],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};`}
+</CodeBlock>
+
+That’s it. Boom. Styles were back instantly
+
+---
+
+#### Why Did That Work?
+
+Honestly, still a bit of a mystery
+My guess is:
+
+- NativeWind's content scanning or Metro’s file watcher was silently failing outside the new structure
+- Something in NativeWind's internal behavior prefers the `app/` layout
+- File invalidation wasn’t triggering a rebuild
+
+Whatever it is — the fix is real.
+
+---
+
+#### Final Folder Structure
+
+<CustomImage
+  src="/native-wind.png"
+  alt="Screenshot of React Native folder structure with app folder"
+/>
+
+/App.js
+/app
+/screens
+/components
+/navigation
+
+And that solved it once and for all.
+
+---
+
+#### Final Thoughts
+
+If NativeWind suddenly stops working even though your config looks perfect, try this:
+
+✅ **Create an `/app` folder and move everything inside it**  
+✅ **Update `tailwind.config.js` to point to it**
+
+You’ll save hours of pointless debugging.
+
+<Cta />
