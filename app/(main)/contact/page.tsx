@@ -20,8 +20,8 @@ export default function ContactPage() {
             Get in Touch
           </h2>
           <p className="text-muted-foreground text-sm max-w-md">
-            Whether it's collaboration, work opportunities, or a quick tech chat
-            — feel free to reach out.
+            Whether it&apos;s collaboration, work opportunities, or a quick tech
+            chat — feel free to reach out.
           </p>
         </div>
 

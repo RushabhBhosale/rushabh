@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Hero from "./_components/Hero";
 import LetsBuild from "./_components/LetsBuild";
 import SkillsSection from "./_components/Skills";

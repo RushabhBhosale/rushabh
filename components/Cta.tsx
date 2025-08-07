@@ -1,7 +1,11 @@
 import Link from "next/link";
 import React from "react";
 
-const Cta = ({ page }: any) => {
+type CtaProps = {
+  page?: boolean;
+};
+
+const Cta = ({ page }: CtaProps) => {
   return (
     <div
       className={`rounded-xl mx-6 ${

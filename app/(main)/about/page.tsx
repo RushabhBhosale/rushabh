@@ -2,14 +2,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  MapPin,
-  Calendar,
-  Code,
-  Briefcase,
-  GraduationCap,
-  Rocket,
-} from "lucide-react";
+import { MapPin, Code, Briefcase, GraduationCap } from "lucide-react";
 import Cta from "@/components/Cta";
 import { skillCategories } from "@/utils/skills";
 import { experience } from "../../../utils/experience";
