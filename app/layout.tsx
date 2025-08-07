@@ -18,6 +18,26 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Rushabh Bhosale",
   description: "Your friendly neighborhood developer",
+  openGraph: {
+    title: "Rushabh Bhosale",
+    description: "Your friendly neighborhood developer",
+    url: "https://rushabh.in",
+    siteName: "Rushabh Bhosale",
+    images: [
+      {
+        url: "/me.png",
+        width: 1200,
+        height: 630,
+        alt: "Rushabh Bhosale Portfolio",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    title: "Rushabh Bhosale",
+    description: "Your friendly neighborhood developer",
+    images: ["/me.png"],
+  },
 };
 
 export default function RootLayout({
