@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const phrases = [
   `const user = "Rushabh";`,
@@ -29,7 +29,6 @@ const FloatingCodeSnippets = () => {
       {Array.from({ length: 100 }).map((_, i) => {
         const top = Math.random() * 90;
         const left = Math.random() * 90;
-        const rotate = Math.random() * 20 - 10;
         const phrase = phrases[i % phrases.length];
 
         return (
@@ -39,7 +38,6 @@ const FloatingCodeSnippets = () => {
             style={{
               top: `${top}%`,
               left: `${left}%`,
-              ["--tw-rotate" as any]: `${rotate}deg`,
             }}
           >
             {phrase}
