@@ -28,6 +28,14 @@ const Footer = () => {
           >
             GitHub
           </a>
+          <a
+            href="https://www.linkedin.com/in/rushabh-bhosale-software-developer/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            LinkedIn
+          </a>
         </div>
       </div>
     </footer>
