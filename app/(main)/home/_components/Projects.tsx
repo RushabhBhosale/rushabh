@@ -4,96 +4,63 @@ import React from "react";
 import { RiGithubFill } from "react-icons/ri";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
-
-const projects = [
-  {
-    title: "Movie Watchlist App",
-    description:
-      "Track your favorite movies, manage watch status, and get smart recommendations.",
-    image: "/projects/watchlist.png",
-    github: "https://github.com/RushabhBhosale/Movies",
-    live: "https://watchlist.rushabh.in/",
-  },
-  {
-    title: "AI Travel Planner",
-    description:
-      "Explore destinations, generate itineraries, and visualize trips using AI & maps.",
-    image: "/bg.avif",
-    github: "https://github.com/RushabhBhosale/travel-app",
-  },
-  {
-    title: "Ecommerce Sofa Website",
-    description:
-      "Modern furniture store with smooth UI, cart system, and Firebase-powered checkout. Type anything to login",
-    image: "/projects/sofa.png",
-    github: "https://github.com/RushabhBhosale/Firebase-react-ecommerce",
-    live: "https://bejewelled-yeot-744c49.netlify.app/",
-  },
-  {
-    title: "Ecommerce Clothing Website",
-    description:
-      "Stylish apparel shop built with React. Features filtering, cart, and responsive design.",
-    image: "/projects/clothing.png",
-    github: "https://github.com/RushabhBhosale/ecommerce",
-    live: "https://best-ecommerce.netlify.app/",
-  },
-  {
-    title: "N8N Blog Automation",
-    description:
-      "Type a topic in the n8n workflow it create a blog and post it within 10-15 minutes",
-    image: "/projects/blog.png",
-    github: "https://github.com/RushabhBhosale/ecommerce",
-    live: "https://best-ecommerce.netlify.app/",
-  },
-];
+import { projects } from "@/utils/projects";
 
 const Projects = () => {
   return (
-    <section className="w-full max-w-6xl px-6 mb-16 mx-auto">
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-foreground tracking-tight">
+    <section className="w-full max-w-6xl px-4 sm:px-6 mb-16 mx-auto">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center text-foreground tracking-tight">
         Latest Projects
       </h2>
-      <div className="grid md:grid-cols-2 gap-8">
+
+      <div className="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-8">
         {projects.map((project) => (
           <div
             key={project.title}
-            className="relative group rounded-2xl overflow-hidden border border-muted bg-muted/10 transition-shadow min-h-60"
+            className="group rounded-xl sm:rounded-2xl overflow-hidden border border-muted bg-muted/10 transition-all duration-300 hover:shadow-lg"
           >
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover scale-110 md:group-hover:scale-100 blur-sm md:group-hover:blur-none brightness-[0.4] md:group-hover:brightness-50 transition-all duration-500 z-0"
-            />
+            <div className="relative h-48 sm:h-56 md:h-64">
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover brightness-[0.3] sm:brightness-[0.2] md:group-hover:brightness-50 transition-all duration-500"
+              />
 
-            <div className="absolute inset-0 flex items-center justify-center text-center p-6 z-10 transition-opacity duration-300 md:group-hover:opacity-0">
-              <div>
-                <h3 className="text-2xl font-semibold text-white drop-shadow-sm">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-white/90 font-medium mt-2">
-                  {project.description}
-                </p>
+              <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
+                <div className="flex-1 mt-16 text-center md:opacity-100 md:group-hover:opacity-0 md:transition-opacity md:duration-300">
+                  <h3 className="text-lg sm:text-xl md:text-3xl font-semibold text-white drop-shadow-sm mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-white/90 font-medium leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="flex justify-center gap-4 mt-4 md:absolute md:bottom-4 md:left-4 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 md:transition-all md:duration-300">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white/20 backdrop-blur-sm text-white hover:text-primary hover:bg-white/30 flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95"
+                  >
+                    <RiGithubFill size={16} className="sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">GitHub</span>
+                    <span className="sm:hidden">Code</span>
+                  </a>
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/20 backdrop-blur-sm text-white hover:text-primary hover:bg-white/30 flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95"
+                    >
+                      <ExternalLink size={16} className="sm:w-4 sm:h-4" />
+                      <span>Live</span>
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-
-            <div className="absolute bottom-4 left-4 z-20 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-300 flex gap-4">
-              <a
-                href={project.github}
-                target="_blank"
-                className="text-white hover:text-primary flex items-center gap-1 text-sm transition-colors"
-              >
-                <RiGithubFill size={18} /> GitHub
-              </a>
-              {project.live && (
-                <a
-                  href={project.live}
-                  target="_blank"
-                  className="text-white hover:text-primary flex items-center gap-1 text-sm transition-colors"
-                >
-                  <ExternalLink size={18} /> Live
-                </a>
-              )}
             </div>
           </div>
         ))}

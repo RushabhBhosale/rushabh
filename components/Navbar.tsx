@@ -14,8 +14,8 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/home" },
     { name: "About", href: "/about" },
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Career", href: "/career" },
+    { name: "Projects", href: "/projects" },
+    { name: "Blogs", href: "/blogs" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -41,9 +41,9 @@ const Navbar = () => {
     <>
       <nav className="fixed left-1/2 -translate-x-1/2 md:top-4 z-50 backdrop-blur-2xl bg-black/40 dark:bg-accent/40 dark:text-white md:rounded-full px-6 py-3 lg:w-3xl md:w-2xl w-full mx-auto">
         <div className="flex items-center justify-between gap-4">
-          <div className="font-semibold text-lg heading text-white tracking-wide">
+          <Link className="font-black" href="/">
             Rushabh
-          </div>
+          </Link>
 
           <div className="hidden sm:flex gap-2">
             {navLinks.map((link) => navItem(link.name, link.href))}

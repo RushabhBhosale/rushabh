@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import React from "react";
 
 const LetsBuild = () => {
@@ -9,13 +10,17 @@ const LetsBuild = () => {
       </h2>
       <p className="mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
         Code. Design. Deploy. Together. Whether it&apos;s websites, mobile apps,
-        or full-stack magic — let&apos;s make it happen.
+        or full-stack project — let&apos;s make it happen.
       </p>
       <div className="mt-10 flex justify-center gap-4 flex-wrap">
-        <Button size="lg">Start a Project</Button>
-        <Button size="lg" variant="secondary">
-          View Portfolio
-        </Button>
+        <Link href="/contact">
+          <Button size="lg">Start a Project</Button>
+        </Link>
+        <Link href="/projects">
+          <Button size="lg" variant="secondary">
+            View Portfolio
+          </Button>
+        </Link>
       </div>
     </section>
   );

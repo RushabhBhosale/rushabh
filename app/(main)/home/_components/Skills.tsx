@@ -1,21 +1,5 @@
+import { skills } from "@/utils/skills";
 import React from "react";
-
-const skills = [
-  "React.js",
-  "Next.js",
-  "Tailwind CSS",
-  "TypeScript",
-  "Node.js",
-  "Express.js",
-  "MongoDB",
-  "Kotlin",
-  "Java",
-  "Angular",
-  "Ionic",
-  "NextAuth",
-  "Javascript",
-  "Git & GitHub",
-];
 
 const SkillsSection = () => {
   return (
@@ -31,7 +15,7 @@ const SkillsSection = () => {
         {skills.map((skill) => (
           <span
             key={skill}
-            className="px-4 py-2 bg-muted rounded-full text-xs md:text-sm font-medium tracking-widest text-white
+            className="px-4 py-2 bg-muted rounded-full text-xs md:text-sm font-medium tracking-widest text-muted-foreground dark:text-white
                  shadow-[0_0_8px_rgba(255,255,255,0.2)] ring-1 ring-white/10 backdrop-blur-sm
                  md:shadow-none md:ring-0 md:backdrop-blur-0"
           >

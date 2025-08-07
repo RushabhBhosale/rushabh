@@ -36,7 +36,7 @@ const Hero = () => {
         </p>
 
         <div className="flex gap-3 flex-row justify-center mb-6">
-          <Link href="/">
+          <Link href="/contact">
             <Button className="gap-x-2">
               Contact Me <Send size={18} />
             </Button>
