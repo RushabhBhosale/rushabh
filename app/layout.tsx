@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/ThemeScript";
 import { RightClickMenu } from "@/components/RightClickMenu";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,6 +60,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark">
           <RightClickMenu>{children}</RightClickMenu>
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
