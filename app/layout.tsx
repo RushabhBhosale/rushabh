@@ -52,6 +52,11 @@ export default function RootLayout({
       <head>
         <ThemeScript />
       </head>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1425611919231559"
+        crossOrigin="anonymous"
+      ></script>
       <body
         suppressHydrationWarning
         suppressContentEditableWarning
