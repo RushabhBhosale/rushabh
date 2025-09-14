@@ -4,8 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/ThemeScript";
 import { RightClickMenu } from "@/components/RightClickMenu";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +49,50 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script
+          id="ld-person-website"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": "https://rushabh.in/",
+                  name: "Rushabh Bhosale",
+                  url: "https://rushabh.in",
+                  image: "https://rushabh.in/me.png",
+                  jobTitle: "Software Developer",
+                  knowsAbout: [
+                    "React",
+                    "Next.js",
+                    "TypeScript",
+                    "Node.js",
+                    "SEO",
+                  ],
+                  sameAs: [
+                    "https://github.com/RushabhBhosale",
+                    "https://x.com/yourhandle",
+                    "https://www.linkedin.com/in/rushabh-bhosale-software-developer/",
+                  ],
+                  owns: {
+                    "@type": "WebSite",
+                    "@id": "https://dailysparks.in",
+                    name: "DailySparks",
+                    url: "https://dailysparks.in",
+                  },
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://rushabh.in",
+                  url: "https://rushabh.in",
+                  name: "Rushabh Bhosale",
+                  publisher: { "@id": "https://rushabh.in" },
+                },
+              ],
+            }),
+          }}
+        />
         <ThemeScript />
       </head>
       <script
@@ -64,8 +107,6 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
           <RightClickMenu>{children}</RightClickMenu>
-          <Analytics />
-          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

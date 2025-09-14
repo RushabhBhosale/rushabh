@@ -5,6 +5,7 @@ import SkillsSection from "./_components/Skills";
 import Blogs from "./_components/Blogs";
 import Projects from "./_components/Projects";
 import About from "./_components/About";
+import DailySparks from "./_components/DailySparks";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Hero />
       <SkillsSection />
       <About />
+      <DailySparks />
       <Blogs />
       <Projects />
       <LetsBuild />

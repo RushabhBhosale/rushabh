@@ -1,5 +1,13 @@
 export const projects = [
   {
+    title: "DailySparks Blog Network",
+    description:
+      "Multi-category blog platform featuring Tech, Anime, and Travel content. Optimized for SEO with dynamic OG images",
+    image: "/projects/dailysparks.png",
+    github: "https://github.com/RushabhBhosale/dailysparks",
+    live: "https://dailysparks.in/",
+  },
+  {
     title: "Movie Watchlist App",
     description:
       "Track your favorite movies, manage watch status, and get smart recommendations.",
