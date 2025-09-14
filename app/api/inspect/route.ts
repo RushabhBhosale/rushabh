@@ -431,23 +431,35 @@ export async function POST(req: Request) {
 
   const start = Date.now();
 
-  // Defer heavy imports until needed
-  let chromium: any;
+  // Try Playwright; fallback to puppeteer-core + @sparticuz/chromium for Vercel
+  let mode: "playwright" | "puppeteer" = "playwright";
+  let page: any;
+  let browser: any;
+  let context: any;
   try {
-    ({ chromium } = await import("playwright"));
+    const { chromium } = await import("playwright");
+    browser = await chromium.launch({ headless: true });
+    context = await browser.newContext({
+      userAgent:
+        "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)",
+    });
+    page = await context.newPage();
   } catch (e) {
-    return NextResponse.json(
-      { error: "Server missing dependency: playwright. Please install it." },
-      { status: 500 }
+    mode = "puppeteer";
+    const chromium = await import("@sparticuz/chromium");
+    const puppeteer = (await import("puppeteer-core")).default;
+    const exePath = await (chromium as any).executablePath();
+    browser = await puppeteer.launch({
+      args: (chromium as any).args,
+      defaultViewport: { width: 1280, height: 800 },
+      executablePath: exePath,
+      headless: (chromium as any).headless,
+    });
+    page = await browser.newPage();
+    await page.setUserAgent(
+      "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)"
     );
   }
-
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    userAgent:
-      "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)",
-  });
-  const page = await context.newPage();
 
   const stylesheetUrls = new Set<string>();
   const imageUrls = new Set<string>();
@@ -507,7 +519,7 @@ export async function POST(req: Request) {
   let navRes: any = null;
   try {
     navRes = await page.goto(targetUrl, {
-      waitUntil: "networkidle",
+      waitUntil: mode === "playwright" ? "networkidle" : "networkidle0",
       timeout: 20000,
     });
   } catch (e) {
@@ -745,10 +757,15 @@ export async function POST(req: Request) {
   // Redirect chain for main document
   const redirects: string[] = [];
   try {
-    let req = navRes?.request();
-    while (req?.redirectedFrom()) {
-      redirects.unshift(req.redirectedFrom()!.url());
-      req = req.redirectedFrom();
+    if (mode === "playwright") {
+      let req = navRes?.request();
+      while (req?.redirectedFrom()) {
+        redirects.unshift(req.redirectedFrom()!.url());
+        req = req.redirectedFrom();
+      }
+    } else {
+      const chain = navRes?.request?.().redirectChain?.() || [];
+      for (const r of chain) redirects.push(r.url());
     }
   } catch {}
 
@@ -801,14 +818,21 @@ export async function POST(req: Request) {
     seo: seoInfo,
     network: {
       finalUrl: page.url(),
-      status: navRes?.status?.() ?? null,
+      status: typeof navRes?.status === "function" ? navRes.status() : null,
       redirects,
       totals: { requests: totalRequests, bytes: totalBytes },
       byType: Object.fromEntries(byType),
-      headers: {
-        contentType: navRes?.headers?.()["content-type"] ?? null,
-        cacheControl: navRes?.headers?.()["cache-control"] ?? null,
-      },
+      headers: (() => {
+        try {
+          const h = typeof navRes?.headers === "function" ? navRes.headers() : {};
+          return {
+            contentType: h?.["content-type"] ?? null,
+            cacheControl: h?.["cache-control"] ?? null,
+          };
+        } catch {
+          return { contentType: null, cacheControl: null };
+        }
+      })(),
     },
     trackers,
   };
