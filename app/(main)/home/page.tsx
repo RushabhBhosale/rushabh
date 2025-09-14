@@ -6,6 +6,7 @@ import Blogs from "./_components/Blogs";
 import Projects from "./_components/Projects";
 import About from "./_components/About";
 import DailySparks from "./_components/DailySparks";
+import ToolsSection from "./_components/Tools";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <SkillsSection />
       <About />
       <DailySparks />
+      <ToolsSection />
       <Blogs />
       <Projects />
       <LetsBuild />

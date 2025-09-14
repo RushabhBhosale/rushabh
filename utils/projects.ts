@@ -1,10 +1,10 @@
 export const projects = [
   {
-    title: "DailySparks Blog Network",
+    title: "DailySparks",
     description:
-      "Multi-category blog platform featuring Tech, Anime, and Travel content. Optimized for SEO with dynamic OG images",
+      "DailySparks is where I publish blogs on Tech, Anime, and Travel — a mix of guides, reviews, and personal insights.",
     image: "/projects/dailysparks.png",
-    github: "https://github.com/RushabhBhosale/dailysparks",
+    github: "https://github.com/RushabhBhosale/blog",
     live: "https://dailysparks.in/",
   },
   {

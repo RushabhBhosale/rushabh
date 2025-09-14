@@ -31,17 +31,8 @@ const DailySparks = () => {
             DailySparks
           </h2>
           <p className="text-muted-foreground mt-3 sm:mt-4 text-sm sm:text-base">
-            A multi-category{" "}
-            <a
-              href="https://dailysparks.in/?utm_source=rushabh.in&utm_medium=referral&utm_campaign=context_link"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-4 hover:no-underline"
-            >
-              Tech, Anime & Travel blog
-            </a>{" "}
-            optimized for performance and SEO with dynamic OG images and a
-            modern reading experience.
+            DailySparks is where I publish blogs on Tech, Anime, and Travel — a
+            mix of guides, reviews, and personal insights
           </p>
 
           <div className="flex flex-wrap gap-3 mt-6">
