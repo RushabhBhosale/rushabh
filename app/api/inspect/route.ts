@@ -446,9 +446,9 @@ export async function POST(req: Request) {
     page = await context.newPage();
   } catch (e) {
     mode = "puppeteer";
-    const chromium = await import("@sparticuz/chromium");
+    const { default: chromium } = await import("@sparticuz/chromium");
+    const exePath = await chromium.executablePath();
     const puppeteer = (await import("puppeteer-core")).default;
-    const exePath = await (chromium as any).executablePath();
     browser = await puppeteer.launch({
       args: (chromium as any).args,
       defaultViewport: { width: 1280, height: 800 },
@@ -824,7 +824,8 @@ export async function POST(req: Request) {
       byType: Object.fromEntries(byType),
       headers: (() => {
         try {
-          const h = typeof navRes?.headers === "function" ? navRes.headers() : {};
+          const h =
+            typeof navRes?.headers === "function" ? navRes.headers() : {};
           return {
             contentType: h?.["content-type"] ?? null,
             cacheControl: h?.["cache-control"] ?? null,
