@@ -360,9 +360,7 @@ export default function SiteInspectorPage() {
                                 Copy src
                               </button>
                               <a
-                                href={`/api/proxy-download?url=${encodeURIComponent(
-                                  s
-                                )}`}
+                                href={`/api/proxy-download?url=${encodeURIComponent(s)}&base=${encodeURIComponent(data.network.finalUrl)}`}
                                 className="text-xs px-2 py-1 rounded-md border bg-muted/40"
                               >
                                 Download
