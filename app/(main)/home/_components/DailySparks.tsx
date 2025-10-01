@@ -45,7 +45,7 @@ const DailySparks = () => {
               Visit DailySparks
             </a>
             <a
-              href="https://dailysparks.in/blog?utm_source=rushabh.in&utm_medium=referral&utm_campaign=secondary_cta"
+              href="https://dailysparks.in/blogs?utm_source=rushabh.in&utm_medium=referral&utm_campaign=secondary_cta"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-input bg-background hover:bg-muted/50 transition"
