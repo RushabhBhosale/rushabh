@@ -1,11 +1,11 @@
 export const projects = [
   {
-    title: "DailySparks",
+    title: "AnimeSparks",
     description:
-      "DailySparks is where I publish blogs on Tech, Anime, and Travel — a mix of guides, reviews, and personal insights.",
-    image: "/projects/dailysparks.png",
+      "AnimeSparks is a modern anime and pop-culture editorial platform focused on deep analysis, reviews, and thoughtful storytelling. Built with a strong SEO foundation, it delivers long-form content that explores characters, themes, and narratives beyond surface-level fandom.",
+    image: "/projects/animesparks.png",
     github: "https://github.com/RushabhBhosale/blog",
-    live: "https://dailysparks.in/",
+    live: "https://www.animesparks.blog/",
   },
   {
     title: "Movie Watchlist App",

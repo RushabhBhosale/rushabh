@@ -86,7 +86,7 @@ async function fetchWithTimeout(
       signal: controller.signal,
       headers: {
         "user-agent":
-          "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)",
+          "AnimeSparksSiteInspector/1.0 (+https://www.animesparks.blog)",
         ...(opts.headers || {}),
       },
       cache: "no-store",
@@ -441,7 +441,7 @@ export async function POST(req: Request) {
     browser = await chromium.launch({ headless: true });
     context = await browser.newContext({
       userAgent:
-        "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)",
+        "AnimeSparksSiteInspector/1.0 (+https://www.animesparks.blog)",
     });
     page = await context.newPage();
   } catch (e) {
@@ -457,7 +457,7 @@ export async function POST(req: Request) {
     });
     page = await browser.newPage();
     await page.setUserAgent(
-      "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)"
+      "AnimeSparksSiteInspector/1.0 (+https://www.animesparks.blog)"
     );
   }
 

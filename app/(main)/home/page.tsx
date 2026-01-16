@@ -5,7 +5,7 @@ import SkillsSection from "./_components/Skills";
 import Blogs from "./_components/Blogs";
 import Projects from "./_components/Projects";
 import About from "./_components/About";
-import DailySparks from "./_components/DailySparks";
+import AnimeSparks from "./_components/AnimeSparks";
 import ToolsSection from "./_components/Tools";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
       <Hero />
       <SkillsSection />
       <About />
-      <DailySparks />
+      <AnimeSparks />
       <ToolsSection />
       <Blogs />
       <Projects />

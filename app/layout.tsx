@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <Script
           id="ld-person-website"
@@ -77,9 +77,9 @@ export default function RootLayout({
                   ],
                   owns: {
                     "@type": "WebSite",
-                    "@id": "https://dailysparks.in",
-                    name: "DailySparks",
-                    url: "https://dailysparks.in",
+                    "@id": "https://www.animesparks.blog",
+                    name: "AnimeSparks",
+                    url: "https://www.animesparks.blog",
                   },
                 },
                 {

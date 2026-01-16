@@ -40,7 +40,7 @@ export async function GET(req: Request) {
 
   const headers: Record<string, string> = {
     "user-agent":
-      "DailysparksSiteInspector/1.0 (+https://dailysparks.in/tools/site-inspector)",
+      "AnimeSparksSiteInspector/1.0 (+https://www.animesparks.blog)",
     accept:
       "font/woff2, font/woff, application/font-woff, application/octet-stream;q=0.8, */*;q=0.1",
   };
