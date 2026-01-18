@@ -4,12 +4,12 @@ const About = () => {
   return (
     <section className="px-6 mt-24 text-center text-base text-muted-foreground">
       <p>
-        Just a software dev who builds clean, fast, and fun web/mobile
-        experiences.
+        I&apos;m Rushabh Bhosale, a software developer focused on clean UI, fast
+        performance, and SEO friendly architecture across React and Next.js.
       </p>
       <p className="mt-2">
-        When I’m not coding, I’m probably watching anime, planning my next trip,
-        or working on side projects that may or may not ship
+        I ship products end to end and currently run AnimeSparks, a modern
+        editorial blog for anime and storytelling.
       </p>
       <p className="mt-4">
         <a

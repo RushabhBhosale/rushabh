@@ -3,8 +3,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Rushabh Bhosale",
-  description: "Your friendly neighborhood developer",
+  title: "Rushabh Bhosale | Software Developer Portfolio",
+  description:
+    "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web applications. Explore projects, experience, and contact details.",
 };
 
 export default function RootLayout({

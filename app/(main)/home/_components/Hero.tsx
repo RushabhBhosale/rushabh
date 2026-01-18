@@ -10,13 +10,12 @@ const Hero = () => {
       <FloatingCodeSnippets />
 
       <div className="w-full max-w-[720px] text-center relative z-10">
-        <div className="text-sm tracking-[4px] uppercase text-primary font-semibold mb-4">
-          Software Developer
+        <div className="hidden tracking-[4px] uppercase text-primary font-semibold mb-4">
+          Software Developer building React, Next.js, and full stack web apps
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground my-4 leading-tight quote">
-          Hi, I&apos;m Rushabh Bhosale <br /> $ git commit -m &quot;Built
-          something cool&quot;
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground my-4 leading-tight quote">
+          Rushabh Bhosale
         </h1>
 
         <div className="relative mb-4 mx-auto w-40 h-24 sm:w-44 sm:h-28 rounded-3xl overflow-hidden border border-border shadow-sm">
@@ -30,20 +29,20 @@ const Hero = () => {
         </div>
 
         <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto mb-6">
-          Experienced Software Developer proficient with Next.js, React, Redux,
-          and modern CSS frameworks like Tailwind CSS and Bootstrap. I also
-          build mobile apps using React Native, Java, and Ionic.
+          I&apos;m Rushabh Bhosale, a software developer focused on clean UI,
+          performance, and SEO friendly web experiences. I build production apps
+          with React, Next.js, TypeScript, Node.js, and MongoDB.
         </p>
 
         <div className="flex gap-3 flex-row justify-center mb-6">
-          <Link href="/contact">
+          <Link href="/projects">
             <Button className="gap-x-2">
-              Contact Me <Send size={18} />
+              View Projects <Send size={18} />
             </Button>
           </Link>
-          <Link href="/projects">
+          <Link href="/about">
             <Button variant="secondary" className="gap-x-2">
-              Projects
+              About Me
             </Button>
           </Link>
         </div>

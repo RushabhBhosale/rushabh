@@ -21,17 +21,31 @@ export default function About() {
           </div>
 
           <h1 className="text-4xl md:text-7xl font-bold bg-gradient-to-r from-foreground via-muted-foreground to-primary bg-clip-text text-transparent mb-6 tracking-tight heading">
-            Rushabh Bhosale
+            About Rushabh Bhosale
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8 sans">
-            Software developer with a creative edge. I build responsive apps,
-            websites, and design clean UIs. I make what I need, and learn fast.
-          </p>
+          <div className="space-y-4 text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed mb-8 sans">
+            <p>
+              Hi, I&apos;m Rushabh Bhosale, a software developer who builds
+              modern web apps with React, Next.js, TypeScript, Node.js, and
+              MongoDB. I care about clean UX, fast performance, and SEO first
+              architecture.
+            </p>
+            <p>
+              I&apos;ve worked across frontend and backend and enjoy shipping
+              real products end to end, from UI to APIs to deployment. I also
+              run AnimeSparks, an editorial blog built with Next.js and Sanity,
+              where I publish anime reviews and analysis.
+            </p>
+            <p className="text-base md:text-lg">
+              If you&apos;re looking to collaborate or hire, the fastest way to
+              reach me is via email or LinkedIn.
+            </p>
+          </div>
 
           <div className="flex items-center justify-center gap-4 text-muted-foreground">
             <MapPin className="w-5 h-5" />
-            <span>Software Developer at Peracto Infotech</span>
+            <span>Mumbai, India</span>
           </div>
         </div>
 

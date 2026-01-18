@@ -17,11 +17,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rushabh Bhosale",
-  description: "Your friendly neighborhood developer",
+  title: "Rushabh Bhosale | Software Developer Portfolio",
+  description:
+    "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web applications. Explore projects, experience, and contact details.",
+  keywords: [
+    "Rushabh Bhosale",
+    "Rushabh portfolio",
+    "Rushabh Bhosale developer",
+    "software developer",
+    "React developer",
+    "Next.js developer",
+    "full stack developer",
+    "TypeScript",
+    "Node.js",
+  ],
   openGraph: {
-    title: "Rushabh Bhosale",
-    description: "Your friendly neighborhood developer",
+    title: "Rushabh Bhosale | Software Developer",
+    description:
+      "Portfolio of Rushabh Bhosale featuring projects, experience, and writing on modern web development.",
     url: "https://rushabh.in",
     siteName: "Rushabh Bhosale",
     images: [
@@ -29,14 +42,15 @@ export const metadata: Metadata = {
         url: "/me.png",
         width: 1200,
         height: 630,
-        alt: "Rushabh Bhosale Portfolio",
+        alt: "Rushabh Bhosale portfolio preview",
       },
     ],
     type: "website",
   },
   twitter: {
-    title: "Rushabh Bhosale",
-    description: "Your friendly neighborhood developer",
+    title: "Rushabh Bhosale | Software Developer Portfolio",
+    description:
+      "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web applications. Explore projects, experience, and contact details.",
     images: ["/me.png"],
   },
 };
@@ -68,11 +82,14 @@ export default function RootLayout({
                     "Next.js",
                     "TypeScript",
                     "Node.js",
+                    "MongoDB",
+                    "Full Stack Development",
                     "SEO",
+                    "Tailwind CSS",
+                    "JavaScript",
                   ],
                   sameAs: [
                     "https://github.com/RushabhBhosale",
-                    "https://x.com/yourhandle",
                     "https://www.linkedin.com/in/rushabh-bhosale-software-developer/",
                   ],
                   owns: {
