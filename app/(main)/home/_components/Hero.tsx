@@ -34,6 +34,16 @@ const Hero = () => {
           with React, Next.js, TypeScript, Node.js, and MongoDB.
         </p>
 
+        <p
+          className="
+           bg-transparent px-8 py-6 rounded-full w-fit mx-auto
+  text-sm
+    text-[color:var(--primary)]
+    drop-shadow-[0_0_8px_oklch(0.78_0.2_35)]
+  "
+        >
+          Right Click to download resume
+        </p>
         <div className="flex gap-3 flex-row justify-center mb-6">
           <Link href="/projects">
             <Button className="gap-x-2">

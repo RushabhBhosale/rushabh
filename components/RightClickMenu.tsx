@@ -15,12 +15,15 @@ import { useRouter } from "next/navigation";
 
 export function RightClickMenu({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const resumePath = "/Rushabh%20Resume.pdf";
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/Rushabh_Resume.pdf";
-    link.download = "Rushabh_Resume.pdf";
+    link.href = resumePath;
+    link.download = "Rushabh Resume.pdf";
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -41,11 +44,13 @@ export function RightClickMenu({ children }: { children: React.ReactNode }) {
             <ContextMenuItem onClick={() => router.push("/projects")}>
               Projects
             </ContextMenuItem>
-            <ContextMenuItem onClick={() => router.push("/travel")}>
-              Travel App
+            <ContextMenuItem onClick={() => router.push("/rushabh-bhosale")}>
+              Rushabh Bhosale
             </ContextMenuItem>
-            <ContextMenuItem onClick={() => router.push("/inspect")}>
-              Inspect Rushabh
+            <ContextMenuItem
+              onClick={() => router.push("/tools/site-inspector")}
+            >
+              Site Inspector Tool
             </ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>

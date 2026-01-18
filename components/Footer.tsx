@@ -1,129 +1,115 @@
 "use client";
 
 import Link from "next/link";
+import { Github, Linkedin, Mail, Twitter, Send } from "lucide-react";
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 w-full border-t border-border">
-      <div className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-10 md:grid-cols-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
-            <p className="text-base font-semibold text-foreground">
+    <footer className="w-full border-t border-border bg-background/50 backdrop-blur-xl mt-24">
+      <div className="mx-auto max-w-7xl px-6 py-8 md:py-12 lg:px-8">
+        <div className="grid gap-8 xl:grid-cols-6 xl:gap-8">
+          {/* Brand Section */}
+          <div className="xl:col-span-2">
+            <Link href="/" className="text-xl font-bold tracking-tight text-foreground">
               Rushabh Bhosale
+            </Link>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground max-w-xs">
+              Crafting digital experiences with code and creativity. Specialized in building scalable, user-centric web applications.
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Software Developer • India
-            </p>
-
-            <div className="mt-5 space-y-2 text-sm">
-              <a
-                href="mailto:bhosalerushabh0@gmail.com"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                bhosalerushabh0@gmail.com
-              </a>
-              <a
-                href="https://www.linkedin.com/in/rushabh-bhosale-software-developer/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://github.com/RushabhBhosale"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                GitHub
-              </a>
+            <div className="mt-4 flex gap-4">
+              <SocialLink href="https://github.com/RushabhBhosale" icon={<Github className="h-4 w-4" />} label="GitHub" />
+              <SocialLink href="https://www.linkedin.com/in/rushabh-bhosale-software-developer/" icon={<Linkedin className="h-4 w-4" />} label="LinkedIn" />
+              <SocialLink href="mailto:bhosalerushabh0@gmail.com" icon={<Mail className="h-4 w-4" />} label="Email" />
+              <SocialLink href="#" icon={<Twitter className="h-4 w-4" />} label="Twitter" />
             </div>
           </div>
 
-          {/* Navigation */}
-          <div className="md:col-span-4">
-            <p className="text-sm font-medium text-foreground">
-              Important Links
-            </p>
-            <div className="mt-4 grid gap-2 text-sm">
-              <Link
-                href="/home"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/projects"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Projects
-              </Link>
-              <Link
-                href="/about"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                About Rushabh Bhosale
-              </Link>
-              <Link
-                href="/contact"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                Contact
-              </Link>
+          {/* Navigation Links */}
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 xl:col-span-4">
+            <div>
+              <h3 className="text-sm font-semibold leading-6 text-foreground">Navigation</h3>
+              <ul className="mt-4 space-y-2">
+                <FooterLink href="/home">Home</FooterLink>
+                <FooterLink href="/about">About</FooterLink>
+                <FooterLink href="/projects">Projects</FooterLink>
+                <FooterLink href="/contact">Contact</FooterLink>
+              </ul>
             </div>
-          </div>
+            
+            <div>
+              <h3 className="text-sm font-semibold leading-6 text-foreground">Legal</h3>
+              <ul className="mt-4 space-y-2">
+                <FooterLink href="/privacy">Privacy Policy</FooterLink>
+                <FooterLink href="/terms">Terms of Service</FooterLink>
+                <FooterLink href="/sitemap.xml">Sitemap</FooterLink>
+              </ul>
+            </div>
 
-          {/* CTA */}
-          <div className="md:col-span-3 md:text-right">
-            <p className="text-sm font-medium text-foreground">Let’s work</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Open to full-time roles and freelance projects.
-            </p>
-
-            <div className="mt-4 flex gap-3 md:justify-end">
-              <a
-                href="mailto:bhosalerushabh0@gmail.com"
-                className="rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90 transition-opacity"
-              >
-                Email
-              </a>
-              <a
-                href="https://www.linkedin.com/in/rushabh-bhosale-software-developer/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-foreground hover:text-primary hover:border-primary/60 transition-colors"
-              >
-                LinkedIn
-              </a>
+            {/* Newsletter / CTA */}
+            <div className="md:col-span-1">
+              <h3 className="text-sm font-semibold leading-6 text-foreground">Stay Updated</h3>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Subscribe to my newsletter for the latest updates.
+              </p>
+              <form className="mt-4 sm:flex sm:max-w-md" onSubmit={(e) => e.preventDefault()}>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <div className="relative rounded-md shadow-sm">
+                  <input
+                    type="email"
+                    name="email-address"
+                    id="email-address"
+                    autoComplete="email"
+                    required
+                    className="block w-full rounded-md border-0 py-2 pl-3 pr-10 text-foreground ring-1 ring-inset ring-border placeholder:text-muted-foreground focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-background"
+                    placeholder="Enter your email"
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-1.5">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center rounded-sm p-1 text-muted-foreground hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    >
+                      <Send className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>© {year} Rushabh Bhosale. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link
-              href="/sitemap.xml"
-              className="hover:text-primary transition-colors"
-            >
-              Sitemap
-            </Link>
-            <Link
-              href="/robots.txt"
-              className="hover:text-primary transition-colors"
-            >
-              Robots
-            </Link>
-          </div>
+        <div className="mt-8 border-t border-border pt-8 sm:mt-12 lg:mt-16">
+          <p className="text-xs leading-5 text-muted-foreground">
+            &copy; {year} Rushabh Bhosale. All rights reserved. Built with Next.js & Tailwind CSS.
+          </p>
         </div>
       </div>
     </footer>
   );
 };
+
+// Helper Components
+const SocialLink = ({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-full bg-muted p-2 text-muted-foreground transition-all hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    aria-label={label}
+  >
+    {icon}
+  </a>
+);
+
+const FooterLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <li>
+    <Link href={href} className="text-sm leading-6 text-muted-foreground hover:text-primary transition-colors">
+      {children}
+    </Link>
+  </li>
+);
 
 export default Footer;
