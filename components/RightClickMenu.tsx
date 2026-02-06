@@ -32,7 +32,6 @@ export function RightClickMenu({ children }: { children: React.ReactNode }) {
       <ContextMenuContent data-state="open" className="w-52">
         <ContextMenuItem inset onClick={handleDownloadResume}>
           Download Resume
-          <ContextMenuShortcut>⌘D</ContextMenuShortcut>
         </ContextMenuItem>
 
         <ContextMenuSub>
@@ -54,12 +53,6 @@ export function RightClickMenu({ children }: { children: React.ReactNode }) {
             </ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
-
-        <ContextMenuSeparator />
-
-        <ContextMenuItem inset disabled>
-          Inspect Element
-        </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   );
