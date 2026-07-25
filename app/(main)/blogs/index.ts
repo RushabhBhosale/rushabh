@@ -1,5 +1,12 @@
 export const blogPosts = [
   {
+    slug: "expense-tracker-sms-automation",
+    title: "How I Built an Expense Tracker That Automatically Detects Bank SMS",
+    date: "2026-07-25",
+    description:
+      "A case study of the Android SMS pipeline, review-first parsing, local-first storage, and analytics behind my expense tracker.",
+  },
+  {
     slug: "nativewind-not-working",
     title: "NativeWind styles not getting applied in my RN app!!",
     date: "2025-08-06",

@@ -38,16 +38,18 @@ const Projects = () => {
                 </div>
 
                 <div className="flex justify-center gap-4 mt-4 md:absolute md:bottom-4 md:left-4 md:opacity-0 md:group-hover:opacity-100 md:translate-y-2 md:group-hover:translate-y-0 md:transition-all md:duration-300">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white/20 backdrop-blur-sm text-white hover:text-primary hover:bg-white/30 flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95"
-                  >
-                    <RiGithubFill size={16} className="sm:w-4 sm:h-4" />
-                    <span className="hidden sm:inline">GitHub</span>
-                    <span className="sm:hidden">Code</span>
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/20 backdrop-blur-sm text-white hover:text-primary hover:bg-white/30 flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95"
+                    >
+                      <RiGithubFill size={16} className="sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">GitHub</span>
+                      <span className="sm:hidden">Code</span>
+                    </a>
+                  )}
                   {project.live && (
                     <a
                       href={project.live}

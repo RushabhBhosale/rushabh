@@ -1,8 +1,31 @@
-export const projects = [
+export type Project = {
+  title: string;
+  description: string;
+  image: string;
+  github?: string;
+  live?: string;
+};
+
+export const projects: Project[] = [
+  {
+    title: "Expense Tracking App",
+    description:
+      "AI expense tracker that reads bank SMS, records transactions, and shows spending insights.",
+    image: "/projects/expense-tracking.svg",
+    github: "https://github.com/RushabhBhosale/memory",
+  },
+  {
+    title: "Travel Memory Archive",
+    description:
+      "Visual travel archive featuring stories and photo galleries from five journeys across India.",
+    image: "/projects/travel-archive.svg",
+    github: "https://github.com/RushabhBhosale/trip-new",
+    live: "https://trip-new.vercel.app/",
+  },
   {
     title: "AnimeSparks",
     description:
-      "AnimeSparks is a modern anime and pop-culture editorial platform focused on deep analysis, reviews, and thoughtful storytelling. Built with a strong SEO foundation, it delivers long-form content that explores characters, themes, and narratives beyond surface-level fandom.",
+      "Anime and pop-culture editorial platform featuring SEO-focused reviews, analysis, and long-form storytelling.",
     image: "/projects/animesparks.png",
     github: "https://github.com/RushabhBhosale/blog",
     live: "https://www.animesparks.blog/",
@@ -13,7 +36,7 @@ export const projects = [
       "Track your favorite movies, manage watch status, and get smart recommendations.",
     image: "/projects/watchlist.png",
     github: "https://github.com/RushabhBhosale/Movies",
-    live: "https://watchlist.rushabh.in/",
+    live: "https://movies-neon-eight-38.vercel.app/",
   },
   {
     title: "AI Travel Planner",

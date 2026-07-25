@@ -1,0 +1,28 @@
+<svg width="1400" height="760" viewBox="0 0 1400 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="travel-sky" x1="700" y1="0" x2="700" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0CFA5"/>
+      <stop offset="0.52" stop-color="#D98669"/>
+      <stop offset="1" stop-color="#2B4350"/>
+    </linearGradient>
+    <linearGradient id="travel-mountain" x1="720" y1="320" x2="720" y2="670" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#344F5C"/>
+      <stop offset="1" stop-color="#172B35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="760" rx="28" fill="url(#travel-sky)"/>
+  <circle cx="1060" cy="190" r="96" fill="#FFE7B5" fill-opacity="0.72"/>
+  <path d="M0 528L218 338L388 494L608 278L832 500L1054 306L1400 560V760H0V528Z" fill="#5B7380" fill-opacity="0.62"/>
+  <path d="M0 596L274 406L468 570L738 336L1012 590L1190 438L1400 596V760H0V596Z" fill="url(#travel-mountain)"/>
+  <path d="M110 760C238 610 342 568 486 570C620 572 680 650 790 642C954 630 1056 520 1278 570C1330 582 1374 598 1400 616V760H110Z" fill="#13242B"/>
+  <rect x="78" y="78" width="510" height="202" rx="20" fill="#10202A" fill-opacity="0.78"/>
+  <text x="122" y="138" fill="#F9E6C5" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">PERSONAL TRAVEL ARCHIVE</text>
+  <text x="122" y="204" fill="#FFFFFF" font-family="Georgia, serif" font-size="52" font-weight="700">Just roaming.</text>
+  <text x="122" y="244" fill="#F5D9B8" font-family="Arial, sans-serif" font-size="18">Five journeys across India, remembered in words and photographs.</text>
+  <rect x="936" y="82" width="378" height="246" rx="18" fill="#F8E7C8" fill-opacity="0.18" stroke="#F8E7C8" stroke-opacity="0.5"/>
+  <rect x="968" y="114" width="126" height="90" rx="8" fill="#A8C3C3" fill-opacity="0.8"/>
+  <rect x="1110" y="114" width="170" height="90" rx="8" fill="#D7A178" fill-opacity="0.8"/>
+  <rect x="968" y="220" width="170" height="76" rx="8" fill="#637B72" fill-opacity="0.9"/>
+  <rect x="1154" y="220" width="126" height="76" rx="8" fill="#B9C7C8" fill-opacity="0.8"/>
+  <text x="82" y="692" fill="#FBEBD3" font-family="Arial, sans-serif" font-size="20" letter-spacing="2">BRAHMATAL  ·  AMRITSAR  ·  HAMPI  ·  MATHURA  ·  NAINITAL</text>
+</svg>

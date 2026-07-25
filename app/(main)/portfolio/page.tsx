@@ -367,14 +367,16 @@ const PortfolioPage = () => {
                 </div>
 
                 <div className="flex gap-3 pt-2">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background hover:border-primary hover:bg-primary/5 hover:text-primary transition-all text-sm font-medium"
-                  >
-                    <Github className="w-4 h-4" /> Code
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background hover:border-primary hover:bg-primary/5 hover:text-primary transition-all text-sm font-medium"
+                    >
+                      <Github className="w-4 h-4" /> Code
+                    </a>
+                  )}
                   {project.live && (
                     <a
                       href={project.live}
