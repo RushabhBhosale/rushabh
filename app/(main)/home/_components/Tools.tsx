@@ -36,11 +36,6 @@ export default function ToolsSection() {
                 <t.icon className="w-5 h-5 text-primary" />
                 <h3 className="text-xl font-semibold">{t.name}</h3>
               </div>
-              {t.badge ? (
-                <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                  {t.badge}
-                </span>
-              ) : null}
             </div>
             <p className="text-sm mt-3 text-muted-foreground">
               {t.description}
