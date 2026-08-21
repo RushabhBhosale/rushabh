@@ -46,22 +46,6 @@ export const projects: Project[] = [
     github: "https://github.com/RushabhBhosale/travel-app",
   },
   {
-    title: "Ecommerce Sofa Website",
-    description:
-      "Modern furniture store with smooth UI, cart system, and Firebase-powered checkout. Type anything to login",
-    image: "/projects/sofa.png",
-    github: "https://github.com/RushabhBhosale/Firebase-react-ecommerce",
-    live: "https://bejewelled-yeot-744c49.netlify.app/",
-  },
-  {
-    title: "Ecommerce Clothing Website",
-    description:
-      "Stylish apparel shop built with React. Features filtering, cart, and responsive design.",
-    image: "/projects/clothing.png",
-    github: "https://github.com/RushabhBhosale/ecommerce",
-    live: "https://best-ecommerce.netlify.app/",
-  },
-  {
     title: "N8N Blog Automation",
     description:
       "Type a topic in the n8n workflow it create a blog and post it within 10-15 minutes",

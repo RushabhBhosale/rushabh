@@ -18,6 +18,7 @@ const Home = () => {
       <ToolsSection />
       <Blogs />
       <Projects />
+      <Blogs />
       <LetsBuild />
     </main>
   );
