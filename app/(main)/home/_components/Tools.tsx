@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Wrench, ExternalLink } from "lucide-react";
+import { Wrench, ExternalLink, Clipboard } from "lucide-react";
 
 const tools = [
   {
@@ -8,20 +8,28 @@ const tools = [
     icon: Wrench,
     description:
       "Headless page scan: frameworks, theme colors, fonts, assets, Google Fonts, SEO and network stats.",
-    badge: "New",
+  },
+  {
+    slug: "https://clipnote-rb.vercel.app/",
+    name: "ClipNote",
+    icon: Clipboard,
+    description:
+      "ClipNote is a lightweight desktop clipboard manager that helps you quickly organize, transform, search, and reuse copied content.",
   },
 ];
 
 export default function ToolsSection() {
   return (
     <section className="w-full max-w-6xl px-6 py-16 mx-auto my-4">
-      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">Tools</h2>
+      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center">
+        Tools
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {tools.map((t) => (
           <Link
             key={t.slug}
             href={t.slug}
-            className="group border border-border rounded-xl p-6 bg-muted dark:bg-muted/30 hover:shadow-lg transition"
+            className="group border border-border rounded-xl p-6 bg-muted dark:bg-muted/30 hover:shadow-lg transition min-h-[160px] flex flex-col"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
@@ -34,7 +42,9 @@ export default function ToolsSection() {
                 </span>
               ) : null}
             </div>
-            <p className="text-sm mt-3 text-muted-foreground">{t.description}</p>
+            <p className="text-sm mt-3 text-muted-foreground">
+              {t.description}
+            </p>
             <div className="mt-4 inline-flex items-center gap-2 text-primary text-sm">
               Open <ExternalLink className="w-3 h-3" />
             </div>
@@ -44,4 +54,3 @@ export default function ToolsSection() {
     </section>
   );
 }
-

@@ -55,12 +55,6 @@ const AnimeSparks = () => {
             >
               Read Stories
             </a>
-            <Link
-              href="/blogs"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-input bg-background hover:bg-muted/50 transition"
-            >
-              Internal Posts
-            </Link>
           </div>
         </div>
       </div>
