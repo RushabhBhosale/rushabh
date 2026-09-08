@@ -18,25 +18,25 @@ npm run build
 npm start
 ```
 
+## Current prototype
+
+The home experience is one pinned viewport: activation → hero → origin → StackPort junction → next world area. Scroll moves the camera and environmental typography through the same journey clock. Entering StackPort inserts an optional project route that physically merges back. The other world regions are deferred while this slice is refined.
+
+The architecture, itinerary and fallback behavior are documented in [design/SWITCHYARD_WORLD.md](design/SWITCHYARD_WORLD.md).
+
 ## Source guide
 
-- `app/(main)/home/page.tsx`: homepage writing, experiments, and career history.
-- `components/switchyard/Journey.tsx`: GSAP scroll choreography, desktop stations, and accessible project controls.
-- `components/switchyard/RouteWorld.tsx`: raw WebGL perspective geometry, camera travel, visibility throttling, and context-loss handling.
-- `components/switchyard/ProductSurface.tsx`: original typographic product studies and the existing AnimeSparks screenshot.
-- `components/switchyard/Convergence.tsx`: contact route convergence.
-- `app/switchyard.css`: complete visual system and responsive/reduced-motion adaptations.
-- `utils/switchyard.ts`: selected project copy and verified source/contact destinations. StackPort has no public release URL in the supplied project sources, so its action requests a walkthrough by email.
-- `components/Navbar.tsx` and `components/Footer.tsx`: shared navigation and contact system.
-- `utils/projects.ts`, `utils/experience.ts`, and `app/(main)/blogs/index.ts`: existing archive, career, and article data.
+- `components/switchyard/Journey.tsx`: stage and waypoint content.
+- `components/switchyard/useJourneyController.ts`: shared scroll clock and DOM depth transforms.
+- `components/switchyard/journey-model.ts`: main and optional branch itinerary.
+- `components/switchyard/world-path.ts`: main spline and branch geometry.
+- `components/switchyard/RouteWorld.tsx`: raw WebGL camera, track geometry, projected content pins and environment.
+- `components/switchyard/OpeningSequence.tsx`: first-visit and return-visit activation.
+- `components/switchyard/WorldMap.tsx`: route map and direct portfolio index.
+- `app/switchyard.css`: visual system and responsive layouts.
+- `utils/switchyard.ts` and `ProductSurface.tsx`: project copy and labeled product studies.
 
-The project, About, Contact, and writing indexes share the editorial system. Existing MDX articles, Site Inspector APIs, résumé, and legacy routes remain available. The obsolete ad loader was removed from the portfolio shell. Broken legal-page footer destinations were replaced with direct contact channels. Skill percentages were consolidated into a plain skills inventory on About.
-
-## Motion and accessibility
-
-The DOM is the content layer. Desktop motion is enabled only above 800px wide and 649px high, and only without a reduced-motion preference. CSS sticky positioning preserves native scrolling; no wheel or touch event is intercepted. Station buttons move to the appropriate scroll position, and inactive desktop panels are inert.
-
-Mobile, short viewports, reduced motion, and JavaScript-free browsing receive a normal vertical document. With WebGL unavailable, the entry retains a quiet CSS fallback. The renderer caps pixel density, runs at approximately 30fps, pauses outside the spatial chapters or in hidden tabs, cleans up GPU resources, and respects live reduced-motion changes. Product studies are explicitly labeled, not passed off as screenshots.
+All changes are local source files that can be inspected and edited in VS Code. The existing project, About, Contact and writing pages remain accessible through direct navigation. Reduced motion or unavailable WebGL displays a compact direct index. Normal mobile browsing retains the pinned world.
 
 ## Verification
 
@@ -44,10 +44,12 @@ With the dev server running:
 
 ```sh
 node tests/switchyard.mjs
+node tests/switchyard-opening.mjs
+npm run build
 ```
 
-This uses the existing Playwright dependency and Chrome at its standard macOS path. Override `CHROME_PATH`, `PORTFOLIO_URL`, and `PORTFOLIO_SCREENSHOTS` when needed. Screenshots default to `/private/tmp/switchyard-checks`.
+The checks use Playwright and Chrome at its standard macOS path. Override `CHROME_PATH`, `PORTFOLIO_URL`, and `PORTFOLIO_SCREENSHOTS` when needed. The current test default is `http://[::1]:3000` to avoid another local service bound to IPv4 port 3000. Screenshots and a browser recording go to `/private/tmp/switchyard-slice`; video recording requires `npx playwright install ffmpeg` once.
 
-The suite covers the WebGL entry, project selection and native scrolling, local links and résumé, mobile navigation, keyboard access, reduced motion, secondary routes, and a WebGL-unavailable fallback. Tests open contact links only as DOM destinations; they do not send messages.
+The journey suite covers both paths, pinning, same-canvas continuity, reverse travel, the map, phone viewports, direct links, and reduced-motion/WebGL/JavaScript fallbacks. Run the opening timing check separately from recording. Browser emulation does not verify physical phone GPU performance.
 
-`npm run lint -- <file paths>` uses the Next.js 16 flat ESLint configuration. No additional runtime dependencies were added for the redesign.
+`npm run lint -- <file paths>` uses the Next.js 16 flat ESLint configuration. No runtime dependency was added for the journey.

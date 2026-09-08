@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Rushabh Bhosale — The Switchyard",
@@ -21,7 +22,9 @@ export default function MainLayout({
       <main id="main-content" className="site-content" tabIndex={-1}>
         {children}
       </main>
-      <Footer />
+      <SiteFooter>
+        <Footer />
+      </SiteFooter>
     </>
   );
 }

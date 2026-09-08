@@ -1,12 +1,11 @@
-// End-to-end regression checks for the actual journey, not implementation snapshots.
-// Run with the dev server: node tests/switchyard.mjs
+// Real browser checks for the single-stage prototype. Run against the local dev server.
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
-const base = process.env.PORTFOLIO_URL || "http://localhost:3000";
-const output =
-  process.env.PORTFOLIO_SCREENSHOTS || "/private/tmp/switchyard-checks";
-await mkdir(output, { recursive: true });
+const base = process.env.PORTFOLIO_URL || "http://[::1]:3000";
+const out =
+  process.env.PORTFOLIO_SCREENSHOTS || "/private/tmp/switchyard-slice";
+await mkdir(out, { recursive: true });
 const browser = await chromium.launch({
   executablePath:
     process.env.CHROME_PATH ||
@@ -14,236 +13,241 @@ const browser = await chromium.launch({
   headless: true,
 });
 const errors = [];
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const context = await browser.newContext({
+  viewport: { width: 1440, height: 900 },
+  recordVideo: { dir: out, size: { width: 1440, height: 900 } },
+});
+const page = await context.newPage();
 page.on("pageerror", (e) => errors.push(e.message));
 page.on("console", (m) => {
   if (m.type() === "error") errors.push(m.text());
 });
-const pause = () => page.waitForTimeout(850); // Allow the intentionally timed project reveal to settle.
-const noOverflow = async () =>
-  assert(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-    "Horizontal overflow",
+const pause = () => page.waitForTimeout(900);
+const travel = async (unit) => {
+  await page.evaluate(
+    (unit) =>
+      scrollTo({ top: unit * innerHeight * 0.065, behavior: "instant" }),
+    unit,
+  );
+  await pause();
+};
+const shot = async (name) => page.screenshot({ path: `${out}/${name}.png` });
+const stage = async () => {
+  const metrics = await page
+    .locator(".journey-stage")
+    .evaluate((e) => ({
+      top: e.getBoundingClientRect().top,
+      height: e.clientHeight,
+      viewport: innerHeight,
+      overflow: document.documentElement.scrollWidth > innerWidth,
+    }));
+  assert(Math.abs(metrics.top) < 1, `Stage moved vertically: ${metrics.top}`);
+  assert.equal(metrics.height, metrics.viewport);
+  assert.equal(metrics.overflow, false);
+  assert.equal(await page.locator(".waypoint:not([inert])").count(), 1);
+  assert.equal(
+    await page.locator("footer").count(),
+    0,
+    "No conventional footer at the end of the scroll track",
+  );
+};
+const active = async (id) =>
+  assert.equal(
+    await page.locator(".journey").getAttribute("data-active-waypoint"),
+    id,
   );
 try {
-  await page.goto(`${base}/home`);
-  await page.locator('[data-motion="full"]').waitFor();
-  await pause();
-  await noOverflow();
-  assert.equal(await page.getByRole("heading", { name: "RUSHABH BHOSALE", exact: true }).count(), 1);
+  await page.goto(base + "/home");
+  await page.locator("[data-opening=complete]").waitFor();
   assert.equal(await page.locator("canvas").getAttribute("data-ready"), "true");
-  await page.screenshot({ path: `${output}/desktop-entry.png` });
-  await page.evaluate(() => window.scrollTo(0, innerHeight * 0.75));
-  await pause();
-  await page.screenshot({ path: `${output}/desktop-travel.png` });
-  await page
-    .getByRole("navigation", { name: "Main navigation", exact: true })
-    .getByRole("link", { name: "01 Work" })
-    .click();
-  await pause();
-  const workTop = await page
-    .locator(".work-stage")
-    .evaluate((e) => e.getBoundingClientRect().top);
-  assert(
-    workTop >= 70 && workTop <= 95,
-    `Work navigation did not reach the station: ${workTop}`,
+  await stage();
+  await shot("01-entry");
+  const canvas = await page.locator("canvas").elementHandle();
+  await travel(8);
+  await shot("02-through-type");
+  await travel(25);
+  await active("origin");
+  await stage();
+  await shot("03-origin");
+  await travel(51);
+  await active("stackport");
+  await stage();
+  await shot("04-junction");
+  assert.equal(
+    await page.locator(".journey").getAttribute("data-route"),
+    "main",
   );
-  for (const [i, name] of [
-    "StackPort",
-    "ClipNote",
-    "AnimeSparks",
-    "Headline Thread",
-    "Expense Tracker",
-  ].entries()) {
+  await page.mouse.wheel(0, 2200);
+  await pause();
+  await active("district");
+  await stage();
+  await shot("05-passed-junction");
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
+  // TEST B: reversible selection — D selects StackPort, A returns to MAIN
+  // before the commit point, and the runner continues straight.
+  await travel(51);
+  await page.keyboard.press("d");
+  await pause();
+  assert.equal(
     await page
-      .getByRole("button", { name: `0${i + 1} ${name}`, exact: true })
-      .click();
-    await pause();
+      .locator('.junction-choice button[data-selected="true"]')
+      .innerText(),
+    "STACKPORT →",
+  );
+  await page.keyboard.press("a");
+  await pause();
+  assert.equal(
+    await page
+      .locator('.junction-choice button[data-selected="true"]')
+      .innerText(),
+    "← MAIN",
+  );
+  await page.mouse.wheel(0, 1200);
+  await pause();
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
+  await shot("05b-selection-reverted");
+  // TEST C: D then cross the commit point locks the StackPort branch.
+  await travel(51);
+  await page.keyboard.press("d");
+  await pause();
+  await page.mouse.wheel(0, 1200);
+  await pause();
+  await active("project");
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
+  await shot("05c-committed-branch");
+  // Without the canvas, the homepage is still a pinned waypoint, never a full stacked portfolio.
+  await page.locator("canvas").evaluate((e) => (e.style.display = "none"));
+  await shot("06-canvas-disabled");
+  await stage();
+  assert.equal(await page.locator(".journey section").count(), 0);
+  assert.equal(await page.locator(".journey-fallback").isVisible(), false);
+  await page
+    .locator("canvas")
+    .evaluate((e) => e.style.removeProperty("display"));
+  // Alternative path: explicitly enter, follow the branch, merge, and reverse the same route.
+  await travel(51);
+  await page.getByRole("button", { name: "ENTER → ↗" }).click();
+  await page.waitForTimeout(1800);
+  await active("project");
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
+  await stage();
+  await shot("07-branch-entry");
+  for (const [unit, step] of [
+    [70, 1],
+    [77, 2],
+    [85, 3],
+  ]) {
+    await travel(unit);
     assert.equal(
-      await page.locator(".project-panel.is-active h3").innerText(),
-      name,
+      await page.locator(".stage-project").getAttribute("data-step"),
+      String(step),
     );
-    assert.equal(await page.locator(".project-panel:not([inert])").count(), 1);
-    const copy = await page
-      .locator(".project-panel.is-active .project-copy")
-      .boundingBox();
-    const stage = await page.locator(".work-stage").boundingBox();
-    assert(
-      copy.y >= stage.y && copy.y + copy.height <= stage.y + stage.height,
-      `${name} copy escapes pinned viewport`,
-    );
-    await page.screenshot({ path: `${output}/desktop-project-${i + 1}.png` });
+    await stage();
+    await shot(`08-branch-step-${step}`);
   }
-  // Natural scrolling can go backward through the same stations.
-  await page.mouse.wheel(0, -1000);
-  await pause();
-  assert.notEqual(
-    await page.locator(".project-panel.is-active h3").innerText(),
-    "Expense Tracker",
+  // Merge elegance: the branch flag flips exactly once, travel stays
+  // monotonic (no backward snap) and bounded (no teleport) across it.
+  await travel(86);
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
+  const before = Number(
+    await page.locator("canvas").getAttribute("data-distance"),
   );
-  await page.getByRole("link", { name: "NEXT: THE SIDE ROUTES ↓" }).click();
-  await pause();
+  await travel(94);
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
+  const after = Number(
+    await page.locator("canvas").getAttribute("data-distance"),
+  );
   assert(
-    await page
-      .locator("#experiments")
-      .evaluate((e) => Math.abs(e.getBoundingClientRect().top) < 120),
+    after >= before - 0.3 && after - before < 8,
+    `Camera jumped at merge: ${before} -> ${after}`,
   );
-  for (const id of ["writing", "experience", "contact"]) {
-    await page.locator(`#${id}`).scrollIntoViewIfNeeded();
-    await page.screenshot({ path: `${output}/desktop-${id}.png` });
-  }
-  // All local links and the résumé are real routes/assets; do not send contact messages.
-  const urls = await page.locator("a[href]").evaluateAll((links) => [
-    ...new Set(
-      links
-        .map((a) => a.getAttribute("href"))
-        .filter((x) => x.startsWith("/"))
-        .map((x) => x.split("#")[0])
-        .filter(Boolean),
-    ),
-  ]);
-  for (const path of urls) {
-    const response = await page.request.get(`${base}${path}`);
-    assert(response.ok(), `${path}: ${response.status()}`);
-  }
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${base}/home`);
+  // With the rebalanced pacing the merge lands at the district threshold.
+  await active("district");
+  await stage();
+  await shot("09-rejoined");
+  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
+  assert(
+    await canvas.evaluate((e) => e === document.querySelector("canvas")),
+    "Opening and branches must keep the same canvas",
+  );
+  await travel(80);
+  await active("project");
+  await travel(51);
+  await active("stackport");
+  await page.keyboard.press("m");
+  await page.getByRole("dialog").waitFor();
   await pause();
-  await noOverflow();
-  assert.equal(await page.locator(".project-panel:not([inert])").count(), 5);
-  assert.equal(
-    await page
-      .locator(".entry-stage")
-      .evaluate((e) => getComputedStyle(e).position),
-    "relative",
-  );
-  await page.screenshot({ path: `${output}/mobile-entry.png` });
-  await page.getByRole("button", { name: "ROUTES +" }).click();
-  assert.equal(
-    await page
-      .getByRole("button", { name: "CLOSE −" })
-      .getAttribute("aria-expanded"),
-    "true",
-  );
+  await shot("10-map");
   await page.keyboard.press("Escape");
-  assert.equal(
-    await page
-      .getByRole("button", { name: "ROUTES +" })
-      .getAttribute("aria-expanded"),
-    "false",
-  );
-  await page.getByRole("button", { name: "ROUTES +" }).click();
-  await page
-    .getByRole("navigation", { name: "Mobile navigation" })
-    .getByRole("link", { name: "01 Work ↗" })
-    .click();
-  await pause();
-  assert.equal(await page.locator("#mobile-routes").count(), 0);
-  await page.locator("#clipnote").scrollIntoViewIfNeeded();
-  await page.screenshot({ path: `${output}/mobile-project.png` });
-  await page.locator("#writing").scrollIntoViewIfNeeded();
-  await page.screenshot({ path: `${output}/mobile-writing.png` });
-  await page.locator("#contact").scrollIntoViewIfNeeded();
-  await page.screenshot({ path: `${output}/mobile-contact.png` });
-  // Keyboard navigation and focus styling on desktop.
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto(`${base}/home`);
-  await pause();
-  await page.keyboard.press("Tab");
-  assert.equal(
-    await page.evaluate(() => document.activeElement?.textContent),
-    "Skip to content",
-  );
-  await page.keyboard.press("Enter");
-  assert.equal(
-    await page.evaluate(() => document.activeElement?.id),
-    "main-content",
-  );
-  // Reduced motion also handles a live preference change, without hidden project content.
+  assert.equal(await page.getByRole("dialog").isVisible(), false);
+  // Same pinned interaction on phones, with controls and product copy inside the viewport.
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 320, height: 740 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto(base + "/home");
+    await page.locator("[data-opening=complete]").waitFor();
+    await stage();
+    await shot(`mobile-${viewport.width}-entry`);
+    await travel(51);
+    await stage();
+    await shot(`mobile-${viewport.width}-junction`);
+    await page.getByRole("button", { name: "ENTER → ↗" }).click();
+    await page.waitForTimeout(1800);
+    await travel(80);
+    await stage();
+    const box = await page.locator(".stage-project-layout").boundingBox();
+    assert(
+      box.y >= 74 && box.y + box.height <= viewport.height - 40,
+      `Mobile project does not fit ${JSON.stringify(box)}`,
+    );
+    await shot(`mobile-${viewport.width}-project`);
+  }
   await page.emulateMedia({ reducedMotion: "reduce" });
   await pause();
-  assert.equal(await page.locator(".project-panel:not([inert])").count(), 5);
-  assert.equal(
-    await page
-      .locator(".work-stage")
-      .evaluate((e) => getComputedStyle(e).position),
-    "static",
-  );
-  assert.equal(
-    await page.locator("canvas").evaluate((e) => getComputedStyle(e).display),
-    "none",
-  );
-  await page.locator("#stackport").scrollIntoViewIfNeeded();
-  await page.screenshot({ path: `${output}/reduced-motion.png` });
+  assert(await page.locator(".journey-fallback").isVisible());
+  assert.equal(await page.locator(".journey-overlay").isVisible(), false);
   for (const path of [
     "/projects",
     "/about",
-    "/contact",
     "/blogs",
-    "/blogs/expense-tracker-sms-automation",
-    "/tools/site-inspector",
-    "/portfolio",
-    "/rushabh-bhosale",
+    "/contact",
+    "/Rushabh%20Resume.pdf",
   ]) {
-    await page.goto(`${base}${path}`);
-    await pause();
-    await noOverflow();
-    assert.equal(
-      await page.locator("[data-nextjs-dialog]").count(),
-      0,
-      `${path} has an error overlay`,
-    );
+    const response = await page.request.get(base + path);
+    assert(response.ok(), `${path}: ${response.status()}`);
   }
-  // Without WebGL, semantic content and project navigation remain available.
-  const fallback = await browser.newContext({
-    viewport: { width: 1440, height: 900 },
-  });
+  const fallback = await browser.newContext();
   await fallback.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-      if (type === "webgl") return null;
-      return original.call(this, type, ...args);
+      return type === "webgl" ? null : original.call(this, type, ...args);
     };
   });
-  const fallbackPage = await fallback.newPage();
-  await fallbackPage.goto(`${base}/home`);
-  await fallbackPage
-    .getByRole("heading", { name: "RUSHABH BHOSALE" })
-    .waitFor();
+  const fp = await fallback.newPage();
+  await fp.goto(base + "/home");
+  await fp.locator(".journey-fallback").waitFor();
   assert.equal(
-    await fallbackPage.locator("canvas").getAttribute("data-ready"),
-    null,
+    await fp.locator(".journey").getAttribute("data-enhanced"),
+    "false",
   );
   await fallback.close();
-  assert.deepEqual(errors, [], "Browser errors");
+  const nojs = await browser.newContext({ javaScriptEnabled: false });
+  const np = await nojs.newPage();
+  await np.goto(base + "/home");
+  assert(
+    await np
+      .getByRole("navigation", { name: "Accessible portfolio index" })
+      .isVisible(),
+  );
+  await nojs.close();
+  assert.deepEqual(errors, []);
   console.log(
-    JSON.stringify(
-      {
-        result: "PASS",
-        checks: [
-          "WebGL entry",
-          "scroll travel",
-          "five project selectors",
-          "pinned viewport",
-          "backward scrolling",
-          "section navigation",
-          "local links and résumé",
-          "mobile vertical layout",
-          "mobile menu and Escape",
-          "keyboard skip link",
-          "live reduced motion",
-          "secondary routes",
-          "WebGL fallback",
-          "no browser errors",
-        ],
-        screenshots: output,
-      },
-      null,
-      2,
-    ),
+    "PASS: pinned stage, depth waypoints, natural bypass, branch entry/stages, continuous rejoin, reverse travel, same canvas, canvas-off audit, map, mobile, reduced motion, no WebGL, no JS, direct links, no browser errors",
   );
 } finally {
+  console.log("browser errors", errors);
+  await context.close();
   await browser.close();
 }

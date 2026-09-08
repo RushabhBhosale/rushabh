@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/ThemeScript";
 import { RightClickMenu } from "@/components/RightClickMenu";
 import Script from "next/script";
+import { openingBootScript } from "@/components/switchyard/opening-boot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,6 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script id="switchyard-opening-boot" dangerouslySetInnerHTML={{ __html: openingBootScript }} />
         <Script
           id="ld-person-website"
           type="application/ld+json"

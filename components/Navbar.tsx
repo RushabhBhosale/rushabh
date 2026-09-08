@@ -10,10 +10,10 @@ export default function Navbar() {
   const button = useRef<HTMLButtonElement>(null);
   const navigation = useRef<HTMLElement>(null);
   const links = [
-    { label: "Work", href: "/home#work" },
-    { label: "Writing", href: "/home#writing" },
-    { label: "About", href: "/home#experience" },
-    { label: "Contact", href: "/home#contact" },
+    { label: "Work", href: "/projects" },
+    { label: "Writing", href: "/blogs" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ];
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
