@@ -1,69 +1,77 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Github, ExternalLink } from "lucide-react";
 import { projects } from "@/utils/projects";
+import { stations } from "@/utils/switchyard";
+import ProductSurface from "@/components/switchyard/ProductSurface";
 
+export const metadata = { title: "Work — Rushabh Bhosale" };
 export default function ProjectsPage() {
   return (
-    <div className="max-w-7xl xl:mx-auto lg:mx-4 md:mx-8 mx-4 mb-20 space-y-12">
-      <div className="space-y-3">
-        <h2 className="text-3xl font-bold heading text-card-foreground">
-          Projects
-        </h2>
-        <p className="text-muted-foreground text-sm max-w-md">
-          A few things I’ve built recently — combining tech, design, and a
-          sprinkle of obsession.
+    <div className="switchyard archive-page section-pad">
+      <div className="section-line mono">
+        <span>THE WORK / COMPLETE INDEX</span>
+        <Link href="/home#work" className="text-link">
+          TAKE THE SPATIAL ROUTE ↗
+        </Link>
+      </div>
+      <div className="editorial-heading">
+        <h1>
+          Ideas, made
+          <br />
+          <em>useful.</em>
+        </h1>
+        <p>
+          Web, mobile, desktop, and the tools in between. An index of things
+          I’ve built.
         </p>
       </div>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <Card
-            key={project.title}
-            className="bg-card/80 border border-border backdrop-blur-sm flex flex-col overflow-hidden"
-          >
-            <div className="relative h-48 w-full">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover"
-              />
+      {stations.map((s, i) => (
+        <article className="project-panel" key={s.id} id={s.id}>
+          <div className="project-copy">
+            <span className="mono station-label">
+              0{i + 1} / {s.platform}
+            </span>
+            <h2>{s.name}</h2>
+            <p className="project-line">{s.line}</p>
+            <p className="project-description">{s.description}</p>
+            <p className="project-detail">{s.detail}</p>
+            <div className="project-links">
+              <Link href={s.href} className="text-link">
+                {s.action} ↗
+              </Link>
+              {s.github && (
+                <a href={s.github} className="source-link">
+                  Source ↗
+                </a>
+              )}
             </div>
-            <CardContent className="p-4 flex flex-col flex-1 justify-between space-y-4">
+          </div>
+          <ProductSurface station={s} />
+        </article>
+      ))}
+      <h2 className="archive-subheading">More routes to explore.</h2>
+      <div className="archive-list">
+        {projects
+          .filter(
+            (p) => !["AnimeSparks", "Expense Tracking App"].includes(p.title),
+          )
+          .map((p) => (
+            <article key={p.title}>
+              <h3>{p.title}</h3>
+              <p>{p.description}</p>
               <div>
-                <h3 className="font-semibold text-lg text-card-foreground">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {project.description}
-                </p>
-              </div>
-              <div className="flex gap-3 mt-auto">
-                {project.github && (
-                  <Link href={project.github} target="_blank">
-                    <Button variant="outline" size="sm">
-                      <Github className="w-4 h-4 mr-1" />
-                      Code
-                    </Button>
-                  </Link>
+                {p.live && (
+                  <a href={p.live} className="text-link">
+                    Visit project ↗
+                  </a>
                 )}
-                {project.live && (
-                  <Link href={project.live} target="_blank">
-                    <Button variant="outline" size="sm">
-                      <ExternalLink className="w-4 h-4 mr-1" />
-                      Live
-                    </Button>
-                  </Link>
+                {p.github && (
+                  <a href={p.github} className="text-link">
+                    Source ↗
+                  </a>
                 )}
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </article>
+          ))}
       </div>
     </div>
   );

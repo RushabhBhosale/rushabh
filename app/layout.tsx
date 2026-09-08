@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./switchyard.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeScript } from "@/components/ThemeScript";
 import { RightClickMenu } from "@/components/RightClickMenu";
@@ -17,9 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rushabh.in"),
   title: "Rushabh Bhosale | Software Developer Portfolio",
   description:
-    "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web applications. Explore projects, experience, and contact details.",
+    "Rushabh Bhosale builds web, mobile, and desktop products. Explore independent projects, technical writing, and professional experience.",
   keywords: [
     "Rushabh Bhosale",
     "Rushabh portfolio",
@@ -50,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "Rushabh Bhosale | Software Developer Portfolio",
     description:
-      "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web applications. Explore projects, experience, and contact details.",
+      "Rushabh Bhosale builds web, mobile, and desktop products. Explore independent projects, technical writing, and professional experience.",
     images: ["/me.png"],
   },
 };
@@ -112,11 +114,6 @@ export default function RootLayout({
         />
         <ThemeScript />
       </head>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1425611919231559"
-        crossOrigin="anonymous"
-      ></script>
       <body
         suppressHydrationWarning
         suppressContentEditableWarning

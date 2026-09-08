@@ -2,14 +2,12 @@ import createMDX from "@next/mdx";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: false as const,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
-    domains: ["source.unsplash.com"],
-  },
-  eslint: {
-    // ⚠️ Warning: This allows production builds to successfully complete
-    // even if your project has ESLint errors.
-    ignoreDuringBuilds: true,
+    remotePatterns: [
+      { protocol: "https" as const, hostname: "source.unsplash.com" },
+    ],
   },
 };
 
