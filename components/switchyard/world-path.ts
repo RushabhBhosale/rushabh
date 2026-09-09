@@ -26,8 +26,10 @@ export function mainPoint(distance: number): Point3 {
   return [sample(x), sample(y), z];
 }
 
-export const branchStart = (index: number) => 54 + index * 30;
-export const branchEnd = (index: number) => branchStart(index) + 28;
+// Featured work occupies one legible network. Each branch is visible before
+// its decision point and rejoins before the next destination.
+export const branchStart = (index: number) => 108 + index * 12;
+export const branchEnd = (index: number) => branchStart(index) + 10;
 
 export function branchPoint(index: number, t: number): Point3 {
   const p = mainPoint(
@@ -172,7 +174,7 @@ export const DESTINATIONS = [
 export const SKILL_DISTRICTS = [
   {
     id: "frontend",
-    distance: 94,
+    distance: 48,
     side: 1,
     reach: 8,
     label: "FRONTEND SYSTEMS",
@@ -181,7 +183,7 @@ export const SKILL_DISTRICTS = [
   },
   {
     id: "typelogic",
-    distance: 114,
+    distance: 58,
     side: -1,
     reach: 9,
     label: "TYPE / LOGIC",
@@ -190,7 +192,7 @@ export const SKILL_DISTRICTS = [
   },
   {
     id: "backend",
-    distance: 132,
+    distance: 68,
     side: 1,
     reach: 9,
     label: "BACKEND / DATA",
@@ -199,7 +201,7 @@ export const SKILL_DISTRICTS = [
   },
   {
     id: "mobile",
-    distance: 150,
+    distance: 78,
     side: -1,
     reach: 8,
     label: "MOBILE BUILDING",
@@ -208,7 +210,7 @@ export const SKILL_DISTRICTS = [
   },
   {
     id: "tooling",
-    distance: 168,
+    distance: 88,
     side: 1,
     reach: 8,
     label: "TOOLING / AUTOMATION",
@@ -217,7 +219,7 @@ export const SKILL_DISTRICTS = [
   },
   {
     id: "writing",
-    distance: 201,
+    distance: 98,
     side: -1,
     reach: 9,
     label: "PUBLISHING SYSTEMS",
@@ -243,6 +245,7 @@ export const LANDMARKS = [
     description:
       "A visual travel archive with stories and photo galleries from five journeys across India.",
     stack: ["Web", "Vercel"],
+    image: "/projects/travel-archive.svg",
     href: "https://trip-new.vercel.app/",
     github: "https://github.com/RushabhBhosale/trip-new",
   },
@@ -258,6 +261,7 @@ export const LANDMARKS = [
     description:
       "Track favorite movies, manage watch status, and get smart recommendations.",
     stack: ["Web", "Vercel"],
+    image: "/projects/watchlist.png",
     href: "https://movies-neon-eight-38.vercel.app/",
     github: "https://github.com/RushabhBhosale/Movies",
   },
@@ -273,6 +277,7 @@ export const LANDMARKS = [
     description:
       "Explore destinations, generate itineraries, and visualize trips using AI and maps.",
     stack: ["AI", "Maps"],
+    image: "/bg.avif",
     href: undefined,
     github: "https://github.com/RushabhBhosale/travel-app",
   },
@@ -288,20 +293,37 @@ export const LANDMARKS = [
     description:
       "Type a topic and an n8n workflow researches, writes, and posts the blog within minutes.",
     stack: ["n8n", "Automation"],
+    image: "/projects/blog.png",
     href: "https://blog.rushabh.in/",
     github: "https://github.com/RushabhBhosale/ecommerce",
+  },
+  {
+    id: "site-inspector",
+    distance: 162,
+    side: 1,
+    reach: 5.5,
+    mapX: 610,
+    code: "RB/010",
+    label: "SITE INSPECTOR",
+    sub: "WEB / SEO TOOL",
+    description:
+      "Inspect a public page's structure, metadata, links, images, and technical signals from one focused interface.",
+    stack: ["Next.js", "Web analysis"],
+    image: "/projects/site-inspector.png",
+    href: "/tools/site-inspector",
+    github: "https://github.com/RushabhBhosale/rushabh",
   },
 ] as const;
 
 /** Route-history milestones for the experience region (world distances). */
 export const HISTORY = [
-  { distance: 186, label: "2024 → PRESENT", sub: "PERACTO INFOTECH · SOFTWARE DEVELOPER" },
-  { distance: 196, label: "2023", sub: "TECHKENDR · FULL STACK · SNK · FINPLUS" },
-  { distance: 205, label: "ORIGIN YEARS", sub: "SEO · MARKETING · FIRST SHIPPED PAGES" },
+  { distance: 172, label: "APR 2024 → PRESENT", sub: "PERACTO INFOTECH · SOFTWARE DEVELOPER" },
+  { distance: 179, label: "OCT 2023 → MAR 2024", sub: "TECHKENDR · FULL STACK DEVELOPER" },
+  { distance: 185, label: "2022 → 2023", sub: "SNK WEB SOLUTIONS · FINPLUS" },
 ] as const;
 
 /** Writing transformation: the route straightens into an editorial rule. */
-export const WRITING_ZONE = { start: 208, end: 222 } as const;
+export const WRITING_ZONE = { start: 204, end: 218 } as const;
 
 /** Final convergence destination at the end of the world. */
 export const CONVERGENCE = { distance: 232, label: "BRING ME THE NEXT HARD THING." } as const;

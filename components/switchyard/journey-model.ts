@@ -5,7 +5,17 @@ export const UNIT_VIEWPORTS = 0.065;
 export const COMMIT_UNIT = 62;
 export const JUNCTION_WINDOW = [37, 78] as const;
 export type DetourPlan = { enter:number; duration:number; rejoin:number; index:number };
-export type Waypoint = 'entry'|'origin'|'stackport'|'project'|'district'|'next';
+export type Waypoint =
+  | "entry"
+  | "origin"
+  | "capabilities"
+  | "work"
+  | "project"
+  | "history"
+  | "education"
+  | "dispatches"
+  | "current"
+  | "contact";
 
 // Continuous velocity at the junction: no near-station plateau or sudden acceleration.
 const knots = [[0,0],[37,36],[62,54],[190,235]];
@@ -35,7 +45,25 @@ export function sampleJourney(unit:number,plan:DetourPlan|null){
  const branchProgress=inBranch?(unit-plan!.enter)/plan!.duration:0;
  const mainUnit=plan&&unit>=plan.enter+plan.duration?unit-plan.duration+(plan.rejoin-plan.enter):unit;
  const distance=inBranch?branchStart(plan!.index)+(branchEnd(plan!.index)-branchStart(plan!.index))*branchProgress:mainDistance(mainUnit);
- const waypoint:Waypoint=inBranch?'project':mainUnit<16?'entry':mainUnit<37?'origin':mainUnit<78?'stackport':mainUnit<160?'district':'next';
+ const waypoint:Waypoint=inBranch
+  ? 'project'
+  : distance<14
+   ? 'entry'
+   : distance<40
+    ? 'origin'
+    : distance<104
+     ? 'capabilities'
+     : distance<166
+      ? 'work'
+      : distance<191
+       ? 'history'
+       : distance<204
+        ? 'education'
+        : distance<219
+         ? 'dispatches'
+         : distance<229
+          ? 'current'
+          : 'contact';
  return {unit,mainUnit,distance,waypoint,branch:inBranch?plan!.index:-1,branchProgress};
 }
 export function waypointOpacity(unit:number,start:number,end:number,fade=5){return Math.max(0,Math.min(1,(unit-start)/fade,(end-unit)/fade));}

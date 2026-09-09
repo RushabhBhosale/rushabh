@@ -99,6 +99,10 @@ void main(){
  if(vDepth<.15)discard;
  float a=uActivation;
  vec3 background=mix(vec3(.003),vec3(.20,.25,.225),smoothstep(.5,1.,a));
+ background=mix(background,vec3(.25,.30,.25),smoothstep(38.,52.,uDistance)*(1.-smoothstep(98.,108.,uDistance))*.42);
+ background=mix(background,vec3(.16,.21,.20),smoothstep(104.,116.,uDistance)*(1.-smoothstep(160.,168.,uDistance))*.45);
+ background=mix(background,vec3(.30,.34,.30),smoothstep(188.,196.,uDistance)*(1.-smoothstep(201.,205.,uDistance))*.5);
+ background=mix(background,vec3(.88,.89,.84),uFlatten);
  vec3 lime=vec3(.77,.87,.46);
  vec3 ivory=vec3(.88,.88,.83);
  vec3 gray=vec3(.58,.65,.56);
@@ -1336,22 +1340,17 @@ export default function RouteWorld() {
         active = true,
         last = 0,
         slow = 0,
-        quality = 1,
-        px = 0,
-        py = 0,
-        tx = 0,
-        ty = 0;
+        quality = 1;
       let distance = worldState.distance,
         branchProgress = worldState.branchProgress,
         map = 0,
         flat = 0,
         speed = 0,
-        bank = 0,
         switchThrow = 0;
-      let routeMix=0;
-      let transitionIndex=worldState.transitionBranch;
-      let lastBranch=-1;
-      let prevSm=-1;
+      let routeMix = 0;
+      let transitionIndex = worldState.transitionBranch;
+      let lastBranch = -1;
+      let prevSm = -1;
       const startTime = performance.now();
 
       const pushTri = (
@@ -1455,9 +1454,6 @@ export default function RouteWorld() {
         worldState.speed = speed;
         map += (worldState.map - map) * ease;
         flat += (worldState.flatten - flat) * ease;
-        px += (tx - px) * ease;
-        py += (ty - py) * ease;
-
         const branch=worldState.branch;
         if(branch>=0&&branch!==lastBranch){transitionIndex=branch;routeMix=lastBranch<0?routeMix:0;}
         lastBranch=branch;
@@ -1494,8 +1490,6 @@ export default function RouteWorld() {
 
         // ---- rebuild dynamic buffer (vehicle + nearest switch arm) ----
         let dynCount = 0;
-        const onBranch = branch >= 0;
-        const rt = onBranch ? branch + 1 : 0;
         if(cachedRunner!==runnerTris){
           vehicleCount=buildVehicle(dynArray,[0,0,0],[0,0,1],[1,0,0],[0,1,0],0);
           gl.bindBuffer(gl.ARRAY_BUFFER,vehicleBuffer);
@@ -1601,7 +1595,7 @@ export default function RouteWorld() {
             map < 0.2 &&
             lp.depth > 1 &&
             ahead > 4 &&
-            ahead < 70 &&
+            ahead < 14 &&
             canvas.clientWidth > 0 &&
             (!L.mainOnly || worldState.branch < 0);
           const fadeIn = Math.min(1, Math.max(0, (ahead - 1) / 6));
@@ -1622,9 +1616,9 @@ export default function RouteWorld() {
         const a = worldState.activation;
         const base = Math.max(0, Math.min(1, (a - 0.5) / 0.5));
         gl.clearColor(
-          0.003 + (0.20 - 0.003) * base,
-          0.003 + (0.25 - 0.003) * base,
-          0.003 + (0.225 - 0.003) * base,
+          0.003 + (0.2 - 0.003) * base + flat * 0.68,
+          0.003 + (0.25 - 0.003) * base + flat * 0.64,
+          0.003 + (0.225 - 0.003) * base + flat * 0.615,
           1,
         );
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -1688,10 +1682,6 @@ export default function RouteWorld() {
         resume();
       });
       observer.observe(canvas);
-      const pointer = (e: PointerEvent) => {
-        tx = e.clientX / innerWidth - 0.5;
-        ty = e.clientY / innerHeight - 0.5;
-      };
       const visibility = () => {
         visible = !document.hidden;
         resume();
@@ -1707,7 +1697,6 @@ export default function RouteWorld() {
       canvas.addEventListener("webglcontextlost", lost);
       canvas.addEventListener("webglcontextrestored", restored);
       window.addEventListener("resize", resize);
-      window.addEventListener("pointermove", pointer, { passive: true });
       document.addEventListener("visibilitychange", visibility);
       resize();
       resume();
@@ -1719,7 +1708,6 @@ export default function RouteWorld() {
         canvas.removeEventListener("webglcontextlost", lost);
         canvas.removeEventListener("webglcontextrestored", restored);
         window.removeEventListener("resize", resize);
-        window.removeEventListener("pointermove", pointer);
         document.removeEventListener("visibilitychange", visibility);
         gl.deleteBuffer(staticBuffer);
         gl.deleteBuffer(dynBuffer);

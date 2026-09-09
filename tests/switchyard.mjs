@@ -1,11 +1,12 @@
-// Real browser checks for the single-stage prototype. Run against the local dev server.
+// End-to-end checks for the pinned Switchyard world.
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
+
 const base = process.env.PORTFOLIO_URL || "http://[::1]:3000";
-const out =
-  process.env.PORTFOLIO_SCREENSHOTS || "/private/tmp/switchyard-slice";
+const out = process.env.PORTFOLIO_SCREENSHOTS || "/private/tmp/switchyard";
 await mkdir(out, { recursive: true });
+
 const browser = await chromium.launch({
   executablePath:
     process.env.CHROME_PATH ||
@@ -13,211 +14,159 @@ const browser = await chromium.launch({
   headless: true,
 });
 const errors = [];
-const context = await browser.newContext({
-  viewport: { width: 1440, height: 900 },
-  recordVideo: { dir: out, size: { width: 1440, height: 900 } },
-});
+const context = await browser.newContext({ viewport: { width: 1440, height: 810 } });
 const page = await context.newPage();
-page.on("pageerror", (e) => errors.push(e.message));
-page.on("console", (m) => {
-  if (m.type() === "error") errors.push(m.text());
+page.on("pageerror", (error) => errors.push(error.message));
+page.on("console", (message) => {
+  if (message.type() === "error") errors.push(message.text());
 });
-const pause = () => page.waitForTimeout(900);
-const travel = async (unit) => {
-  await page.evaluate(
-    (unit) =>
-      scrollTo({ top: unit * innerHeight * 0.065, behavior: "instant" }),
-    unit,
+
+const journey = page.locator(".journey");
+const canvas = page.locator("canvas");
+const activeWaypoint = async (name) => {
+  await page.waitForFunction(
+    (value) => document.querySelector(".journey")?.getAttribute("data-active-waypoint") === value,
+    name,
   );
-  await pause();
 };
-const shot = async (name) => page.screenshot({ path: `${out}/${name}.png` });
-const stage = async () => {
-  const metrics = await page
-    .locator(".journey-stage")
-    .evaluate((e) => ({
-      top: e.getBoundingClientRect().top,
-      height: e.clientHeight,
-      viewport: innerHeight,
-      overflow: document.documentElement.scrollWidth > innerWidth,
-    }));
-  assert(Math.abs(metrics.top) < 1, `Stage moved vertically: ${metrics.top}`);
+const jump = async (name, waypoint) => {
+  await page.getByRole("button", { name: `Go to ${name}` }).click();
+  await activeWaypoint(waypoint);
+  await page.waitForTimeout(450);
+};
+const checkStage = async () => {
+  const metrics = await page.locator(".journey-stage").evaluate((element) => ({
+    top: element.getBoundingClientRect().top,
+    height: element.clientHeight,
+    viewport: innerHeight,
+    horizontalOverflow: document.documentElement.scrollWidth > innerWidth,
+  }));
+  assert(Math.abs(metrics.top) < 1, `Pinned stage moved: ${metrics.top}`);
   assert.equal(metrics.height, metrics.viewport);
-  assert.equal(metrics.overflow, false);
+  assert.equal(metrics.horizontalOverflow, false);
   assert.equal(await page.locator(".waypoint:not([inert])").count(), 1);
-  assert.equal(
-    await page.locator("footer").count(),
-    0,
-    "No conventional footer at the end of the scroll track",
-  );
-};
-const active = async (id) =>
-  assert.equal(
-    await page.locator(".journey").getAttribute("data-active-waypoint"),
-    id,
-  );
-try {
-  await page.goto(base + "/home");
-  await page.locator("[data-opening=complete]").waitFor();
-  assert.equal(await page.locator("canvas").getAttribute("data-ready"), "true");
-  await stage();
-  await shot("01-entry");
-  const canvas = await page.locator("canvas").elementHandle();
-  await travel(8);
-  await shot("02-through-type");
-  await travel(25);
-  await active("origin");
-  await stage();
-  await shot("03-origin");
-  await travel(51);
-  await active("stackport");
-  await stage();
-  await shot("04-junction");
-  assert.equal(
-    await page.locator(".journey").getAttribute("data-route"),
-    "main",
-  );
-  await page.mouse.wheel(0, 2200);
-  await pause();
-  await active("district");
-  await stage();
-  await shot("05-passed-junction");
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
-  // TEST B: reversible selection — D selects StackPort, A returns to MAIN
-  // before the commit point, and the runner continues straight.
-  await travel(51);
-  await page.keyboard.press("d");
-  await pause();
-  assert.equal(
-    await page
-      .locator('.junction-choice button[data-selected="true"]')
-      .innerText(),
-    "STACKPORT →",
-  );
-  await page.keyboard.press("a");
-  await pause();
-  assert.equal(
-    await page
-      .locator('.junction-choice button[data-selected="true"]')
-      .innerText(),
-    "← MAIN",
-  );
-  await page.mouse.wheel(0, 1200);
-  await pause();
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
-  await shot("05b-selection-reverted");
-  // TEST C: D then cross the commit point locks the StackPort branch.
-  await travel(51);
-  await page.keyboard.press("d");
-  await pause();
-  await page.mouse.wheel(0, 1200);
-  await pause();
-  await active("project");
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
-  await shot("05c-committed-branch");
-  // Without the canvas, the homepage is still a pinned waypoint, never a full stacked portfolio.
-  await page.locator("canvas").evaluate((e) => (e.style.display = "none"));
-  await shot("06-canvas-disabled");
-  await stage();
   assert.equal(await page.locator(".journey section").count(), 0);
-  assert.equal(await page.locator(".journey-fallback").isVisible(), false);
-  await page
-    .locator("canvas")
-    .evaluate((e) => e.style.removeProperty("display"));
-  // Alternative path: explicitly enter, follow the branch, merge, and reverse the same route.
-  await travel(51);
-  await page.getByRole("button", { name: "ENTER → ↗" }).click();
-  await page.waitForTimeout(1800);
-  await active("project");
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
-  await stage();
-  await shot("07-branch-entry");
-  for (const [unit, step] of [
-    [70, 1],
-    [77, 2],
-    [85, 3],
+  assert.equal(await page.locator("footer").count(), 0);
+};
+const shot = (name) => page.screenshot({ path: `${out}/${name}.png` });
+
+try {
+  await page.goto(`${base}/home`);
+  await page.locator("[data-opening=complete]").waitFor();
+  await page.waitForFunction(() => document.querySelector("canvas")?.dataset.ready === "true");
+  assert.equal(await journey.getAttribute("data-enhanced"), "true");
+  assert.match(await page.locator(".hero-name").innerText(), /RUSHABH\s+BHOSALE/);
+  await checkStage();
+  await shot("01-entry");
+
+  await jump("Capabilities", "capabilities");
+  assert.equal(await page.locator(".skill-focus").isVisible(), true);
+  assert.equal(await page.locator(".skill-destinations button").count(), 6);
+  await page.getByRole("button", { name: /Type & logic/ }).click();
+  await page.waitForTimeout(500);
+  assert.match(await page.locator(".skill-focus").innerText(), /JavaScript.*TypeScript/s);
+  await shot("02-capabilities");
+
+  await jump("Work network", "work");
+  assert.equal(await page.locator(".project-route-list button").count(), 5);
+  await shot("03-work-network");
+
+  const originalCanvas = await canvas.elementHandle();
+  await page.getByRole("button", { name: "Enter StackPort route" }).click();
+  await activeWaypoint("project");
+  await page.waitForFunction(() => document.querySelector("canvas")?.dataset.branch === "0");
+  await page.waitForTimeout(500);
+  assert.match(await page.locator(".stage-project").innerText(), /StackPort/);
+  await shot("04-stackport-route");
+
+  // Route changes stay available inside a branch and reuse the same world.
+  await page.getByRole("button", { name: /Projects/ }).click();
+  await page.getByRole("button", { name: /ClipNote/ }).click();
+  await page.waitForFunction(() => document.querySelector("canvas")?.dataset.branch === "1");
+  await page.waitForTimeout(650);
+  assert.match(await page.locator(".stage-project").innerText(), /ClipNote/);
+  const renderState = await canvas.evaluate((element) => ({
+    camera: element.dataset.camera?.split(",").map(Number),
+    routeMix: Number(element.dataset.routeMix),
+    frameMs: Number(element.dataset.frameMs),
+  }));
+  assert(renderState.camera?.every(Number.isFinite));
+  assert(renderState.routeMix > 0.75, `Branch blend did not settle: ${renderState.routeMix}`);
+  assert(renderState.frameMs <= 100, `Slow render frame: ${renderState.frameMs}`);
+  assert(await originalCanvas.evaluate((element) => element === document.querySelector("canvas")));
+  await shot("05-route-changed");
+
+  await page.getByRole("button", { name: "Main route", exact: true }).click();
+  await page.waitForFunction(() => document.querySelector("canvas")?.dataset.branch === "-1");
+
+  for (const [label, waypoint] of [
+    ["Route history", "history"],
+    ["Origin point", "education"],
+    ["Dispatches", "dispatches"],
+    ["Current position", "current"],
   ]) {
-    await travel(unit);
-    assert.equal(
-      await page.locator(".stage-project").getAttribute("data-step"),
-      String(step),
-    );
-    await stage();
-    await shot(`08-branch-step-${step}`);
+    await jump(label, waypoint);
+    await checkStage();
   }
-  // Merge elegance: the branch flag flips exactly once, travel stays
-  // monotonic (no backward snap) and bounded (no teleport) across it.
-  await travel(86);
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "0");
-  const before = Number(
-    await page.locator("canvas").getAttribute("data-distance"),
-  );
-  await travel(94);
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
-  const after = Number(
-    await page.locator("canvas").getAttribute("data-distance"),
-  );
-  assert(
-    after >= before - 0.3 && after - before < 8,
-    `Camera jumped at merge: ${before} -> ${after}`,
-  );
-  // With the rebalanced pacing the merge lands at the district threshold.
-  await active("district");
-  await stage();
-  await shot("09-rejoined");
-  assert.equal(await page.locator("canvas").getAttribute("data-branch"), "-1");
-  assert(
-    await canvas.evaluate((e) => e === document.querySelector("canvas")),
-    "Opening and branches must keep the same canvas",
-  );
-  await travel(80);
-  await active("project");
-  await travel(51);
-  await active("stackport");
-  await page.keyboard.press("m");
-  await page.getByRole("dialog").waitFor();
-  await pause();
-  await shot("10-map");
+
+  // Recruiter access reaches every region, route, skill, and landmark.
+  await page.getByRole("button", { name: /INDEX/ }).click();
+  const index = page.getByRole("dialog", { name: "Routes" });
+  await index.waitFor();
+  assert.equal(await index.getByRole("button", { name: /StackPort/ }).count(), 1);
+  assert.equal(await index.getByRole("button", { name: /Frontend/ }).count(), 1);
+  assert.equal(await index.getByRole("button", { name: /SITE INSPECTOR/ }).count(), 1);
+  await index.getByRole("button", { name: /SITE INSPECTOR/ }).click();
+  const inspector = page.getByRole("dialog", { name: "SITE INSPECTOR details" });
+  await inspector.waitFor();
+  assert.equal(await inspector.locator("img").isVisible(), true);
+  assert.match(await inspector.innerText(), /Next\.js.*Web analysis/is);
+  await inspector.getByRole("button", { name: /CLOSE/ }).click();
+
+  await page.getByRole("button", { name: /MAP/ }).click();
+  const map = page.getByRole("dialog", { name: /FULL TOPOLOGY/ });
+  await map.waitFor();
+  assert.equal(await map.locator(".map-featured-route").count(), 5);
+  assert.equal(await map.locator(".map-landmark").count(), 5);
+  await shot("06-full-map");
   await page.keyboard.press("Escape");
-  assert.equal(await page.getByRole("dialog").isVisible(), false);
-  // Same pinned interaction on phones, with controls and product copy inside the viewport.
+
+  // With the canvas hidden this remains one spatial stage, not a stacked page.
+  await canvas.evaluate((element) => { element.style.display = "none"; });
+  await checkStage();
+  await canvas.evaluate((element) => { element.style.removeProperty("display"); });
+
   for (const viewport of [
     { width: 390, height: 844 },
     { width: 320, height: 740 },
   ]) {
     await page.setViewportSize(viewport);
-    await page.goto(base + "/home");
+    await page.goto(`${base}/home`);
     await page.locator("[data-opening=complete]").waitFor();
-    await stage();
-    await shot(`mobile-${viewport.width}-entry`);
-    await travel(51);
-    await stage();
-    await shot(`mobile-${viewport.width}-junction`);
-    await page.getByRole("button", { name: "ENTER → ↗" }).click();
-    await page.waitForTimeout(1800);
-    await travel(80);
-    await stage();
-    const box = await page.locator(".stage-project-layout").boundingBox();
-    assert(
-      box.y >= 74 && box.y + box.height <= viewport.height - 40,
-      `Mobile project does not fit ${JSON.stringify(box)}`,
+    await jump("Capabilities", "capabilities");
+    await checkStage();
+    await jump("Work network", "work");
+    await checkStage();
+    const visibleRoutes = await page.locator(".project-route-list button").evaluateAll((buttons) =>
+      buttons.every((button) => {
+        const box = button.getBoundingClientRect();
+        return box.left >= 0 && box.right <= innerWidth;
+      }),
     );
-    await shot(`mobile-${viewport.width}-project`);
+    assert(visibleRoutes, `Project choices overflow at ${viewport.width}px`);
+    await shot(`mobile-${viewport.width}-work`);
   }
+
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await pause();
-  assert(await page.locator(".journey-fallback").isVisible());
+  await page.reload();
+  await page.locator(".journey-fallback").waitFor();
   assert.equal(await page.locator(".journey-overlay").isVisible(), false);
-  for (const path of [
-    "/projects",
-    "/about",
-    "/blogs",
-    "/contact",
-    "/Rushabh%20Resume.pdf",
-  ]) {
+
+  for (const path of ["/projects", "/about", "/blogs", "/contact", "/Rushabh%20Resume.pdf"]) {
     const response = await page.request.get(base + path);
     assert(response.ok(), `${path}: ${response.status()}`);
   }
+
   const fallback = await browser.newContext();
   await fallback.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
@@ -225,27 +174,14 @@ try {
       return type === "webgl" ? null : original.call(this, type, ...args);
     };
   });
-  const fp = await fallback.newPage();
-  await fp.goto(base + "/home");
-  await fp.locator(".journey-fallback").waitFor();
-  assert.equal(
-    await fp.locator(".journey").getAttribute("data-enhanced"),
-    "false",
-  );
+  const fallbackPage = await fallback.newPage();
+  await fallbackPage.goto(`${base}/home`);
+  await fallbackPage.locator(".journey-fallback").waitFor();
+  assert.equal(await fallbackPage.locator(".journey").getAttribute("data-enhanced"), "false");
   await fallback.close();
-  const nojs = await browser.newContext({ javaScriptEnabled: false });
-  const np = await nojs.newPage();
-  await np.goto(base + "/home");
-  assert(
-    await np
-      .getByRole("navigation", { name: "Accessible portfolio index" })
-      .isVisible(),
-  );
-  await nojs.close();
+
   assert.deepEqual(errors, []);
-  console.log(
-    "PASS: pinned stage, depth waypoints, natural bypass, branch entry/stages, continuous rejoin, reverse travel, same canvas, canvas-off audit, map, mobile, reduced motion, no WebGL, no JS, direct links, no browser errors",
-  );
+  console.log("PASS: spatial stage, region focus, direct routing, smooth branch changes, map, landmarks, mobile, fallbacks, and browser console");
 } finally {
   console.log("browser errors", errors);
   await context.close();

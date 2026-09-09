@@ -1,12 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import RouteWorld from "./RouteWorld";
 import OpeningSequence from "./OpeningSequence";
 import WorldMap from "./WorldMap";
+import JourneyNavigation from "./JourneyNavigation";
 import ProductSurface from "./ProductSurface";
 import useJourneyController from "./useJourneyController";
 import { stations } from "@/utils/switchyard";
+import { contactLinks } from "@/utils/switchyard";
+import { experience } from "@/utils/experience";
+import { eduation } from "@/utils/education";
+import { blogPosts } from "@/app/(main)/blogs/index";
 import {
   CONVERGENCE,
   HISTORY,
@@ -32,9 +38,9 @@ const steps = [
     copy: "Connect repeatable work. Keep the attention on the product, with less time spent getting ready.",
   },
 ];
+
 export default function Journey() {
   const root = useRef<HTMLDivElement>(null);
-  const [routesOpen,setRoutesOpen]=useState(false);
   const [inspectId, setInspectId] = useState<string | null>(null);
   const {
     plan,
@@ -48,13 +54,19 @@ export default function Journey() {
     enter,
     jump,
     inspect,
+    visitDistance,
     virtualHeight,
   } = useJourneyController(root);
   const station=stations[plan?.index ?? 0];
   const skill=SKILL_DISTRICTS[district];
   const inactive = (id: string) => waypoint !== id;
-  useEffect(()=>{const close=(e:KeyboardEvent)=>{if(e.key==='Escape')setRoutesOpen(false);};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close);},[]);
   const landmark = LANDMARKS.find((l) => l.id === inspectId) ?? null;
+  const openLandmark = (id: string) => {
+    const destination = LANDMARKS.find((item) => item.id === id);
+    if (!destination) return;
+    visitDistance(destination.distance - 7);
+    setInspectId(id);
+  };
   useEffect(() => {
     if (!landmark) return;
     const key = (e: KeyboardEvent) => {
@@ -147,6 +159,14 @@ export default function Journey() {
               </button>
             </div>
             <h3>{landmark.label}</h3>
+            <div className="landmark-image">
+              <Image
+                src={landmark.image}
+                alt={`${landmark.label} project preview`}
+                fill
+                sizes="(max-width: 800px) 86vw, 340px"
+              />
+            </div>
             <p>{landmark.description}</p>
             <p className="mono landmark-stack">{landmark.stack.join(" · ")}</p>
             <div className="landmark-links">
@@ -202,7 +222,7 @@ export default function Journey() {
                 </span>
               </div>
               <div className="entry-bottom mono">
-                <button onClick={() => jump("stackport")} className="text-link">
+                <button onClick={() => jump("work")} className="text-link">
                   EXPLORE THE WORK <span>↗</span>
                 </button>
                 <span className="entry-scroll">
@@ -220,24 +240,20 @@ export default function Journey() {
             inert={inactive("origin")}
             aria-hidden={inactive("origin")}
           >
-            <span className="mono waypoint-label">01 / ORIGIN</span>
+              <span className="mono waypoint-label">01 / RB / ORIGIN</span>
             <h2>
-              THINGS
+              RUSHABH
               <br />
-              PEOPLE
-              <br />
-              <em>USE.</em>
+              <em>BHOSALE.</em>
             </h2>
             <div className="origin-note">
+              <span className="mono">SOFTWARE DEVELOPER</span>
+              <strong>WEB / MOBILE / DESKTOP</strong>
               <p>
-                I’m Rushabh, a software developer in Mumbai. I follow ideas into
-                web, mobile, and desktop products.
+                I build products, tools and publishing systems from idea to
+                something people can actually use.
               </p>
-              <p>
-                Building. Experimenting.
-                <br />
-                Shipping. Learning. Writing.
-              </p>
+              <span>Mumbai, India</span>
             </div>
             <span className="mono waypoint-cue">
               FOLLOW THE ROUTE FORWARD ↓
@@ -245,21 +261,47 @@ export default function Journey() {
           </div>
           <div
             className="waypoint stage-junction"
-            data-waypoint="stackport"
-            inert={inactive("stackport")}
-            aria-hidden={inactive("stackport")}
+            data-waypoint="work"
+            inert={inactive("work")}
+            aria-hidden={inactive("work")}
           >
             <div className="junction-space-label mono" aria-hidden="true">
               <i /> MAIN / 001
             </div>
-            <div className="junction-decision destination-panel">
-              <span className="mono waypoint-label">SELECTED WORK / 05 ROUTES</span>
-              <h2 className="junction-title">Ideas, made<br/><em>useful.</em></h2>
-              <p className="destination-description">Independent products for the way we build, create, and make sense of things.</p>
-              <nav className="project-route-list" aria-label="Project destinations">
-                {stations.map((item,i)=><button key={item.id} onClick={()=>enter(i)} aria-label={`Enter ${item.name} route`}><span className="mono">0{i+1}</span><span><strong>{item.name}</strong><small>{item.platform}</small></span><span aria-hidden="true">↗</span></button>)}
+            <div className="work-network-overview">
+              <header className="work-network-heading">
+                <span className="mono waypoint-label">
+                  SELECTED WORK / 05 ROUTES
+                </span>
+                <h2 className="junction-title">
+                  Ideas, made
+                  <br />
+                  <em>useful.</em>
+                </h2>
+                <p className="destination-description">
+                  Choose a destination. Each project is a route through the
+                  same working world.
+                </p>
+              </header>
+              <nav
+                className="project-route-list"
+                aria-label="Project destinations"
+              >
+                {stations.map((item, i) => (
+                  <button
+                    key={item.id}
+                    onClick={() => enter(i)}
+                    aria-label={`Enter ${item.name} route`}
+                  >
+                    <span className="mono">0{i + 1}</span>
+                    <span>
+                      <strong>{item.name}</strong>
+                      <small>{item.platform}</small>
+                    </span>
+                    <span aria-hidden="true">↗</span>
+                  </button>
+                ))}
               </nav>
-              <p className="destination-hint">Choose a project to take its route. Scroll to continue.</p>
             </div>
           </div>
           <div
@@ -300,27 +342,85 @@ export default function Journey() {
           </div>
           <div
             className="waypoint stage-district"
-            data-waypoint="district"
-            inert={inactive("district")}
-            aria-hidden={inactive("district")}
+            data-waypoint="capabilities"
+            inert={inactive("capabilities")}
+            aria-hidden={inactive("capabilities")}
           >
-            <div className="capabilities-panel destination-panel">
-              <span className="mono waypoint-label">THE TOOLKIT / {String(district+1).padStart(2,'0')} OF 06</span>
-              <h2>Built by<br/><em>doing.</em></h2>
-              <div className="skill-focus" key={skill.id}><span className="mono">{skill.sub}</span><h3>{skill.label}</h3><div className="skill-tags">{skill.techs.map(tech=><span key={tech}>{tech}</span>)}</div></div>
-              <nav className="skill-destinations" aria-label="Skill categories">{SKILL_DISTRICTS.map((d,i)=><button key={d.id} aria-current={district===i?'location':undefined} onClick={()=>visitDistrict(i)}>{['Frontend','Type & logic','Backend','Mobile','Automation','Publishing'][i]}<span>↗</span></button>)}</nav>
-              <p className="destination-hint">Choose a discipline to visit its part of the world.</p>
+            <div className="capabilities-panel">
+              <header className="capabilities-heading">
+                <span className="mono waypoint-label">
+                  THE TOOLKIT / {String(district + 1).padStart(2, "0")} OF 06
+                </span>
+                <h2>
+                  Built by
+                  <br />
+                  <em>doing.</em>
+                </h2>
+              </header>
+              <div className="skill-focus destination-panel" key={skill.id}>
+                <span className="mono">{skill.sub}</span>
+                <h3>{skill.label}</h3>
+                <div className="skill-tags">
+                  {skill.techs.map((tech) => (
+                    <span key={tech}>{tech}</span>
+                  ))}
+                </div>
+              </div>
+              <nav
+                className="skill-destinations destination-panel"
+                aria-label="Skill categories"
+              >
+                {SKILL_DISTRICTS.map((d, i) => (
+                  <button
+                    key={d.id}
+                    aria-current={district === i ? "location" : undefined}
+                    onClick={() => visitDistrict(i)}
+                  >
+                    {
+                      [
+                        "Frontend",
+                        "Type & logic",
+                        "Backend",
+                        "Mobile",
+                        "Automation",
+                        "Publishing",
+                      ][i]
+                    }
+                    <span>↗</span>
+                  </button>
+                ))}
+              </nav>
             </div>
+          </div>
+          <div className="waypoint stage-history region-panel" data-waypoint="history" inert={inactive("history")} aria-hidden={inactive("history")}>
+            <span className="mono waypoint-label">04 / ROUTE HISTORY</span>
+            <h2>Experience,<br/><em>in motion.</em></h2>
+            <ol className="world-timeline">
+              {experience.map((job) => <li key={job.title}><span className="mono">{job.time}</span><strong>{job.title}</strong><span>{job.role}</span><p>{job.desc}</p></li>)}
+            </ol>
+          </div>
+          <div className="waypoint stage-education region-panel" data-waypoint="education" inert={inactive("education")} aria-hidden={inactive("education")}>
+            <span className="mono waypoint-label">05 / ORIGIN POINT</span>
+            <h2>Before<br/><em>the code.</em></h2>
+            <div className="education-stops">{eduation.map((item) => <article key={item.name}><span className="mono">{item.time}</span><h3>{item.name}</h3><p>{item.sub}</p></article>)}</div>
+          </div>
+          <div className="waypoint stage-dispatches region-panel" data-waypoint="dispatches" inert={inactive("dispatches")} aria-hidden={inactive("dispatches")}>
+            <span className="mono waypoint-label">06 / DISPATCHES</span>
+            <h2>Notes from<br/><em>the making.</em></h2>
+            <div className="dispatch-list">{blogPosts.slice(0,3).map((post,index) => <Link href={`/blogs/${post.slug}`} key={post.slug}><span className="mono">0{index+1} / {post.date}</span><strong>{post.title}</strong><span>Read ↗</span></Link>)}</div>
+          </div>
+          <div className="waypoint stage-current region-panel" data-waypoint="current" inert={inactive("current")} aria-hidden={inactive("current")}>
+            <span className="mono waypoint-label">07 / CURRENT POSITION</span>
+            <h2>Still<br/><em>building.</em></h2>
+            <div className="current-grid"><article><span className="mono">BUILDING</span><strong>StackPort</strong></article><article><span className="mono">PUBLISHING</span><strong>AnimeSparks<br/>Headline Thread</strong></article><article><span className="mono">EXPLORING</span><strong>Tools · Automation<br/>Product ideas</strong></article></div>
           </div>
           <div
             className="waypoint stage-next"
-            data-waypoint="next"
-            inert={inactive("next")}
-            aria-hidden={inactive("next")}
+            data-waypoint="contact"
+            inert={inactive("contact")}
+            aria-hidden={inactive("contact")}
           >
-            <span className="mono waypoint-label">
-              {plan ? "MAIN ROUTE / REJOINED" : "MAIN ROUTE / CONTINUING"}
-            </span>
+            <span className="mono waypoint-label">08 / CONVERGENCE · ALL ROUTES LEAD SOMEWHERE</span>
             <h2>
               BRING ME THE<br/>NEXT <em>HARD THING.</em>
             </h2>
@@ -329,20 +429,11 @@ export default function Journey() {
               className="stage-direct-links"
               aria-label="Continue exploring the portfolio"
             >
-              <Link href="/projects">All work ↗</Link>
-              <Link href="/about">Experience ↗</Link>
-              <Link href="/blogs">Writing ↗</Link>
-              <Link href="/contact">Contact ↗</Link>
+              {contactLinks.map((link) => <a href={link.href} key={link.label}>{link.label} ↗</a>)}
             </nav>
           </div>
         </div>
-        {enhanced && <div className="journey-controls" aria-label="Journey controls">
-          <div className="travel-controls"><button onClick={()=>travelBy(-1)} aria-label="Move backward">←</button><button onClick={()=>travelBy(1)} aria-label="Move forward">→</button></div>
-          <button onClick={leave} aria-pressed={waypoint!=='project'}>Main route</button>
-          <button onClick={()=>setRoutesOpen(v=>!v)} aria-expanded={routesOpen} aria-controls="route-picker">Projects <span>⌃</span></button>
-          <button onClick={()=>{setRoutesOpen(false);jump('district');}}>Skills</button>
-          {routesOpen&&<nav id="route-picker" className="route-picker" aria-label="Switch project route"><span className="mono">TAKE A DIFFERENT ROUTE</span>{stations.map((s,i)=><button key={s.id} aria-current={plan?.index===i&&waypoint==='project'?'location':undefined} onClick={()=>{enter(i);setRoutesOpen(false);}}><span className="mono">0{i+1}</span>{s.name}<span>↗</span></button>)}</nav>}
-        </div>}
+        {enhanced ? <JourneyNavigation current={waypoint} projectIndex={plan?.index ?? null} onTravel={travelBy} onMain={leave} onJump={jump} onProject={enter} onSkill={visitDistrict} onLandmark={openLandmark} /> : null}
         {enhanced && (
           <WorldMap visited={!!plan} current={waypoint} onNavigate={jump} onProject={enter} />
         )}

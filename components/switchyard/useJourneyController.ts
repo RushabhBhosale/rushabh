@@ -43,18 +43,19 @@ export default function useJourneyController(root:RefObject<HTMLDivElement|null>
  },[replacePlan,move]);
  const choose=useCallback((side:'left'|'right')=>{if(side==='left')leave();else enter(Math.max(0,selected));},[enter,leave,selected]);
  const inspect=useCallback((value:number)=>{const p=planRef.current;if(p)move(p.enter+p.duration*(value+.5)/4);},[move]);
+ const visitDistance=useCallback((distance:number)=>{
+  if(planRef.current)replacePlan(null);
+  setSelected(-1);worldState.preview=-1;worldState.selection=-1;
+  requestAnimationFrame(()=>move(unitAtDistance(distance,null)));
+ },[move,replacePlan]);
  const jump=useCallback((destination:Waypoint)=>{
   if(destination==='project'){enter(Math.max(0,selected));return;}
-  const unit=destination==='entry'?0:destination==='origin'?25:destination==='stackport'?51:destination==='district'?112:181;
-  if(planRef.current)replacePlan(null);
-  setSelected(-1);worldState.preview=-1;worldState.selection=-1;
-  requestAnimationFrame(()=>move(unit));
- },[enter,move,replacePlan,selected]);
+  const distances:Record<Exclude<Waypoint,'project'>,number>={entry:0,origin:22,capabilities:47,work:108,history:171,education:194,dispatches:207,current:222,contact:232};
+  visitDistance(distances[destination]);
+ },[enter,selected,visitDistance]);
  const visitDistrict=useCallback((index:number)=>{
-  if(planRef.current)replacePlan(null);
-  setSelected(-1);worldState.preview=-1;worldState.selection=-1;
-  requestAnimationFrame(()=>move(unitAtDistance(SKILL_DISTRICTS[index].distance-7,null)));
- },[move,replacePlan]);
+  visitDistance(SKILL_DISTRICTS[index].distance-5);
+ },[visitDistance]);
  useEffect(()=>{
   const key=(e:KeyboardEvent)=>{
    const target=e.target as HTMLElement|null;
@@ -84,6 +85,9 @@ export default function useJourneyController(root:RefObject<HTMLDivElement|null>
    if(Math.abs(target-clock.current.value)<.001)clock.current.value=target;
    const sample=sampleJourney(clock.current.value,planRef.current);
    worldState.progress=sample.unit/max;worldState.distance=sample.distance;worldState.branch=sample.branch;worldState.branchProgress=sample.branchProgress;
+   const flattenIn=Math.max(0,Math.min(1,(sample.distance-202)/5));
+   const flattenOut=1-Math.max(0,Math.min(1,(sample.distance-217)/4));
+   worldState.flatten=flattenIn*flattenOut;
    if(sample.branch>=0)worldState.transitionBranch=sample.branch;
    const nextStep=Math.min(3,Math.floor(sample.branchProgress*4));
    let nextDistrict=0,best=Infinity;
@@ -92,16 +96,21 @@ export default function useJourneyController(root:RefObject<HTMLDivElement|null>
    if(nextStep!==previous.current.step){previous.current.step=nextStep;setStep(nextStep);}
    if(nextDistrict!==previous.current.district){previous.current.district=nextDistrict;setDistrict(nextDistrict);}
    el.dataset.progress=worldState.progress.toFixed(4);el.dataset.worldDistance=sample.distance.toFixed(2);el.dataset.route=sample.branch>=0?String(sample.branch):'main';
-   el.dataset.junction=String(sample.waypoint==='stackport');
-   const main=sample.mainUnit;
+   el.dataset.junction=String(sample.waypoint==='work');
+   el.dataset.region=sample.waypoint==='project'?'work':sample.waypoint;
+   const main=sample.mainUnit,distance=sample.distance;
    for(const layer of layers){
     const id=layer.dataset.waypoint;let opacity=0,z=0,x=0;
-    if(id==='entry'&&sample.branch<0)opacity=Math.max(0,1-Math.max(0,main-9)/7);
-    if(id==='origin'&&sample.branch<0){opacity=waypointOpacity(main,14,39,5);z=(main-25)*10;x=(main-25)*-2;}
-    if(id==='stackport'&&sample.branch<0){opacity=waypointOpacity(main,35,80,5);z=-Math.max(0,48-main)*7;}
+    if(id==='entry'&&sample.branch<0)opacity=Math.max(0,1-Math.max(0,distance-8)/6);
+    if(id==='origin'&&sample.branch<0){opacity=waypointOpacity(distance,12,41,5);z=(distance-25)*8;x=(distance-25)*-1.6;}
+    if(id==='capabilities'&&sample.branch<0)opacity=waypointOpacity(distance,38,106,5);
+    if(id==='work'&&sample.branch<0){opacity=waypointOpacity(distance,102,168,6);z=-Math.max(0,110-distance)*6;}
     if(id==='project'&&sample.branch>=0){opacity=Math.min(1,sample.branchProgress/.04,(1-sample.branchProgress)/.04);z=-35*(1-Math.min(1,sample.branchProgress/.1));}
-    if(id==='district'&&sample.branch<0)opacity=waypointOpacity(main,76,162,4);
-    if(id==='next'&&sample.branch<0)opacity=Math.min(1,Math.max(0,(main-158)/5));
+    if(id==='history'&&sample.branch<0)opacity=waypointOpacity(distance,164,192,4);
+    if(id==='education'&&sample.branch<0)opacity=waypointOpacity(distance,189,205,3);
+    if(id==='dispatches'&&sample.branch<0)opacity=waypointOpacity(distance,202,220,3);
+    if(id==='current'&&sample.branch<0)opacity=waypointOpacity(distance,217,230,2.5);
+    if(id==='contact'&&sample.branch<0)opacity=Math.min(1,Math.max(0,(distance-227)/3));
     gsap.set(layer,{opacity,visibility:opacity>.005?'visible':'hidden',x,z,rotateY:0,force3D:true});
    }
    const travel=Math.min(1,Math.max(0,main/16));
@@ -117,5 +126,5 @@ export default function useJourneyController(root:RefObject<HTMLDivElement|null>
   return()=>{cancelAnimationFrame(frame);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',scroll);window.removeEventListener('switchyard:world-ready',settings);media.removeEventListener('change',settings);document.removeEventListener('visibilitychange',visibility);Object.assign(worldState,{branch:-1,distance:0,progress:0,map:0,preview:-1,selection:-1,zone:0,speed:0,bank:0,switchThrow:0});};
  },[root]);
  const travelBy=useCallback((direction:number)=>move(clock.current.target+direction*6),[move]);
- return {plan,waypoint,step,district,selected,enhanced,enter,leave,jump,choose,inspect,visitDistrict,travelBy,virtualHeight:(1+totalUnits(plan)*UNIT_VIEWPORTS)*100,mainUnits:MAIN_UNITS};
+ return {plan,waypoint,step,district,selected,enhanced,enter,leave,jump,choose,inspect,visitDistrict,visitDistance,travelBy,virtualHeight:(1+totalUnits(plan)*UNIT_VIEWPORTS)*100,mainUnits:MAIN_UNITS};
 }

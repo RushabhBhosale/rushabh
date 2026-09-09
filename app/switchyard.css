@@ -2878,3 +2878,396 @@ html[data-sy-opening] .journey-controls { visibility:hidden; }
  .skill-focus h3 { font-size:20px; }
  .skill-destinations button { min-height:40px; }
 }
+
+/* Orientation layer: one quiet location marker, one route rail, one index. */
+.journey-hud { position:absolute; inset:92px 5% auto; z-index:7; pointer-events:none; }
+.hud-location { display:grid; grid-template-columns:auto 1fr; width:max-content; color:#f0f1e9; }
+.hud-location>.mono { grid-column:1/-1; margin-bottom:5px; color:#becbb8; font-size:8px; }
+.hud-location strong { color:var(--sy-signal); font:30px/1 var(--font-geist-mono),monospace; font-weight:400; }
+.hud-location>span:last-child { align-self:end; margin-left:12px; font-size:15px; text-transform:uppercase; letter-spacing:.04em; }
+.hud-index { position:absolute; top:0; right:86px; min-height:44px; padding:0 12px; color:#eef2e8; pointer-events:auto; }
+.hud-index span { margin-left:12px; color:var(--sy-signal); }
+.journey-progress { position:fixed; left:5%; right:5%; bottom:87px; display:grid; grid-template-columns:repeat(9,1fr); pointer-events:auto; }
+.journey-progress::before { content:""; position:absolute; left:0; right:0; top:5px; height:1px; background:#a6b49a66; }
+.journey-progress button { position:relative; min-height:35px; padding-top:16px; color:#d5ddd2; font:8px var(--font-geist-mono),monospace; letter-spacing:.06em; text-align:left; text-transform:uppercase; }
+.journey-progress i { position:absolute; top:2px; left:0; width:7px; height:7px; border:1px solid #9dac8f; border-radius:50%; background:#334039; }
+.journey-progress button[data-active="true"] { color:#fff; }
+.journey-progress button[data-active="true"] i { background:var(--sy-signal); border-color:var(--sy-signal); box-shadow:0 0 0 4px #d3ee8022; }
+.journey-index { position:fixed; inset:0; width:min(1060px,calc(100% - 34px)); max-height:min(84svh,820px); margin:auto; padding:32px 36px 38px; border:1px solid #aaba9a88; border-radius:4px; background:#24342ff7; color:#f1f2ea; box-shadow:0 32px 100px #10201899; }
+.journey-index::backdrop { background:#17221dcc; backdrop-filter:blur(8px); }
+.index-heading { display:flex; justify-content:space-between; align-items:start; padding-bottom:22px; border-bottom:1px solid #a5b49455; }
+.index-heading h2 { margin-top:6px; font-size:54px; line-height:1; letter-spacing:-.05em; }
+.index-heading button { min-height:44px; color:#d9e2d4; font:9px var(--font-geist-mono),monospace; }
+.index-grid { display:grid; grid-template-columns:.9fr 1.5fr; gap:50px; padding-top:25px; }
+.index-groups { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+.index-groups nav:last-child { grid-column:1/-1; }
+.index-label { display:block; margin-bottom:10px; color:var(--sy-signal); font-size:8px; }
+.journey-index nav button,.journey-index nav a { display:flex; width:100%; min-height:43px; align-items:center; gap:14px; border-top:1px solid #8fa08044; color:#e8ede4; font-size:13px; text-align:left; }
+.journey-index nav button>span:last-child,.journey-index nav a>span:last-child { margin-left:auto; color:var(--sy-signal); }
+.journey-index nav button:hover,.journey-index nav a:hover { color:var(--sy-signal); }
+
+/* Later regions remain environmental: each panel occupies the same stage. */
+.region-panel { padding:17svh 6% 120px; color:#f3f3eb; }
+.region-panel h2 { font-size:clamp(48px,6vw,86px); line-height:.96; letter-spacing:-.06em; margin:25px 0 35px; }
+.region-panel h2 em { color:var(--sy-signal); }
+.stage-history { display:grid; grid-template-columns:.75fr 1.25fr; gap:7%; }
+.stage-history>.waypoint-label { grid-column:1/-1; }
+.world-timeline { list-style:none; padding:0; margin:18px 0 0; background:#283a32e8; border-left:2px solid #d3ee80; }
+.world-timeline li { display:grid; grid-template-columns:150px 1fr; gap:4px 20px; padding:14px 20px; border-top:1px solid #99a98c55; }
+.world-timeline li>.mono { grid-row:1/4; color:#c8d6ba; font-size:8px; }
+.world-timeline strong { font-size:19px; font-weight:500; }
+.world-timeline li>span:not(.mono) { color:var(--sy-signal); font-size:12px; }
+.world-timeline p { color:#cbd6c7; font-size:12px; line-height:1.45; }
+.stage-education { padding-left:14%; }
+.stage-education h2 { font-size:clamp(58px,8vw,115px); }
+.education-stops { position:absolute; right:8%; top:24%; width:min(430px,38%); background:#526259d9; border-left:2px solid #d3ee80; }
+.education-stops article { padding:18px 22px; border-top:1px solid #bfccb455; }
+.education-stops h3 { margin:5px 0; font-size:23px; }
+.education-stops p { color:#d2dbcf; }
+.stage-dispatches { color:#1c2823; }
+.stage-dispatches::before { content:""; position:absolute; inset:74px 0 0; z-index:-1; background:#e3e4d9e8; }
+.stage-dispatches .waypoint-label,.stage-dispatches h2 em { color:#557126; }
+.dispatch-list { width:min(650px,58%); margin-left:auto; }
+.dispatch-list a { display:grid; grid-template-columns:130px 1fr auto; gap:20px; align-items:center; min-height:83px; border-top:1px solid #798172; }
+.dispatch-list strong { font-size:18px; font-weight:500; }
+.stage-current { padding-left:10%; }
+.current-grid { display:grid; grid-template-columns:repeat(3,1fr); width:min(780px,70%); margin-left:auto; background:#283a32e8; border-top:2px solid #d3ee80; }
+.current-grid article { min-height:150px; padding:23px; border-right:1px solid #9ba88f55; }
+.current-grid .mono { display:block; margin-bottom:28px; color:#bdcbae; }
+.current-grid strong { font-size:20px; line-height:1.4; font-weight:450; }
+.landmark-image { position:relative; height:140px; margin:8px 0 13px; overflow:hidden; background:#dce7c8; }
+.landmark-image img { object-fit:cover; }
+.world-map-button { top:92px; right:5%; bottom:auto!important; }
+.full-map .map-main-line { stroke-width:2; }
+.full-map .map-featured-route path { stroke:#93a681; }
+.full-map .map-featured-route circle,.full-map .map-landmark { fill:#27392f; stroke:var(--sy-signal); }
+html[data-sy-opening] .journey-hud { visibility:hidden; }
+
+.world-timeline {
+  display: grid;
+  gap: 8px;
+  background: none;
+  border-left: 0;
+}
+.world-timeline li {
+  border-top: 1px solid #99a98c66;
+  border-left: 2px solid #d3ee80;
+  background: #283a32e8;
+}
+.education-stops {
+  display: grid;
+  gap: 9px;
+  background: none;
+  border-left: 0;
+}
+.education-stops article {
+  border-top: 1px solid #bfccb455;
+  border-left: 2px solid #d3ee80;
+  background: #526259d9;
+}
+.current-grid {
+  gap: 12px;
+  background: none;
+  border-top: 0;
+}
+.current-grid article {
+  min-height: 132px;
+  border-top: 2px solid #d3ee80;
+  border-right: 0;
+  background: #283a32e8;
+}
+
+@media(max-width:800px){
+ .journey-hud { inset:81px 20px auto; }
+ .hud-index { right:64px; }
+ .world-map-button { top:81px; right:18px; }
+ .journey-progress { left:20px; right:20px; bottom:77px; }
+ .journey-progress button span { display:none; }
+ .region-panel { padding:17svh 20px 110px; }
+ .stage-history { display:block; }
+ .region-panel h2 { font-size:44px; margin:18px 0 24px; }
+ .world-timeline li { grid-template-columns:92px 1fr; padding:11px 14px; }
+ .world-timeline p { display:none; }
+ .stage-education { padding-left:24px; }
+ .education-stops { position:static; width:100%; }
+ .dispatch-list { width:100%; }
+ .dispatch-list a { grid-template-columns:82px 1fr auto; min-height:72px; gap:10px; }
+ .dispatch-list strong { font-size:14px; }
+ .current-grid { width:100%; grid-template-columns:1fr; }
+ .current-grid article { min-height:86px; }
+ .current-grid .mono { margin-bottom:8px; }
+ .journey-index { padding:22px; }
+ .index-heading h2 { font-size:42px; }
+ .index-grid { display:block; }
+ .index-regions { margin-bottom:28px; }
+ .index-groups { display:block; }
+ .index-groups nav { margin-bottom:28px; }
+}
+
+/* Focus pass: one readable foreground layer per stop. */
+.pinned-journey .entry-coordinate {
+  padding-left: 215px;
+}
+.pinned-journey .entry-bottom {
+  bottom: 132px;
+}
+.pinned-journey .hero-name {
+  font-size: min(12.5vw, 20svh);
+  line-height: 0.82;
+}
+.pinned-journey .hero-description {
+  margin-top: 4svh;
+}
+.pinned-journey .entry-scroll {
+  display: none;
+}
+.journey-progress button span {
+  display: block;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  white-space: nowrap;
+}
+.journey-progress button:hover span,
+.journey-progress button:focus-visible span,
+.journey-progress button[data-active="true"] span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pinned-journey .work-network-overview {
+  position: absolute;
+  inset: 16% 6% 126px;
+}
+.work-network-heading {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(360px, 31vw);
+  transform: translateX(-50%);
+  text-align: center;
+}
+.work-network-heading .waypoint-label {
+  display: block;
+}
+.pinned-journey .work-network-heading .junction-title {
+  margin: 12px 0 10px !important;
+  font-size: clamp(36px, 4vw, 54px) !important;
+}
+.work-network-heading .destination-description {
+  margin: 0;
+  font-size: 14px;
+}
+.work-network-overview .project-route-list {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.work-network-overview .project-route-list button {
+  position: absolute;
+  width: min(280px, 24vw);
+  min-height: 62px;
+  padding: 10px 14px;
+  border: 1px solid #a4b29155;
+  border-left: 2px solid #d3ee80;
+  background: #25322fe8;
+  box-shadow: 0 10px 35px #13241d22;
+}
+.work-network-overview .project-route-list button:nth-child(1) {
+  left: 0;
+  top: 36%;
+}
+.work-network-overview .project-route-list button:nth-child(2) {
+  right: 0;
+  top: 36%;
+}
+.work-network-overview .project-route-list button:nth-child(3) {
+  left: 0;
+  top: 60%;
+}
+.work-network-overview .project-route-list button:nth-child(4) {
+  right: 0;
+  top: 60%;
+}
+.work-network-overview .project-route-list button:nth-child(5) {
+  left: 0;
+  top: 84%;
+}
+.work-network-overview .project-route-list strong {
+  font-size: 16px;
+}
+.work-network-overview .project-route-list small {
+  overflow: hidden;
+  max-width: 180px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pinned-journey[data-active-waypoint="work"] .junction-space-label {
+  display: none;
+}
+.pinned-journey[data-active-waypoint="capabilities"] .world-label-layer,
+.pinned-journey[data-active-waypoint="work"] .world-label-layer,
+.pinned-journey[data-active-waypoint="history"] .world-label-layer,
+.pinned-journey[data-active-waypoint="education"] .world-label-layer,
+.pinned-journey[data-active-waypoint="dispatches"] .world-label-layer,
+.pinned-journey[data-active-waypoint="current"] .world-label-layer,
+.pinned-journey[data-active-waypoint="contact"] .world-label-layer,
+.pinned-journey[data-active-waypoint="history"] .landmark-layer,
+.pinned-journey[data-active-waypoint="education"] .landmark-layer,
+.pinned-journey[data-active-waypoint="dispatches"] .landmark-layer,
+.pinned-journey[data-active-waypoint="current"] .landmark-layer,
+.pinned-journey[data-active-waypoint="contact"] .landmark-layer {
+  opacity: 0;
+}
+
+.pinned-journey[data-active-waypoint="dispatches"] .hud-location,
+.pinned-journey[data-active-waypoint="dispatches"] .hud-location > .mono,
+.pinned-journey[data-active-waypoint="dispatches"] .hud-index {
+  color: #233027;
+}
+.pinned-journey[data-active-waypoint="dispatches"] .journey-progress::before {
+  background: #67726366;
+}
+.pinned-journey[data-active-waypoint="dispatches"] .journey-progress button {
+  color: #344039;
+}
+
+.capabilities-panel {
+  position: absolute;
+  inset: 16% 7% 130px;
+  display: grid;
+  grid-template-columns: minmax(260px, 350px) minmax(260px, 350px);
+  grid-template-rows: auto 1fr;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  padding: 0;
+}
+.capabilities-heading {
+  grid-column: 1 / -1;
+  width: min(330px, 32vw);
+  margin: 0 auto 24px;
+  text-align: center;
+}
+.capabilities-panel .capabilities-heading h2 {
+  margin: 12px 0 0;
+  font-size: clamp(38px, 4vw, 56px);
+}
+.capabilities-panel .skill-focus,
+.capabilities-panel .skill-destinations {
+  width: 100%;
+  padding: 22px 24px;
+}
+.capabilities-panel .skill-focus {
+  min-height: 178px;
+  align-self: center;
+}
+.capabilities-panel .skill-destinations {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+}
+.capabilities-panel .skill-destinations button {
+  min-height: 42px;
+}
+.capabilities-panel .skill-focus h3 {
+  margin: 10px 0 16px;
+  font-size: 22px;
+}
+.capabilities-panel .skill-tags {
+  min-height: 0;
+}
+.capabilities-panel .destination-hint {
+  display: none;
+}
+
+@media(max-width:800px) {
+  .pinned-journey .entry-coordinate {
+    padding-left: 0;
+  }
+  .pinned-journey .entry-coordinate span:first-child {
+    visibility: hidden;
+  }
+  .journey-progress button span {
+    display: none;
+  }
+  .pinned-journey .work-network-overview {
+    inset: 15% 20px 114px;
+    overflow: auto;
+  }
+  .work-network-heading {
+    position: static;
+    width: 100%;
+    transform: none;
+    text-align: left;
+  }
+  .pinned-journey .work-network-heading .junction-title {
+    font-size: 34px !important;
+  }
+  .work-network-heading .destination-description {
+    max-width: 330px;
+    font-size: 13px;
+  }
+  .work-network-overview .project-route-list {
+    position: static;
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .work-network-overview .project-route-list button,
+  .work-network-overview .project-route-list button:nth-child(n) {
+    position: static;
+    width: 100%;
+    min-height: 48px;
+  }
+  .capabilities-panel {
+    inset: 15% 20px 112px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+    overflow: auto;
+  }
+  .capabilities-heading {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+  .capabilities-panel .capabilities-heading h2 {
+    margin: 8px 0 4px;
+    font-size: 36px;
+  }
+  .capabilities-panel .skill-focus,
+  .capabilities-panel .skill-destinations {
+    padding: 15px 17px;
+  }
+  .capabilities-panel .skill-focus {
+    min-height: 0;
+  }
+  .capabilities-panel .skill-destinations {
+    grid-template-columns: 1fr 1fr;
+  }
+  .capabilities-panel .skill-destinations button {
+    min-height: 38px;
+    font-size: 12px;
+  }
+}
+
+@media(max-height:760px) and (min-width:801px) {
+  .pinned-journey .work-network-overview,
+  .capabilities-panel {
+    top: 14%;
+  }
+  .work-network-overview .project-route-list button:nth-child(1),
+  .work-network-overview .project-route-list button:nth-child(2) {
+    top: 38%;
+  }
+  .work-network-overview .project-route-list button:nth-child(3),
+  .work-network-overview .project-route-list button:nth-child(4) {
+    top: 62%;
+  }
+  .work-network-overview .project-route-list button:nth-child(5) {
+    top: 86%;
+  }
+}
