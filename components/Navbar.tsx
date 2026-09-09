@@ -70,7 +70,7 @@ export default function Navbar() {
           </Link>
         ))}
       </nav>
-      {pathname !== "/home" && <ThemeToggler />}
+      {/* {pathname !== "/switchyard" && <ThemeToggler />} */}
       <button
         className="mobile-menu-button mono"
         ref={button}

@@ -12,6 +12,8 @@ const ThemeToggler = () => {
       <Button
         variant={theme === "dark" ? "secondary" : "outline"}
         size="icon"
+        aria-label="Toggle color theme"
+        className="min-h-11 min-w-11"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       >
         <SunIcon className="h-[1.2rem] text-black w-[1.2rem] rotate-0 scale-100 transition-all dark:scale-0 dark:rotate-90" />

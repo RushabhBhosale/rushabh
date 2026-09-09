@@ -221,6 +221,13 @@ p,
     opacity 180ms ease;
 }
 
+.switchyard-car-link.is-inline {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  inset: auto !important;
+}
+
 .switchyard-car-link::before,
 .switchyard-car-link::after {
   position: absolute;

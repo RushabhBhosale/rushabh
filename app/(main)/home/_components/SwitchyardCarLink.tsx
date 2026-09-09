@@ -10,7 +10,11 @@ import {
 } from "react";
 import SwitchyardCar from "@/components/switchyard/SwitchyardCar";
 
-export default function SwitchyardCarLink() {
+export default function SwitchyardCarLink({
+  className = "",
+}: {
+  className?: string;
+}) {
   const router = useRouter();
   const carRef = useRef<HTMLSpanElement>(null);
   const [launching, setLaunching] = useState(false);
@@ -56,7 +60,7 @@ export default function SwitchyardCarLink() {
       <Link
         href="/switchyard"
         onClick={handleClick}
-        className="switchyard-car-link"
+        className={`switchyard-car-link ${className}`.trim()}
         data-launching={launching ? "true" : "false"}
         aria-label="Enter Rushabh's interactive Switchyard portfolio"
       >
