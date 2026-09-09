@@ -23,12 +23,17 @@ const phrases = [
   `export default Dream`,
 ];
 
+const seededPosition = (index: number, offset: number) => {
+  const value = Math.sin(index * 12.9898 + offset) * 43758.5453;
+  return `${((value - Math.floor(value)) * 90).toFixed(4)}%`;
+};
+
 const FloatingCodeSnippets = () => {
   return (
     <>
       {Array.from({ length: 100 }).map((_, i) => {
-        const top = Math.random() * 90;
-        const left = Math.random() * 90;
+        const top = seededPosition(i, 4.23);
+        const left = seededPosition(i, 9.71);
         const phrase = phrases[i % phrases.length];
 
         return (
@@ -36,8 +41,8 @@ const FloatingCodeSnippets = () => {
             key={i + "-"}
             className="absolute text-[10px] font-mono opacity-10 hidden lg:block pointer-events-none animate-float transition-all duration-700 ease-in-out"
             style={{
-              top: `${top}%`,
-              left: `${left}%`,
+              top,
+              left,
             }}
           >
             {phrase}

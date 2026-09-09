@@ -51,7 +51,7 @@ const checkStage = async () => {
 const shot = (name) => page.screenshot({ path: `${out}/${name}.png` });
 
 try {
-  await page.goto(`${base}/home`);
+  await page.goto(`${base}/switchyard`);
   await page.locator("[data-opening=complete]").waitFor();
   await page.waitForFunction(() => document.querySelector("canvas")?.dataset.ready === "true");
   assert.equal(await journey.getAttribute("data-enhanced"), "true");
@@ -141,7 +141,7 @@ try {
     { width: 320, height: 740 },
   ]) {
     await page.setViewportSize(viewport);
-    await page.goto(`${base}/home`);
+    await page.goto(`${base}/switchyard`);
     await page.locator("[data-opening=complete]").waitFor();
     await jump("Capabilities", "capabilities");
     await checkStage();
@@ -175,7 +175,7 @@ try {
     };
   });
   const fallbackPage = await fallback.newPage();
-  await fallbackPage.goto(`${base}/home`);
+  await fallbackPage.goto(`${base}/switchyard`);
   await fallbackPage.locator(".journey-fallback").waitFor();
   assert.equal(await fallbackPage.locator(".journey").getAttribute("data-enhanced"), "false");
   await fallback.close();

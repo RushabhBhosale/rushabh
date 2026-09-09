@@ -201,3 +201,228 @@ p,
   background-color: var(--background) !important;
   color: var(--accent-foreground) !important;
 }
+
+/* Animated entrance from the classic portfolio hero into The Switchyard. */
+.switchyard-car-link {
+  position: absolute;
+  right: clamp(16px, 3vw, 44px);
+  bottom: clamp(16px, 3vw, 36px);
+  z-index: 20;
+  display: grid;
+  width: 112px;
+  height: 112px;
+  place-items: center;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(132 154 67 / 0.07), transparent 68%);
+  filter: drop-shadow(0 12px 18px rgb(8 16 12 / 0.22));
+  transition:
+    filter 250ms ease,
+    transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+}
+
+.switchyard-car-link::before,
+.switchyard-car-link::after {
+  position: absolute;
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.switchyard-car-link::before {
+  inset: 5px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  transition: border-color 250ms ease;
+}
+
+.switchyard-car-link::after {
+  inset: 0;
+  background: conic-gradient(
+    from 205deg,
+    transparent 0 10%,
+    rgb(132 154 67 / 0.88) 10% 12%,
+    transparent 12% 60%,
+    rgb(132 154 67 / 0.62) 60% 61.5%,
+    transparent 61.5% 100%
+  );
+  mask: radial-gradient(circle, transparent 67%, #000 68% 70%, transparent 71%);
+}
+
+.switchyard-car-link:hover {
+  filter: drop-shadow(0 16px 24px rgb(8 16 12 / 0.35));
+  transform: translateY(-2px);
+}
+
+.switchyard-car-link:hover::before {
+  border-color: rgb(132 154 67 / 0.5);
+}
+
+.switchyard-car-link:focus-visible {
+  outline: 3px solid #d3ee80;
+  outline-offset: 7px;
+}
+
+.switchyard-car-link[data-launching="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switchyard-car-rest {
+  display: block;
+  width: 76px;
+  height: 76px;
+  animation: switchyard-car-idle 3.8s ease-in-out infinite;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.switchyard-orbit-copy {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: color-mix(in srgb, var(--foreground) 48%, #849a43);
+  pointer-events: none;
+  animation: switchyard-copy-orbit 20s linear infinite;
+}
+
+.switchyard-orbit-copy text {
+  fill: currentColor;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 5.5px;
+  font-weight: 520;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.switchyard-car-link:hover .switchyard-car-rest {
+  transform: translateX(-4px);
+}
+
+.switchyard-mini-car {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.switchyard-launch-overlay {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.switchyard-launch-overlay[data-phase="arriving"] {
+  animation: switchyard-arrival-reveal 560ms ease-out forwards;
+}
+
+.switchyard-launch-wipe {
+  position: absolute;
+  z-index: 1;
+  inset: -10%;
+  background:
+    radial-gradient(
+      circle at var(--switchyard-origin-x, 90%) var(--switchyard-origin-y, 90%),
+      rgb(211 238 128 / 0.13),
+      transparent 28%
+    ),
+    linear-gradient(145deg, #26372e, #0c0e0d 65%);
+  animation: switchyard-launch-wipe 900ms cubic-bezier(0.65, 0, 0.2, 1)
+    forwards;
+  transform: translate3d(112%, 0, 0) skewX(-9deg);
+}
+
+.switchyard-launch-car {
+  position: fixed;
+  z-index: 2;
+  top: var(--switchyard-car-top, calc(100% - 112px));
+  left: var(--switchyard-car-left, calc(100% - 112px));
+  width: var(--switchyard-car-width, 58px);
+  height: var(--switchyard-car-height, 58px);
+  filter: drop-shadow(0 12px 12px rgb(0 0 0 / 0.48));
+  animation: switchyard-car-launch 900ms cubic-bezier(0.22, 0.72, 0.24, 1)
+    forwards;
+}
+
+.switchyard-launch-car-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes switchyard-car-idle {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -1.5px;
+  }
+}
+
+@keyframes switchyard-copy-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes switchyard-launch-wipe {
+  0%,
+  38% {
+    transform: translate3d(112%, 0, 0) skewX(-9deg);
+  }
+  to {
+    transform: translate3d(0, 0, 0) skewX(-9deg);
+  }
+}
+
+@keyframes switchyard-arrival-reveal {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes switchyard-car-launch {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(
+        var(--switchyard-car-x, calc(-50vw + 86px)),
+        var(--switchyard-car-y, -15vh),
+        0
+      )
+      rotate(-5deg) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .switchyard-car-link {
+    right: 8px;
+    bottom: 8px;
+    width: 86px;
+    height: 86px;
+  }
+
+  .switchyard-car-rest {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switchyard-car-link,
+  .switchyard-car-rest,
+  .switchyard-orbit-copy {
+    animation: none;
+    transition: none;
+  }
+}

@@ -7,6 +7,7 @@ import { ThemeScript } from "@/components/ThemeScript";
 import { RightClickMenu } from "@/components/RightClickMenu";
 import Script from "next/script";
 import { openingBootScript } from "@/components/switchyard/opening-boot";
+import SwitchyardTransitionBridge from "@/components/switchyard/SwitchyardTransitionBridge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -122,6 +123,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark">
+          <SwitchyardTransitionBridge />
           <RightClickMenu>{children}</RightClickMenu>
         </ThemeProvider>
       </body>

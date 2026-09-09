@@ -60,7 +60,7 @@ export default function Navbar() {
         </span>
       </Link>
       <span className="header-coordinate mono">
-        THE SWITCHYARD <span> / </span> A DEVELOPER’S PORTFOLIO
+        <span> </span> A DEVELOPER’S PORTFOLIO
       </span>
       <nav className="desktop-nav" aria-label="Main navigation">
         {links.map((l, i) => (

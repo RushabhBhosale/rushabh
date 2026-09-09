@@ -26,7 +26,7 @@ try {
     ["first", 1500, 2600],
     ["return", 600, 1100],
   ]) {
-    await page.goto(base + "/home", { waitUntil: "domcontentloaded" });
+    await page.goto(base + "/switchyard", { waitUntil: "domcontentloaded" });
     await page.locator("[data-opening=complete]").waitFor();
     const events = await page.evaluate(() => window.activationEvents);
     const start = events.find((e) => e.phase === "running");

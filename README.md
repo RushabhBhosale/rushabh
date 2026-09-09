@@ -11,7 +11,9 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000/home. `/` redirects to `/home`.
+Open http://localhost:3000/home for the classic portfolio. The circling car in
+the hero enters the interactive experience at http://localhost:3000/switchyard.
+`/` redirects to `/home`.
 
 ```sh
 npm run build
@@ -20,7 +22,7 @@ npm start
 
 ## Current prototype
 
-The home experience is one pinned viewport: activation → hero → origin → StackPort junction → next world area. Scroll moves the camera and environmental typography through the same journey clock. Entering StackPort inserts an optional project route that physically merges back. The other world regions are deferred while this slice is refined.
+The `/switchyard` experience is one pinned viewport: activation → hero → origin → StackPort junction → next world area. Scroll moves the camera and environmental typography through the same journey clock. Entering StackPort inserts an optional project route that physically merges back. The other world regions are deferred while this slice is refined.
 
 The architecture, itinerary and fallback behavior are documented in [design/SWITCHYARD_WORLD.md](design/SWITCHYARD_WORLD.md).
 
