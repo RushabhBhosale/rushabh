@@ -9,6 +9,14 @@ const nextConfig = {
       { protocol: "https" as const, hostname: "source.unsplash.com" },
     ],
   },
+  // Routes retired in the redesign.
+  async redirects() {
+    return [
+      { source: "/projects", destination: "/work", permanent: true },
+      { source: "/portfolio", destination: "/home", permanent: true },
+      { source: "/switchyard", destination: "/home", permanent: true },
+    ];
+  },
 };
 
 const withMDX = createMDX({});

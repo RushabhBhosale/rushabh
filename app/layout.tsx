@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "./switchyard.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeScript } from "@/components/ThemeScript";
-import { RightClickMenu } from "@/components/RightClickMenu";
+import { Archivo, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
-import { openingBootScript } from "@/components/switchyard/opening-boot";
-import SwitchyardTransitionBridge from "@/components/switchyard/SwitchyardTransitionBridge";
+import "./globals.css";
+import "../styles/base.css";
+import "../styles/shell.css";
+import "../styles/chrome.css";
+import "../styles/home.css";
+import "../styles/work.css";
+import "../styles/pages.css";
+import { RightClickMenu } from "@/components/RightClickMenu";
+
+const display = Archivo({
+  variable: "--font-display",
+  subsets: ["latin"],
+  axes: ["wdth"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +25,18 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const serif = Instrument_Serif({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
+/* Runs before paint: applies the saved theme, enables entrance states only when
+   JS + motion are available, and shows the preloader once per session. Falls back to plain content if the app
+   never boots. */
+const bootScript = `(function(){try{var d=document.documentElement;var t='dark';try{t=localStorage.getItem('rb-theme')==='light'?'light':'dark'}catch(e){}d.dataset.theme=t;d.classList.toggle('dark',t==='dark');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js-anim');var seen=false;try{seen=!!sessionStorage.getItem('rb-loaded')}catch(e){}if(!seen)d.setAttribute('data-loader','on');setTimeout(function(){if(!window.__rbBooted){d.classList.remove('js-anim');d.removeAttribute('data-loader')}},6000)}catch(e){}})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rushabh.in"),
@@ -65,9 +84,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="dark"
+      className={`${display.variable} ${geistSans.variable} ${geistMono.variable} ${serif.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        <script id="switchyard-opening-boot" dangerouslySetInnerHTML={{ __html: openingBootScript }} />
+        <script id="rb-boot" dangerouslySetInnerHTML={{ __html: bootScript }} />
         <Script
           id="ld-person-website"
           type="application/ld+json"
@@ -115,17 +139,9 @@ export default function RootLayout({
             }),
           }}
         />
-        <ThemeScript />
       </head>
-      <body
-        suppressHydrationWarning
-        suppressContentEditableWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <SwitchyardTransitionBridge />
-          <RightClickMenu>{children}</RightClickMenu>
-        </ThemeProvider>
+      <body suppressHydrationWarning suppressContentEditableWarning>
+        <RightClickMenu>{children}</RightClickMenu>
       </body>
     </html>
   );

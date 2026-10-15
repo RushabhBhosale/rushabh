@@ -1,13 +1,5 @@
-import { ThemeProvider } from "@/components/ThemeProvider";
+import BlogFrame from "@/components/site/BlogFrame";
 
-export default function BlogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
-      <main className="max-w-3xl mx-auto px-6 md:px-4">{children}</main>
-    </ThemeProvider>
-  );
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
+  return <BlogFrame>{children}</BlogFrame>;
 }

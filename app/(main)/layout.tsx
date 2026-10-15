@@ -1,30 +1,27 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import SiteFooter from "@/components/SiteFooter";
+import Header from "@/components/site/Header";
+import Footer from "@/components/site/Footer";
+import Preloader from "@/components/site/Preloader";
+import SmoothScroll from "@/components/site/SmoothScroll";
+import RouteTransition from "@/components/site/RouteTransition";
+import ScrollFx from "@/components/site/ScrollFx";
+import Cursor from "@/components/site/Cursor";
 
-export const metadata: Metadata = {
-  title: "Rushabh Bhosale — The Switchyard",
-  description:
-    "Software developer building web, mobile, and desktop products. Explore independent projects, technical writing, and the routes between ideas and useful software.",
-};
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <Navbar />
-      <main id="main-content" className="site-content" tabIndex={-1}>
+      <Preloader />
+      <SmoothScroll />
+      <Header />
+      <main id="main-content" tabIndex={-1}>
         {children}
       </main>
-      <SiteFooter>
-        <Footer />
-      </SiteFooter>
+      <Footer />
+      <RouteTransition />
+      <ScrollFx />
+      <Cursor />
     </>
   );
 }

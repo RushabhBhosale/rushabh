@@ -1,35 +1,70 @@
-export const metadata = { title: "Contact — Rushabh Bhosale" };
+import type { Metadata } from "next";
+import CopyEmail from "@/components/site/CopyEmail";
+import LocalTime from "@/components/site/LocalTime";
+import { EMAIL, PHONE, PHONE_HREF, socials } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Contact — Rushabh Bhosale",
+  description: "Work opportunities, collaborations, and conversations about things worth building.",
+};
+
 export default function ContactPage() {
+  const channels = [
+    { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
+    { label: "Phone", value: PHONE, href: PHONE_HREF },
+    ...socials.map((s) => ({
+      label: s.label,
+      value: s.label === "Résumé" ? "Download PDF" : s.label === "WhatsApp" ? "Start a chat" : s.href.replace(/^https:\/\/(www\.)?/, ""),
+      href: s.href,
+    })),
+  ];
+
   return (
-    <div className="switchyard archive-page section-pad">
-      <div className="section-line mono">
-        <span>DIRECT LINE / MUMBAI, INDIA</span>
-      </div>
-      <div className="editorial-heading">
-        <h1>
-          Let’s find
-          <br />
-          <em>the next route.</em>
+    <div className="page contact">
+      <header className="page-hero section">
+        <div className="page-hero__meta mono">
+          <span>(Contact)</span>
+          <span className="dim">Mumbai — <LocalTime /> IST</span>
+          <span>
+            <span className="signal-dot" /> Open to new projects
+          </span>
+        </div>
+        <h1 className="page-hero__title display contact__title" data-lines>
+          Let’s talk
         </h1>
-        <p>
-          Work opportunities, collaborations, and conversations about things
-          worth building.
+        <p className="page-hero__lede" data-reveal>
+          Work, collaborations, or a conversation about <span className="serif">something worth building.</span> A
+          product, a problem, an idea that won’t leave you alone — tell me about it.
         </p>
-      </div>
-      <div className="direct-contact">
-        <a href="mailto:bhosalerushabh0@gmail.com">
-          <span className="mono">EMAIL</span>
-          <span>bhosalerushabh0@gmail.com ↗</span>
-        </a>
-        <a href="tel:+919137996317">
-          <span className="mono">PHONE</span>
-          <span>+91 91379 96317 ↗</span>
-        </a>
-        <a href="https://wa.me/919137996317?text=Hey%20Rushabh%2C%20I%20just%20checked%20out%20your%20portfolio.%20I%27d%20love%20to%20connect.">
-          <span className="mono">WHATSAPP</span>
-          <span>Start a conversation ↗</span>
-        </a>
-      </div>
+      </header>
+
+      <section className="section">
+        <div className="contact__email" data-reveal>
+          <a href={`mailto:${EMAIL}`} className="contact__email-link" data-cursor="Write">
+            {EMAIL}
+          </a>
+          <CopyEmail />
+        </div>
+
+        <ul className="channels">
+          {channels.map((c, i) => (
+            <li key={c.label} data-reveal>
+              <a
+                href={c.href}
+                className="channel"
+                {...(c.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
+                <span className="mono dim">{String(i + 1).padStart(2, "0")}</span>
+                <span className="channel__label">{c.label}</span>
+                <span className="channel__value mono">{c.value}</span>
+                <span className="channel__arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }

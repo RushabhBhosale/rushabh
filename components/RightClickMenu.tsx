@@ -40,7 +40,7 @@ export function RightClickMenu({ children }: { children: React.ReactNode }) {
             <ContextMenuItem onClick={() => router.push("/about")}>
               About Me
             </ContextMenuItem>
-            <ContextMenuItem onClick={() => router.push("/projects")}>
+            <ContextMenuItem onClick={() => router.push("/work")}>
               Projects
             </ContextMenuItem>
             <ContextMenuItem onClick={() => router.push("/rushabh-bhosale")}>

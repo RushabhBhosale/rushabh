@@ -1,0 +1,144 @@
+/* ─────────────────────────────────────────────
+   Shell — cursor, buttons, poster
+   ───────────────────────────────────────────── */
+
+/* ── Cursor label ─────────────────────────── */
+
+.cursor {
+  position: fixed;
+  z-index: 9995;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 92px;
+  height: 92px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--fg);
+  color: var(--bg);
+  pointer-events: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-cursor] { cursor: none; }
+}
+
+/* ── Magnetic & buttons ───────────────────── */
+
+.magnetic { display: inline-block; will-change: transform; }
+
+.copy-btn {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+.copy-btn:hover {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ── Poster (placeholder artwork) ─────────── */
+
+.poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: size;
+  background:
+    radial-gradient(85% 75% at 78% 22%, color-mix(in srgb, var(--glow) 58%, transparent) 0%, transparent 62%),
+    radial-gradient(70% 60% at 0% 100%, color-mix(in srgb, var(--glow) 20%, transparent) 0%, transparent 70%),
+    var(--tone);
+  color: var(--poster-fg); /* posters stay dark artwork in both themes */
+  isolation: isolate;
+}
+.poster::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  content: "";
+  pointer-events: none;
+}
+.poster__img { object-fit: cover; }
+.poster--bare .poster__corner { display: none; }
+
+.poster__ring {
+  position: absolute;
+  top: 50%;
+  left: 64%;
+  width: 62cqh;
+  height: 62cqh;
+  border: 1px solid color-mix(in srgb, var(--glow) 70%, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.poster__ring::after {
+  position: absolute;
+  inset: 22%;
+  border: 1px dashed color-mix(in srgb, var(--poster-fg) 25%, transparent);
+  border-radius: 50%;
+  content: "";
+  animation: spin 40s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.poster__num {
+  position: absolute;
+  top: 4cqh;
+  right: 4cqw;
+  color: transparent;
+  font-family: var(--f-display);
+  font-size: 58cqh;
+  font-variation-settings: "wdth" 62;
+  font-weight: 800;
+  line-height: 0.8;
+  -webkit-text-stroke: 1px rgb(237 235 230 / 0.2);
+}
+
+.poster__corner {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--f-mono);
+  font-size: max(9px, 1.55cqw);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.poster__corner--tl { top: 4cqw; left: 4cqw; }
+.poster__corner--tr { top: 4cqw; right: 4cqw; opacity: 0.7; }
+.poster__corner--bl { bottom: 4cqw; left: 4cqw; opacity: 0.7; }
+.poster__corner--br { right: 4cqw; bottom: 4cqw; }
+.poster__swatch {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  background: var(--glow);
+}
+
+.poster__title {
+  position: absolute;
+  z-index: 2;
+  bottom: 11cqw;
+  left: 4cqw;
+  max-width: 88cqw;
+  font-family: var(--f-display);
+  font-size: 11.5cqw;
+  font-variation-settings: "wdth" 62;
+  font-weight: 800;
+  line-height: 0.86;
+  text-transform: uppercase;
+}

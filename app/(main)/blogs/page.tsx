@@ -1,80 +1,66 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Clock3 } from "lucide-react";
 import { blogPosts } from "./index";
-import styles from "./writing.module.css";
+import { formatDate } from "@/utils/content";
 
 export const metadata: Metadata = {
   title: "Writing — Rushabh Bhosale",
-  description: "Build stories, practical fixes, and lessons from Rushabh Bhosale’s work on web apps, mobile development, and automation.",
+  description:
+    "Build stories, practical fixes, and lessons from Rushabh Bhosale’s work on web apps, mobile development, and automation.",
 };
 
-const articleDetails: Record<string, { category: string; readTime: string; image: string }> = {
-  "expense-tracker-sms-automation": { category: "Mobile development", readTime: "8 min read", image: "/projects/expense-tracking.svg" },
-  "nativewind-not-working": { category: "Debugging", readTime: "5 min read", image: "/native-wind.png" },
-  "movie-watchlist-app": { category: "Build story", readTime: "6 min read", image: "/projects/watchlist.png" },
-  "automated-blog-n8n-ai": { category: "Automation", readTime: "8 min read", image: "/n8n.png" },
+const details: Record<string, { category: string; readTime: string }> = {
+  "expense-tracker-sms-automation": { category: "Mobile development", readTime: "8 min" },
+  "nativewind-not-working": { category: "Debugging", readTime: "5 min" },
+  "movie-watchlist-app": { category: "Build story", readTime: "6 min" },
+  "automated-blog-n8n-ai": { category: "Automation", readTime: "8 min" },
 };
-
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-}
 
 export default function BlogsPage() {
-  const [latest, ...remainingPosts] = blogPosts;
-  const latestDetails = articleDetails[latest.slug];
-
   return (
-    <div className={`switchyard ${styles.page}`}>
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <div className={styles.topline}><span>Writing / The notebook</span><span>{String(blogPosts.length).padStart(2, "0")} articles</span></div>
-          <div className={styles.headingRow}>
-            <h1>Notes from<br /><em>the making.</em></h1>
-            <p>Build stories, practical fixes, and things I’ve learned while turning ideas into software.</p>
-          </div>
-        </header>
+    <div className="page">
+      <header className="page-hero section">
+        <div className="page-hero__meta mono">
+          <span>(Writing)</span>
+          <span className="dim">Build stories, fixes &amp; lessons</span>
+          <span>{String(blogPosts.length).padStart(2, "0")} articles</span>
+        </div>
+        <h1 className="page-hero__title display" data-lines>
+          Writing
+        </h1>
+        <p className="page-hero__lede" data-reveal>
+          Notes from <span className="serif">the making</span> — things I’ve learned while turning ideas into software.
+        </p>
+      </header>
 
-        <section aria-labelledby="latest-heading" className={styles.featuredSection}>
-          <h2 id="latest-heading" className={styles.sectionLabel}>The latest article</h2>
-          <Link href={`/blogs/${latest.slug}`} className={styles.featured}>
-            <div className={styles.featuredCopy}>
-              <span className={styles.category}>{latestDetails.category}</span>
-              <h3>{latest.title}</h3>
-              <p>{latest.description}</p>
-              <div className={styles.articleMeta}><time dateTime={latest.date}>{formatDate(latest.date)}</time><span><Clock3 size={13} aria-hidden="true" /> {latestDetails.readTime}</span></div>
-              <span className={styles.readLink}>Read the story <ArrowUpRight size={17} aria-hidden="true" /></span>
-            </div>
-            <div className={styles.featuredImage}>
-              <Image src={latestDetails.image} alt="Illustrated expense tracker dashboard" fill priority sizes="(max-width: 700px) 90vw, 520px" className={styles.featuredPhoto} />
-            </div>
-          </Link>
-        </section>
-
-        <section className={styles.archive} aria-labelledby="archive-heading">
-          <div className={styles.archiveHeading}><h2 id="archive-heading">More from the notebook</h2><span>{String(remainingPosts.length).padStart(2, "0")} articles</span></div>
-          <div className={styles.articles}>
-            {remainingPosts.map(post => {
-              const details = articleDetails[post.slug];
-              return (
-                <article key={post.slug}>
-                  <Link href={`/blogs/${post.slug}`} className={styles.article}>
-                    <div className={styles.thumbnail}><Image src={details.image} alt="" fill sizes="(max-width: 700px) 80px, 180px" className={styles.thumbnailPhoto} /></div>
-                    <div className={styles.articleCopy}>
-                      <span className={styles.category}>{details.category}</span>
-                      <h3>{post.title}</h3>
-                      <p>{post.description}</p>
-                      <div className={styles.articleMeta}><time dateTime={post.date}>{formatDate(post.date)}</time><span>{details.readTime}</span></div>
-                    </div>
-                    <ArrowUpRight className={styles.articleArrow} size={22} aria-hidden="true" />
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-      </div>
+      <section className="section">
+        <ul className="articles">
+          {blogPosts.map((post, i) => {
+            const d = details[post.slug];
+            return (
+              <li key={post.slug} data-reveal>
+                <Link href={`/blogs/${post.slug}`} className="article-row" data-cursor="Read">
+                  <span className="article-row__num mono">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="article-row__main">
+                    <span className="article-row__title">{post.title}</span>
+                    <span className="article-row__desc dim">{post.description}</span>
+                  </span>
+                  <span className="article-row__meta mono">
+                    <span>{d?.category}</span>
+                    <time dateTime={post.date} className="dim">
+                      {formatDate(post.date)}
+                    </time>
+                    <span className="dim">{d?.readTime} read</span>
+                  </span>
+                  <span className="article-row__arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
     </div>
   );
 }
