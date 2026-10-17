@@ -9,6 +9,16 @@ export type Shots = {
   desktop?: string[];
   /** A phone-sized screenshot, shown in a phone frame. */
   mobile?: string;
+  /** Several phone screenshots for an app with no desktop view; shown fanned out together. */
+  phones?: string[];
+  /** App store graphics (artwork that already includes a device); shown as rounded
+   *  cards, fanned out on the cover and in a grid on the case study. */
+  cards?: string[];
+  /** Cover composition. "devices" puts the first phone shot in front of the first
+   *  desktop shot; otherwise the first desktop shot (or the phones) is the cover. */
+  cover?: "devices";
+  /** A drawn stand-in for work whose real screens are private. */
+  mock?: "ble" | "care";
   /** A standalone illustration or image, shown without a frame. */
   art?: string;
 };
@@ -30,15 +40,236 @@ export type Work = {
   github?: string;
   /** Long-form write-up on the blog, if one exists. */
   story?: string;
+  /** App store listings. */
+  stores?: { label: string; href: string }[];
   shots?: Shots;
   /** Background behind the framed screenshots. */
   color: string;
   /** Placeholder poster colours when there are no shots: [background, glow]. */
   tone: [string, string];
   featured?: boolean;
+  /** A caveat shown with the facts, e.g. why the visuals are illustrations. */
+  note?: string;
+  /** What I did, one line each. */
+  contributions?: string[];
+  /** How the system fits together, drawn as a chain of steps or a hub with spokes. */
+  flow?: { title: string; kind: "chain" | "hub"; nodes: { label: string; note: string }[] };
+  challenges?: { title: string; problem: string; solution: string }[];
+  /** Feature areas of a larger product. */
+  modules?: { title: string; items: string }[];
 };
 
 export const work: Work[] = [
+  {
+    slug: "activex",
+    title: "ActiveX",
+    line: "From a smart scale to a health report.",
+    summary: "A cross-platform app that connects to Bluetooth body composition devices and turns each measurement into a health report.",
+    detail:
+      "Custom Capacitor plugins bridge the devices’ native Android and iOS SDKs into an Ionic + Angular app — handling BLE discovery, connection and measurement, then processing body fat, muscle mass, BMI, BMR, visceral fat and body water into detailed, exportable reports for users and clinics.",
+    discipline: "Mobile",
+    category: "HealthTech — BLE & IoT",
+    stack: ["Ionic", "Angular", "TypeScript", "Capacitor", "Kotlin", "Java", "Swift", "BLE"],
+    role: "Mobile application developer",
+    stores: [{ label: "Google Play", href: "https://play.google.com/store/apps/details?id=com.iosx.activex" }],
+    shots: {
+      phones: ["/work/activex/mobile-1.jpg", "/work/activex/mobile-2.jpg", "/work/activex/mobile-3.jpg"],
+    },
+    color: "#1f8a73",
+    tone: ["#12201c", "#4fd1b0"],
+    featured: true,
+    note: "Professional work. The code is private; the screens are from the app’s Google Play listing.",
+    contributions: [
+      "Integrated Bluetooth body composition devices using their native Android and iOS SDKs.",
+      "Built custom Capacitor plugins to bridge those native SDKs into the Ionic app.",
+      "Implemented BLE device discovery, connection management and measurement workflows.",
+      "Processed health metrics: body fat %, muscle mass, BMI, BMR, visceral fat and body water.",
+      "Built detailed body composition reports with PDF export.",
+      "Implemented device management and clinic-specific workflows.",
+      "Improved Android compatibility, including support for 16 KB memory page sizes.",
+    ],
+    flow: {
+      title: "BLE measurement workflow",
+      kind: "chain",
+      nodes: [
+        { label: "Smart device", note: "Body composition over BLE" },
+        { label: "Native SDKs", note: "Kotlin / Java · Swift" },
+        { label: "Capacitor plugins", note: "Custom native bridge" },
+        { label: "Ionic + Angular", note: "Discovery, connection, measuring" },
+        { label: "Health report", note: "Metrics & PDF export" },
+      ],
+    },
+    challenges: [
+      {
+        title: "One app, two native SDKs",
+        problem: "The devices are driven through native Android and iOS SDKs, while the app itself is built with Ionic and Angular.",
+        solution: "Custom Capacitor plugins written in Kotlin, Java and Swift wrap each SDK and expose a single TypeScript interface to the app.",
+      },
+      {
+        title: "Bluetooth, start to finish",
+        problem: "A reading depends on finding the right device, holding the connection, and seeing the measurement through.",
+        solution: "BLE discovery, connection management and a guided measurement workflow, alongside device management for each setup.",
+      },
+      {
+        title: "Readings people can act on",
+        problem: "Raw measurements mean little to users or healthcare professionals on their own.",
+        solution: "Metrics are processed into detailed body composition reports, with PDF export and clinic-specific workflows.",
+      },
+      {
+        title: "Keeping pace with Android",
+        problem: "Newer Android devices use 16 KB memory pages, which native code has to support.",
+        solution: "Compatibility work across the Android build, including 16 KB page-size support.",
+      },
+    ],
+  },
+  {
+    slug: "healthnovo",
+    title: "Healthnovo",
+    line: "Connected care, on every phone.",
+    summary: "A healthcare app connecting patients and doctors through video consultations, payments and timely notifications.",
+    detail:
+      "Ongoing development and modernisation of a cross-platform React Native app: upgrading dependencies, maintaining native Android and iOS configuration, and integrating Firebase Cloud Messaging, Agora video consultations and Razorpay payments on top of the platform’s REST APIs.",
+    discipline: "Mobile",
+    category: "Healthcare platform",
+    stack: ["React Native", "JavaScript", "Firebase", "Agora SDK", "Razorpay", "Android", "iOS", "REST APIs"],
+    role: "Full-stack / mobile developer",
+    live: "https://healthnovoindia.com/",
+    stores: [
+      { label: "HN Plus — Google Play", href: "https://play.google.com/store/apps/details?id=com.healthnovoindia.healthnovoplus" },
+      { label: "HN Care — Google Play", href: "https://play.google.com/store/apps/details?id=com.healthnovoindia.healthnovodoc" },
+    ],
+    shots: {
+      cards: [
+        "/work/healthnovo/card-1.jpg",
+        "/work/healthnovo/card-2.jpg",
+        "/work/healthnovo/card-3.jpg",
+        "/work/healthnovo/card-4.jpg",
+        "/work/healthnovo/card-5.jpg",
+        "/work/healthnovo/card-6.jpg",
+      ],
+    },
+    color: "#2f6fb0",
+    tone: ["#121a24", "#7cc242"],
+    featured: true,
+    note: "Professional work. The code is private; the screens are from the HN Plus and HN Care Google Play listings.",
+    contributions: [
+      "Developed and maintained the cross-platform app in React Native.",
+      "Integrated Firebase Cloud Messaging for push notifications.",
+      "Worked on video consultations with the Agora SDK.",
+      "Integrated Razorpay for payment processing.",
+      "Implemented native Android and iOS configuration.",
+      "Migrated and upgraded React Native dependencies for compatibility and maintainability.",
+      "Worked with REST APIs across the app’s healthcare workflows.",
+    ],
+    flow: {
+      title: "How the integrations fit",
+      kind: "hub",
+      nodes: [
+        { label: "React Native app", note: "Android · iOS" },
+        { label: "Firebase Cloud Messaging", note: "Push notifications" },
+        { label: "Agora SDK", note: "Video consultations" },
+        { label: "Razorpay", note: "Payments" },
+        { label: "REST APIs", note: "Healthcare workflows" },
+      ],
+    },
+    challenges: [
+      {
+        title: "Modernising a working app",
+        problem: "An established React Native codebase whose older dependencies made compatibility and upkeep harder.",
+        solution: "Migrated and upgraded React Native dependencies to improve compatibility and maintainability across Android and iOS.",
+      },
+      {
+        title: "Two platforms, one feature set",
+        problem: "Each integration needs its own native setup on Android and on iOS.",
+        solution: "Implemented and maintained the native Android and iOS configuration behind every integration.",
+      },
+      {
+        title: "Consultations over video",
+        problem: "Patients and doctors need to meet face to face without leaving the app.",
+        solution: "Worked on in-app video consultation built on the Agora SDK.",
+      },
+      {
+        title: "Payments and notifications",
+        problem: "Paying for care and staying informed both have to work reliably inside the app.",
+        solution: "Integrated Razorpay for payments and Firebase Cloud Messaging for push notifications.",
+      },
+    ],
+  },
+  {
+    slug: "peracto-hrms",
+    title: "Peracto HRMS",
+    line: "Workforce management, unified.",
+    summary:
+      "A multi-module HR platform for employees, attendance, leave, projects, payroll, performance and visitors — on web and mobile.",
+    detail:
+      "Full-stack work across a Next.js, React and TypeScript web app, a Node.js and MongoDB backend served over REST APIs, and a Flutter app for attendance, leave and everyday employee tasks. Every module carries its own business workflow, under role-based access control across the platform.",
+    discipline: "Web",
+    category: "Enterprise SaaS — HR",
+    stack: ["Next.js", "React", "TypeScript", "Node.js", "MongoDB", "Flutter", "REST APIs"],
+    role: "Full-stack developer",
+    live: "https://hrms.peractoinfotech.com/",
+    shots: {
+      desktop: ["/work/peracto-hrms/desktop-1.jpg", "/work/peracto-hrms/desktop-2.jpg", "/work/peracto-hrms/desktop-3.jpg"],
+      phones: ["/work/peracto-hrms/mobile-1.jpg", "/work/peracto-hrms/mobile-2.jpg", "/work/peracto-hrms/mobile-3.jpg"],
+      cover: "devices",
+    },
+    color: "#3a4c8f",
+    tone: ["#16181f", "#7d93ff"],
+    featured: true,
+    note: "Screens are from my own employee account, on the web app and the Flutter app.",
+    modules: [
+      { title: "Employee management", items: "Profiles, onboarding, documents, role-based access control and employee archiving." },
+      { title: "Attendance & leave", items: "Punch in/out, attendance tracking, leave requests, approval workflows and attendance reports." },
+      { title: "Projects", items: "Project assignments, client and vendor management, and employee work tracking." },
+      { title: "Finance & payroll", items: "Salary management, expense tracking, reimbursements, invoices and TDS." },
+      { title: "Performance", items: "Employee KRAs, performance evaluations and question banks." },
+      { title: "Visitor management", items: "A reception module for clients, vendors, guests and deliveries." },
+      { title: "Reports & analytics", items: "Attendance, project, leave, salary and employee performance reports." },
+      { title: "Mobile app", items: "A Flutter app for attendance, leave and essential employee workflows." },
+    ],
+    contributions: [
+      "Developed and maintained the web platform with Next.js, React and TypeScript.",
+      "Built backend features in Node.js and MongoDB, exposed through REST APIs.",
+      "Implemented role-based access control across the platform’s modules.",
+      "Built attendance, leave and approval workflows.",
+      "Built finance, payroll, performance and visitor management modules.",
+      "Built reporting across attendance, projects, leave, salary and performance.",
+      "Developed the Flutter mobile app for attendance, leave and core employee workflows.",
+    ],
+    flow: {
+      title: "One backend, two clients",
+      kind: "hub",
+      nodes: [
+        { label: "Node.js REST APIs", note: "Business logic & workflows" },
+        { label: "Web app", note: "Next.js · React · TypeScript" },
+        { label: "Mobile app", note: "Flutter" },
+        { label: "MongoDB", note: "Records for every module" },
+        { label: "Access control", note: "Permissions by role" },
+      ],
+    },
+    challenges: [
+      {
+        title: "Many modules, one product",
+        problem: "HR, attendance, projects, finance, performance and reception each have their own workflows, yet they all concern the same people and organisation.",
+        solution: "Each area is built as a module on one shared stack, with reports that span attendance, projects, leave, salary and performance.",
+      },
+      {
+        title: "Who sees what",
+        problem: "HR and salary data is sensitive, and every role needs a different view of it.",
+        solution: "Role-based access control governs what each user can see and do across modules.",
+      },
+      {
+        title: "Workflows, not just records",
+        problem: "Leave and attendance move through requests and approvals rather than sitting as static records.",
+        solution: "Punch in/out, leave requests and approval workflows, feeding attendance and leave reports.",
+      },
+      {
+        title: "Work happens off the desk",
+        problem: "Employees need to punch in and apply for leave from wherever they are.",
+        solution: "A Flutter app focused on attendance, leave and essential employee workflows, alongside the web platform.",
+      },
+    ],
+  },
   {
     slug: "clipnote",
     title: "ClipNote",
@@ -74,7 +305,9 @@ export const work: Work[] = [
     year: "2026",
     github: "https://github.com/RushabhBhosale/memory",
     story: "/blogs/expense-tracker-sms-automation",
-    shots: { art: "/projects/expense-tracking.svg" },
+    shots: {
+      phones: ["/work/expense-tracker/mobile-1.jpg", "/work/expense-tracker/mobile-2.jpg", "/work/expense-tracker/mobile-3.jpg"],
+    },
     color: "#1d7a6c",
     tone: ["#161d1f", "#3fb8a6"],
     featured: true,
