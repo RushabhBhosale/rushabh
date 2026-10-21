@@ -271,6 +271,51 @@ export const work: Work[] = [
     ],
   },
   {
+    slug: "rajesh-renewed",
+    title: "Rajesh Renewed",
+    line: "Premium laptops, second time round.",
+    summary:
+      "An online store for certified refurbished laptops and accessories, with checkout, order tracking and a full admin console.",
+    detail:
+      "A Next.js storefront and management console on MongoDB. Shoppers browse by price band, category and brand, choose a configuration, and pay through Razorpay or cash on delivery; admins run the catalogue, inventory, orders, invoices and transactions from one dashboard.",
+    discipline: "Web",
+    category: "E-commerce",
+    stack: ["Next.js", "TypeScript", "MongoDB", "Razorpay", "Tailwind CSS", "Zustand", "Zod", "Nodemailer"],
+    role: "Design & development",
+    live: "https://rajesh-ecom.vercel.app/",
+    github: "https://github.com/RushabhBhosale/rajesh-ecom",
+    shots: {
+      desktop: [
+        "/work/rajesh-renewed/desktop-1.jpg",
+        "/work/rajesh-renewed/desktop-2.jpg",
+        "/work/rajesh-renewed/desktop-3.jpg",
+      ],
+      mobile: "/work/rajesh-renewed/mobile.jpg",
+    },
+    color: "#30343c",
+    tone: ["#16171b", "#e8572a"],
+    featured: true,
+    modules: [
+      { title: "Storefront", items: "Landing deals, price-band shortcuts, shop-by-category and brand rails, About and Contact." },
+      { title: "Catalogue", items: "Search and filters by price, category, brand and condition, with sorting." },
+      { title: "Product pages", items: "Gallery with lightbox, configuration variants, colours, highlights and related products." },
+      { title: "Cart & checkout", items: "A persisted cart, 18% GST, Razorpay or cash on delivery, and email confirmations." },
+      { title: "Orders & returns", items: "Order history with live status, and return requests once an order ships." },
+      { title: "Admin console", items: "Dashboard charts, products, categories, inventory, orders, invoices and transactions." },
+    ],
+    flow: {
+      title: "From cart to confirmed order",
+      kind: "chain",
+      nodes: [
+        { label: "Cart", note: "Persisted on the device" },
+        { label: "Checkout", note: "Validated with Zod · GST added" },
+        { label: "Razorpay", note: "Or cash on delivery" },
+        { label: "Verification", note: "Signature checked on the server" },
+        { label: "Order", note: "Transaction logged · email sent" },
+      ],
+    },
+  },
+  {
     slug: "expense-tracker",
     title: "Expense Tracker",
     line: "Less entering. More understanding.",
