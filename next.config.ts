@@ -15,6 +15,7 @@ const nextConfig = {
       { source: "/projects", destination: "/work", permanent: true },
       { source: "/portfolio", destination: "/home", permanent: true },
       { source: "/switchyard", destination: "/home", permanent: true },
+      { source: "/work/movie-watchlist", destination: "/work/one-more-episode", permanent: true },
     ];
   },
 };

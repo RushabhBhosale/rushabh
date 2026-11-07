@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import SearchReport from "@/components/site/SearchReport";
 import Shot from "@/components/site/Shot";
 import { getNextWork, getWork, indexOf, siteLabel, work } from "@/utils/work";
 
@@ -44,6 +45,7 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
   const facts = [
     { k: "Role", v: w.role },
     { k: "Type", v: `${w.discipline} — ${w.category}` },
+    w.status && { k: "Status", v: w.status },
     w.year && { k: "Year", v: w.year },
     w.live && isExternal(w.live) && { k: "Live", v: siteLabel(w) },
     w.note && { k: "Note", v: w.note },
@@ -154,6 +156,8 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
               ))}
             </div>
           )}
+
+          {w.search && <SearchReport report={w.search} tile={w.color} />}
 
           {w.modules && (
             <section className="cs__block" data-reveal>

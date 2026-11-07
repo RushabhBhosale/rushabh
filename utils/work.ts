@@ -23,6 +23,26 @@ export type Shots = {
   art?: string;
 };
 
+/** A Google Search Console snapshot, copied by hand; refresh `updated` with the numbers. */
+export type SearchReport = {
+  updated: string;
+  period: string;
+  verdict: string;
+  intro: string;
+  /** First month of the period against the latest. */
+  months: { label: string; from: string; to: string }[];
+  totals: string;
+  /** Full weeks only: [week start, clicks, impressions]. */
+  weeks: [string, number, number][];
+  /** Why the peak week is the peak. */
+  spike: string;
+  queries?: { query: string; clicks: string; impressions: string; position: string }[];
+  /** How I use SEO on the project, one line each. */
+  playbook?: string[];
+  /** What still falls short, and what I'll do about it. */
+  gaps: { title: string; problem: string; next: string }[];
+};
+
 export type Work = {
   slug: string;
   title: string;
@@ -36,6 +56,8 @@ export type Work = {
   stack: string[];
   role: string;
   year?: string;
+  /** For work that is still moving, e.g. "Ongoing". */
+  status?: string;
   live?: string;
   github?: string;
   /** Long-form write-up on the blog, if one exists. */
@@ -57,6 +79,8 @@ export type Work = {
   challenges?: { title: string; problem: string; solution: string }[];
   /** Feature areas of a larger product. */
   modules?: { title: string; items: string }[];
+  /** Search performance, for projects where it is part of the work. */
+  search?: SearchReport;
 };
 
 export const work: Work[] = [
@@ -359,15 +383,60 @@ export const work: Work[] = [
     slug: "animesparks",
     title: "AnimeSparks",
     line: "Built for the stories worth telling.",
-    summary: "An editorial home for anime reviews, analysis, and long-form storytelling.",
+    summary: "An independent anime publication I’m still building: reviews, explainers and reader tools, improved against real Search Console data.",
     detail:
-      "Next.js and Sanity connect a publishing workflow with search-friendly, reader-focused pages. SEO-first structure, fast reading pages, and a CMS that keeps writing the main job.",
+      "Astro on Cloudflare, with articles in MongoDB and images on R2. It started on Sanity and Vercel, and I moved it once the site outgrew their free-tier limits. Pages are prerendered to static HTML so they stay fast and crawlable.",
     discipline: "Web",
     category: "Independent publishing",
-    stack: ["Next.js", "Sanity", "TypeScript", "Technical SEO"],
+    stack: ["Astro", "Cloudflare Workers", "MongoDB", "Cloudflare R2", "TypeScript", "Technical SEO"],
     role: "Founder, design & development",
+    status: "Ongoing — still improving",
     live: "https://www.animesparks.blog/",
-    github: "https://github.com/RushabhBhosale/blog",
+    github: "https://github.com/RushabhBhosale/animesparks-v2",
+    search: {
+      updated: "7 Nov 2026",
+      period: "1 Jan – 4 Nov 2026",
+      verdict: "Growing, and still improving.",
+      intro: "Search visibility grew steadily this year, with most of the climb since late August.",
+      months: [
+        { label: "Monthly impressions", from: "21.9k", to: "840k" },
+        { label: "Monthly clicks", from: "34", to: "2,559" },
+        { label: "Average position", from: "12.7", to: "7.6" },
+        { label: "Click-through rate", from: "0.16%", to: "0.30%" },
+      ],
+      totals: "4,273 clicks from 1.72M impressions this year, across 239 countries and regions, with 74% of clicks on mobile.",
+      weeks: [
+        ["2026-01-01", 13, 5885], ["2026-01-08", 11, 4096], ["2026-01-15", 6, 4107], ["2026-01-22", 3, 5510],
+        ["2026-01-29", 4, 5856], ["2026-02-05", 29, 7526], ["2026-02-12", 10, 6020], ["2026-02-19", 9, 6902],
+        ["2026-02-26", 6, 5040], ["2026-03-05", 6, 5191], ["2026-03-12", 1, 5068], ["2026-03-19", 4, 4487],
+        ["2026-03-26", 10, 6020], ["2026-04-02", 13, 8790], ["2026-04-09", 9, 8721], ["2026-04-16", 4, 9569],
+        ["2026-04-23", 14, 12978], ["2026-04-30", 13, 12830], ["2026-05-07", 14, 13792], ["2026-05-14", 7, 9938],
+        ["2026-05-21", 6, 8788], ["2026-05-28", 13, 9179], ["2026-06-04", 54, 13397], ["2026-06-11", 12, 14539],
+        ["2026-06-18", 24, 16303], ["2026-06-25", 12, 14213], ["2026-07-02", 24, 15915], ["2026-07-09", 26, 15172],
+        ["2026-07-16", 22, 11457], ["2026-07-23", 13, 15026], ["2026-07-30", 18, 14842], ["2026-08-06", 17, 15482],
+        ["2026-08-13", 20, 14475], ["2026-08-20", 62, 28639], ["2026-08-27", 96, 42057], ["2026-09-03", 151, 69608],
+        ["2026-09-10", 169, 72085], ["2026-09-17", 158, 81878], ["2026-09-24", 347, 135788], ["2026-10-01", 1040, 226123],
+        ["2026-10-08", 472, 167054], ["2026-10-15", 352, 171266], ["2026-10-22", 483, 191952], ["2026-10-29", 496, 206750],
+      ],
+      spike: "One Tokyo Revengers page took 615 of the 720 clicks on 1–2 Oct.",
+      playbook: [
+        "Work from Search Console, not guesses: review unindexed URLs one by one and fix what they show.",
+        "Keep the technical base clean: every sitemap URL returns 200, with structured data on articles.",
+        "Rewrite titles and descriptions on pages that rank but get few clicks.",
+      ],
+      gaps: [
+        {
+          title: "Turn impressions into clicks",
+          problem: "Many pages rank on page one, but the click-through rate is still low.",
+          next: "Keep rewriting titles and descriptions, and push page-one results into the top five.",
+        },
+        {
+          title: "Get more pages indexed",
+          problem: "Google has discovered more pages than it keeps in the index.",
+          next: "Strengthen thin templated pages and internal links rather than just publishing more.",
+        },
+      ],
+    },
     shots: {
       desktop: [
         "/work/animesparks/desktop-1.jpg",
@@ -376,6 +445,19 @@ export const work: Work[] = [
       ],
       mobile: "/work/animesparks/mobile.jpg",
     },
+    challenges: [
+      {
+        title: "Outgrowing Sanity and Vercel",
+        problem: "As articles and traffic grew, the site kept hitting the free-tier limits on both Sanity and Vercel.",
+        solution:
+          "Moved content to MongoDB, images to R2 and the site to Astro on Cloudflare, then crawled every old URL against the new one so nothing changed for readers or Google.",
+      },
+      {
+        title: "Staying inside Cloudflare’s free plan",
+        problem: "The free plan allows 10 ms of CPU per request, and a few dynamic pages went over it under scraper traffic.",
+        solution: "Prerendered those pages, cached shared results at the edge and served static files without the Worker.",
+      },
+    ],
     color: "#b8361c",
     tone: ["#231817", "#ff5b24"],
     featured: true,
@@ -426,30 +508,29 @@ export const work: Work[] = [
     tone: ["#171c22", "#5aa0e6"],
   },
   {
-    slug: "movie-watchlist",
-    title: "Movie Watchlist",
-    line: "Every film, in its place.",
-    summary: "Track your favourite movies, manage watch status, and get smart recommendations.",
+    slug: "one-more-episode",
+    title: "One More Episode",
+    line: "400 titles. 8,039 hours. No regrets.",
+    summary: "A personal viewing journal that turns everything I’ve watched into one cinematic, scroll-driven film.",
     detail:
-      "Categorised lists, notes and reviews, TMDB metadata, real-time status updates, and daily recommendations generated with an LLM — a minimal tracker without the ads and bloat.",
+      "It opens on a full-screen trailer, lays my perfect tens out as graded cards, flies through every show I rated nine and above, plays each title in colour order, then ends in a searchable collection with my ratings and quotes. TMDB supplies the posters, colours and years.",
     discipline: "Web",
     category: "Personal product",
-    stack: ["Next.js", "Tailwind CSS", "MongoDB", "TMDB API", "OpenRouter"],
+    stack: ["Next.js", "React", "TypeScript", "GSAP", "Lenis", "WebGL", "TMDB API"],
     role: "Design & development",
-    year: "2025",
-    live: "https://movies-neon-eight-38.vercel.app/",
-    github: "https://github.com/RushabhBhosale/Movies",
-    story: "/blogs/movie-watchlist-app",
+    year: "2026",
+    live: "https://movi6s.vercel.app/",
+    github: "https://github.com/RushabhBhosale/spectrum",
     shots: {
       desktop: [
-        "/work/movie-watchlist/desktop-1.jpg",
-        "/work/movie-watchlist/desktop-2.jpg",
-        "/work/movie-watchlist/desktop-3.jpg",
+        "/work/one-more-episode/desktop-1.jpg",
+        "/work/one-more-episode/desktop-2.jpg",
+        "/work/one-more-episode/desktop-3.jpg",
       ],
-      mobile: "/work/movie-watchlist/mobile.jpg",
+      mobile: "/work/one-more-episode/mobile.jpg",
     },
-    color: "#2b4a6b",
-    tone: ["#1f1719", "#e2577a"],
+    color: "#2c5a5c",
+    tone: ["#14110f", "#f1ebe2"],
     featured: true,
   },
   {

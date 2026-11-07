@@ -36,7 +36,7 @@ export default function RushabhBhosalePage() {
             MongoDB, REST APIs, React Native, and SEO-friendly web architecture.
           </p>
           <p data-reveal>
-            Featured work includes AnimeSparks, an editorial blog built with Next.js and Sanity. If you’re here from
+            Featured work includes AnimeSparks, an editorial blog built with Astro on Cloudflare. If you’re here from
             AnimeSparks,{" "}
             <a href="https://www.animesparks.blog" className="u-link">
               head back to it here
