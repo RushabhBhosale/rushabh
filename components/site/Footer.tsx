@@ -61,7 +61,7 @@ export default function Footer() {
             <div className="footer__col">
               <span className="mono dim">Pages</span>
               <ul>
-                {[{ label: "Index", href: "/home" }, ...nav].map((n) => (
+                {[{ label: "Index", href: "/home" }, ...nav, { label: "Hire", href: "/hire" }].map((n) => (
                   <li key={n.href}>
                     <Link href={n.href}>
                       <span className="roll">

@@ -31,6 +31,7 @@ const routes: Record<string, [string, string]> = {
   blogs: ["Writing", "04"],
   contact: ["Contact", "05"],
   tools: ["Tools", "06"],
+  hire: ["Hire", "07"],
 };
 
 /* Name and index shown on the transition curtain while moving between pages. */

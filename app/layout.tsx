@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Archivo, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import "../styles/base.css";
 import "../styles/shell.css";
@@ -9,6 +8,7 @@ import "../styles/home.css";
 import "../styles/work.css";
 import "../styles/pages.css";
 import { RightClickMenu } from "@/components/RightClickMenu";
+import { jsonLd, personNode, serviceNode, websiteNode } from "@/lib/seo";
 
 const display = Archivo({
   variable: "--font-display",
@@ -40,41 +40,64 @@ const bootScript = `(function(){try{var d=document.documentElement;var t='dark';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rushabh.in"),
-  title: "Rushabh Bhosale | Software Developer Portfolio",
+  title: {
+    default: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai",
+    template: "%s",
+  },
   description:
-    "Rushabh Bhosale builds web, mobile, and desktop products. Explore independent projects, technical writing, and professional experience.",
+    "Rushabh Bhosale is a freelance full stack software developer in Navi Mumbai, India. Web apps, mobile apps and automations with React, Next.js, React Native and Node.js for clients across Mumbai and India.",
+  applicationName: "Rushabh Bhosale",
+  authors: [{ name: "Rushabh Bhosale", url: "https://rushabh.in" }],
+  creator: "Rushabh Bhosale",
+  category: "technology",
   keywords: [
     "Rushabh Bhosale",
-    "Rushabh portfolio",
-    "Rushabh Bhosale developer",
-    "software developer",
-    "React developer",
-    "Next.js developer",
-    "full stack developer",
+    "freelance software developer Navi Mumbai",
+    "software developer Navi Mumbai",
+    "hire developer Mumbai",
+    "React developer Mumbai",
+    "Next.js developer Mumbai",
+    "React Native developer Mumbai",
+    "full stack developer India",
+    "MERN stack developer India",
+    "freelance developer India",
     "TypeScript",
     "Node.js",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   openGraph: {
-    title: "Rushabh Bhosale | Software Developer",
+    title: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai",
     description:
-      "Portfolio of Rushabh Bhosale featuring projects, experience, and writing on modern web development.",
+      "Freelance full stack developer in Navi Mumbai building web apps, mobile apps and automations with React, Next.js, React Native and Node.js.",
     url: "https://rushabh.in",
     siteName: "Rushabh Bhosale",
+    locale: "en_IN",
     images: [
       {
         url: "/me.png",
         width: 1200,
         height: 630,
-        alt: "Rushabh Bhosale portfolio preview",
+        alt: "Rushabh Bhosale, freelance software developer in Navi Mumbai",
       },
     ],
     type: "website",
   },
   twitter: {
-    title: "Rushabh Bhosale | Software Developer Portfolio",
+    card: "summary_large_image",
+    title: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai",
     description:
-      "Rushabh Bhosale builds web, mobile, and desktop products. Explore independent projects, technical writing, and professional experience.",
+      "Freelance full stack developer in Navi Mumbai building web apps, mobile apps and automations with React, Next.js, React Native and Node.js.",
     images: ["/me.png"],
+  },
+  other: {
+    "geo.region": "IN-MH",
+    "geo.placename": "Navi Mumbai",
+    "geo.position": "19.0330;73.0297",
+    ICBM: "19.0330, 73.0297",
   },
 };
 
@@ -85,59 +108,17 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       data-theme="dark"
       className={`${display.variable} ${geistSans.variable} ${geistMono.variable} ${serif.variable}`}
       suppressHydrationWarning
     >
       <head>
         <script id="rb-boot" dangerouslySetInnerHTML={{ __html: bootScript }} />
-        <Script
+        <script
           id="ld-person-website"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "Person",
-                  "@id": "https://rushabh.in/",
-                  name: "Rushabh Bhosale",
-                  url: "https://rushabh.in",
-                  image: "https://rushabh.in/me.png",
-                  jobTitle: "Software Developer",
-                  knowsAbout: [
-                    "React",
-                    "Next.js",
-                    "TypeScript",
-                    "Node.js",
-                    "MongoDB",
-                    "Full Stack Development",
-                    "SEO",
-                    "Tailwind CSS",
-                    "JavaScript",
-                  ],
-                  sameAs: [
-                    "https://github.com/RushabhBhosale",
-                    "https://www.linkedin.com/in/rushabh-bhosale-software-developer/",
-                  ],
-                  owns: {
-                    "@type": "WebSite",
-                    "@id": "https://www.animesparks.blog",
-                    name: "AnimeSparks",
-                    url: "https://www.animesparks.blog",
-                  },
-                },
-                {
-                  "@type": "WebSite",
-                  "@id": "https://rushabh.in",
-                  url: "https://rushabh.in",
-                  name: "Rushabh Bhosale",
-                  publisher: { "@id": "https://rushabh.in" },
-                },
-              ],
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: jsonLd([personNode, serviceNode, websiteNode]) }}
         />
       </head>
       <body suppressHydrationWarning suppressContentEditableWarning>

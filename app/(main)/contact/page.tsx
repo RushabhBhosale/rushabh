@@ -4,8 +4,10 @@ import LocalTime from "@/components/site/LocalTime";
 import { EMAIL, PHONE, PHONE_HREF, socials } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact — Rushabh Bhosale",
-  description: "Work opportunities, collaborations, and conversations about things worth building.",
+  title: "Contact Rushabh Bhosale — Hire a Developer in Navi Mumbai",
+  description:
+    "Contact Rushabh Bhosale, a freelance software developer in Navi Mumbai, for web, mobile and automation projects. Email, phone, WhatsApp and LinkedIn.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Writing — Rushabh Bhosale",
   description:
     "Build stories, practical fixes, and lessons from Rushabh Bhosale’s work on web apps, mobile development, and automation.",
+  alternates: { canonical: "/blogs" },
 };
 
 const details: Record<string, { category: string; readTime: string }> = {

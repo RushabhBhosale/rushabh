@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SearchReport from "@/components/site/SearchReport";
 import Shot from "@/components/site/Shot";
+import { PERSON_ID, abs, breadcrumb, jsonLd } from "@/lib/seo";
 import { getNextWork, getWork, indexOf, siteLabel, work } from "@/utils/work";
 
 export function generateStaticParams() {
@@ -15,8 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const w = getWork(slug);
   if (!w) return {};
   return {
-    title: `${w.title} — Rushabh Bhosale`,
-    description: `${w.line} ${w.summary}`,
+    title: `${w.title} — ${w.discipline} project by Rushabh Bhosale`,
+    description: `${w.summary} Built by Rushabh Bhosale, a developer in Navi Mumbai, with ${w.stack.slice(0, 4).join(", ")}.`,
+    alternates: { canonical: `/work/${w.slug}` },
+    openGraph: { title: `${w.title} — Rushabh Bhosale`, description: w.summary, url: abs(`/work/${w.slug}`), type: "article" },
   };
 }
 
@@ -53,6 +56,31 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
 
   return (
     <article className="cs">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd([
+            {
+              "@type": w.discipline === "Mobile" ? "MobileApplication" : "CreativeWork",
+              "@id": `${abs(`/work/${w.slug}`)}#project`,
+              name: w.title,
+              description: `${w.summary} ${w.detail}`,
+              url: abs(`/work/${w.slug}`),
+              ...(w.live?.startsWith("http") ? { sameAs: [w.live] } : {}),
+              ...(w.year ? { dateCreated: w.year } : {}),
+              keywords: w.stack.join(", "),
+              author: { "@id": PERSON_ID },
+              creator: { "@id": PERSON_ID },
+              ...(w.discipline === "Mobile" ? { applicationCategory: "MobileApplication", operatingSystem: "Android, iOS" } : {}),
+            },
+            breadcrumb([
+              { name: "Home", path: "/home" },
+              { name: "Work", path: "/work" },
+              { name: w.title, path: `/work/${w.slug}` },
+            ]),
+          ]),
+        }}
+      />
       <div className="cs__layout section">
         <aside className="cs__aside">
           <div className="cs__sticky">

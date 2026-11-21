@@ -5,7 +5,8 @@ import { work } from "@/utils/work";
 export const metadata: Metadata = {
   title: "Work — Rushabh Bhosale",
   description:
-    "An index of things Rushabh Bhosale has built: web platforms, mobile apps, desktop tools, and automations.",
+    "An index of things Rushabh Bhosale, a developer in Navi Mumbai, has built: web platforms, mobile apps, desktop tools, and automations in React, Next.js and React Native.",
+  alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {

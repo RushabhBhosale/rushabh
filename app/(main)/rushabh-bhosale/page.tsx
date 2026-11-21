@@ -4,7 +4,8 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Rushabh Bhosale | Software Developer",
   description:
-    "Rushabh Bhosale is a software developer specializing in React, Next.js, TypeScript, and full stack web development. Explore projects, experience, and ways to connect.",
+    "Rushabh Bhosale is a software developer in Navi Mumbai specializing in React, Next.js, TypeScript, and full stack web development. Explore projects, experience, and ways to connect.",
+  alternates: { canonical: "/rushabh-bhosale" },
 };
 
 const routes = [

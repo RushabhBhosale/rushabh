@@ -10,9 +10,10 @@ import { blogPosts } from "../blogs/index";
 import { capabilities, formatDate } from "@/utils/content";
 
 export const metadata: Metadata = {
-  title: "Rushabh Bhosale — Software Developer | Portfolio",
+  title: { absolute: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai" },
   description:
-    "Portfolio of Rushabh Bhosale. Full-stack software developer in Mumbai building web platforms, mobile apps, and automations with React, Next.js, React Native, TypeScript, and Node.js.",
+    "Rushabh Bhosale is a freelance full stack software developer in Navi Mumbai, India. Web apps, mobile apps and automations with React, Next.js, React Native and Node.js for clients across Mumbai and India.",
+  alternates: { canonical: "/home" },
 };
 
 export default function HomePage() {

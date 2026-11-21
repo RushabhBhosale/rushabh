@@ -9,7 +9,8 @@ import { RESUME } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About — Rushabh Bhosale",
   description:
-    "Rushabh Bhosale is a software developer in Mumbai with a background in media and SEO, building across web, mobile, and desktop.",
+    "Rushabh Bhosale is a software developer in Navi Mumbai with a background in media and SEO, building web, mobile and desktop products with React, Next.js and React Native.",
+  alternates: { canonical: "/about" },
 };
 
 export default function About() {
