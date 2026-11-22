@@ -349,7 +349,7 @@ export const hirePages: HirePage[] = [
     keywords: ["ecommerce website developer Navi Mumbai", "online store developer Mumbai", "Razorpay integration developer India", "Next.js ecommerce developer", "build online store India cost"],
     faqs: [
       { q: "How much does an e-commerce website cost?", a: `A custom online store with catalogue, cart, Razorpay checkout, order emails and an admin panel starts from ${price("ecommerce")}. The final price depends on the number of products, variants, integrations such as shipping, and custom features. You get a written quote before work starts.` },
-      { q: "How long does it take to build an online store?", a: "A standard store typically takes one to two weeks, depending on how quickly product data and feedback arrive." },
+      { q: "How long does it take to build an online store?", a: "A standard store typically takes four to seven working days, depending on how quickly product data and feedback arrive." },
       { q: "Can customers pay by UPI and cards?", a: "Yes. I integrate Razorpay, which supports UPI, cards and netbanking." },
       { q: "Can I manage products myself?", a: "Yes. The admin panel lets you add and edit products and manage orders without a developer." },
       { q: "Do you also build stores for clients outside Navi Mumbai?", a: "Yes. I work with brands across Mumbai and India, in person in Navi Mumbai and Mumbai and remotely elsewhere." },
@@ -378,7 +378,7 @@ export const hirePages: HirePage[] = [
     keywords: ["landing page developer Navi Mumbai", "landing page design Mumbai", "ad landing page developer India", "cheap landing page India"],
     faqs: [
       { q: "How much does a landing page cost?", a: `A single landing page starts from ${price("landing-page")}. Custom animation, multiple language versions or integrations can add to that, and I confirm the total in writing first.` },
-      { q: "How fast can you deliver?", a: "Typically one to two working days once I have your content and branding." },
+      { q: "How fast can you deliver?", a: "Typically one working day once I have your content and branding." },
       { q: "Can you connect it to WhatsApp?", a: "Yes. I add a click-to-chat button and track every click." },
       { q: "Will it work for Google Ads?", a: "Yes. Pages are built for speed and clarity, which helps conversion and ad quality. I can add conversion tracking." },
     ],
@@ -434,7 +434,7 @@ export const hirePages: HirePage[] = [
     keywords: ["MVP developer India", "web app developer Mumbai", "startup developer Navi Mumbai", "custom web application development India", "hire developer for startup idea"],
     faqs: [
       { q: "How much does an MVP cost?", a: `Web apps and MVPs start from ${price("web-app")}. The price depends on the number of screens, user roles and integrations. I give a fixed written quote after scoping.` },
-      { q: "How long does it take?", a: "Typically two to four weeks for a first version, depending on scope." },
+      { q: "How long does it take?", a: "Typically one to three weeks for a first version, depending on scope." },
       { q: "Do I own the code?", a: "Yes. The code and accounts are handed over to you at the end of the project." },
       { q: "Can you also build the mobile app later?", a: "Yes. I build React Native apps, so the mobile version can reuse your API." },
     ],
