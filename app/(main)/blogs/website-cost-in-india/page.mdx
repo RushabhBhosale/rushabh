@@ -1,0 +1,80 @@
+import ArticleSchema from "@/components/site/ArticleSchema";
+import { products, inr, EXTRA_PAGE } from "@/utils/pricing";
+
+export const price = (id) => products.find((p) => p.id === id).from;
+
+export const metadata = {
+  title: "How Much Does a Website Cost in India? A Developer’s Price Guide — Rushabh Bhosale",
+  description: "What a landing page, business website, online store and web app cost in India, what drives the price, and what to ask before you pay. Includes my own starting prices.",
+  alternates: { canonical: "/blogs/website-cost-in-india" },
+  openGraph: { type: "article", title: "How Much Does a Website Cost in India? A Developer’s Price Guide", description: "What a landing page, business website, online store and web app cost in India, what drives the price, and what to ask before you pay. Includes my own starting prices.", url: "https://rushabh.in/blogs/website-cost-in-india", publishedTime: "2026-11-22", authors: ["Rushabh Bhosale"] },
+};
+
+<ArticleSchema slug="website-cost-in-india" />
+
+# How Much Does a Website Cost in India? A Developer’s Price Guide
+
+_Published on November 22, 2026 • 6 min read_
+
+**Short answer:** with me, a landing page starts from {inr(price("landing-page"))}, a 5-page business website from {inr(price("business-website"))}, an online store from {inr(price("ecommerce"))} and a custom web app from {inr(price("web-app"))}. Other developers and agencies will quote differently, so the useful question is not "what is the cheapest price?" but "what exactly am I getting for it?"
+
+I’m Rushabh Bhosale, a freelance full stack developer in Navi Mumbai. This guide explains what moves the price of a website, so you can compare quotes fairly.
+
+## What a website costs, by type
+
+- **Landing page:** from {inr(price("landing-page"))}, typically 2–4 working days
+- **5-page business website:** from {inr(price("business-website"))}, typically 5–10 working days
+- **E-commerce store:** from {inr(price("ecommerce"))}, typically 2–4 weeks
+- **Admin panel or CRM:** from {inr(price("admin-panel"))}, typically 1–3 weeks
+- **Web app or MVP:** from {inr(price("web-app"))}, typically 3–8 weeks
+
+Extra pages on a business website are {inr(EXTRA_PAGE)} each. These are starting prices; the final figure depends on your requirements, and I always confirm it in writing before work begins. See the full [pricing page](/pricing) or try the [estimate calculator](/pricing#calc).
+
+## What makes a website cost more
+
+- **Number of pages and unique layouts.** Ten different page designs take longer than five.
+- **Custom features.** Payments, user logins, booking, search and dashboards all add work.
+- **Integrations.** Payment gateways, shipping, WhatsApp, CRMs and maps each need setup and testing.
+- **Content.** If you need copywriting or product data entry, that is extra time.
+- **Speed of feedback.** Projects stall when feedback is slow, which stretches timelines.
+
+## Costs that are separate from development
+
+- **Domain name:** paid yearly to a registrar.
+- **Hosting:** some platforms are free for small sites; others charge monthly or yearly.
+- **Third-party fees:** payment gateways charge a percentage per transaction.
+- **Maintenance:** updates, backups and small changes after launch.
+
+Ask any developer which of these are included in the quote and which you pay directly.
+
+## Questions to ask before you pay
+
+1. What exactly is included, page by page?
+2. Who owns the domain, hosting and code at the end?
+3. How many revisions are included?
+4. How will the site be set up for Google (titles, sitemap, structured data)?
+5. What happens if I need changes after launch?
+
+## Is a cheap website a bad idea?
+
+Not necessarily. A small business that needs a clear page with contact details does not need a custom web app. But a very low price often means a template, limited support or hidden extras. Judge by the scope, examples of previous work and how clearly the developer explains what you will get.
+
+## Frequently asked questions
+
+### How much does a simple website cost in India?
+
+A one-page website or landing page starts from {inr(price("landing-page"))} with me, and a 5-page business website from {inr(price("business-website"))}.
+
+### How much does an online store cost?
+
+A custom store with a catalogue, cart, Razorpay payments, order emails and an admin panel starts from {inr(price("ecommerce"))}.
+
+### How long does it take to build a website?
+
+A landing page takes a few days. A business website typically takes one to two weeks. Stores and web apps take several weeks.
+
+### Do I need to pay extra for SEO?
+
+Basic on-page SEO (titles, descriptions, sitemap and structured data) is part of every build. Ongoing SEO, AEO and GEO work is a [monthly service](/hire/seo-aeo-geo-services-india).
+
+Want a number for your project? [Contact me](/contact) with a short description and I will send a written quote.

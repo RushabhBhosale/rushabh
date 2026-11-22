@@ -1,0 +1,66 @@
+import ArticleSchema from "@/components/site/ArticleSchema";
+import { products, inr, EXTRA_PAGE } from "@/utils/pricing";
+
+export const price = (id) => products.find((p) => p.id === id).from;
+
+export const metadata = {
+  title: "How Much Does a Mobile App Cost in India? Android and iOS Price Guide — Rushabh Bhosale",
+  description: "What drives the cost of an Android and iOS app in India, why React Native lowers it, and my starting price for cross-platform apps.",
+  alternates: { canonical: "/blogs/mobile-app-cost-in-india" },
+  openGraph: { type: "article", title: "How Much Does a Mobile App Cost in India? Android and iOS Price Guide", description: "What drives the cost of an Android and iOS app in India, why React Native lowers it, and my starting price for cross-platform apps.", url: "https://rushabh.in/blogs/mobile-app-cost-in-india", publishedTime: "2026-11-22", authors: ["Rushabh Bhosale"] },
+};
+
+<ArticleSchema slug="mobile-app-cost-in-india" />
+
+# How Much Does a Mobile App Cost in India? Android and iOS Price Guide
+
+_Published on November 22, 2026 • 6 min read_
+
+**Short answer:** a cross-platform React Native app for Android and iOS starts from {inr(price("mobile-app"))} with me, typically taking four to ten weeks. The final cost depends on the number of screens, backend work and integrations.
+
+I’m Rushabh Bhosale, a developer in Navi Mumbai who builds React Native apps professionally at Peracto Infotech and independently. Here is how app pricing works.
+
+## One codebase or two?
+
+Building a separate native Android app and iOS app means writing everything twice. **React Native** lets me build one codebase that runs on both, which lowers cost and keeps features in step. When the platform needs it, I write native code in Kotlin or Java, as I did for a Bluetooth health-device app and an Android SMS reader.
+
+## What drives the price of an app
+
+- **Number of screens.** Each screen needs design, build and testing.
+- **Backend.** Most apps need an API, a database and user accounts.
+- **Integrations.** Payments (Razorpay), maps, video calls, push notifications and Bluetooth each add work.
+- **Design.** A custom visual design costs more than a standard layout.
+- **Store release.** Developer accounts, listings, screenshots and review rounds take time.
+
+## Examples from my work
+
+- A healthcare app with video consultations (Agora), Razorpay payments and notifications: [Healthnovo](/work/healthnovo).
+- An AI travel planner with maps and itineraries: [Wayfare](/work/ai-travel-planner).
+- An expense tracker that reads bank SMS on Android: [Expense Tracker](/work/expense-tracker).
+- A Bluetooth body-composition device app: [ActiveX](/work/activex).
+
+## Costs beyond development
+
+- Google Play developer account (one-time fee) and Apple Developer Program (yearly fee), both paid to the platforms.
+- Servers or cloud services for the backend.
+- Third-party service fees, such as video calling or SMS.
+
+## Frequently asked questions
+
+### How much does an app cost to build in India?
+
+Cross-platform apps start from {inr(price("mobile-app"))} with me. Complex apps with many screens, payments or real-time features cost more, and I quote after scoping.
+
+### How long does it take to build an app?
+
+Typically four to ten weeks for a first version.
+
+### Can you build for both Android and iOS?
+
+Yes. React Native produces both from one codebase.
+
+### Can you add features after launch?
+
+Yes. I can maintain and extend the app after release.
+
+See the [mobile app service page](/hire/mobile-app-developer-mumbai) or [contact me](/contact) for a written quote.

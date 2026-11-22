@@ -5,6 +5,7 @@ import { EMAIL, PHONE, PHONE_HREF } from "@/lib/site";
 import { BUSINESS_ID, PERSON_ID, abs, breadcrumb, jsonLd } from "@/lib/seo";
 import { getHire, hirePages } from "@/utils/hire";
 import { getWork } from "@/utils/work";
+import { getProduct, inr, offerFor, priceLabel, PRICES_UPDATED } from "@/utils/pricing";
 
 export function generateStaticParams() {
   return hirePages.map((p) => ({ slug: p.slug }));
@@ -30,6 +31,7 @@ export default async function HirePage({ params }: { params: Promise<{ slug: str
   const url = abs(`/hire/${p.slug}`);
   const proof = p.proof.map((s) => getWork(s)).filter((w): w is NonNullable<typeof w> => !!w);
   const others = hirePages.filter((o) => o.slug !== p.slug);
+  const product = p.product ? getProduct(p.product) : undefined;
 
   const schema = [
     {
@@ -50,6 +52,7 @@ export default async function HirePage({ params }: { params: Promise<{ slug: str
       serviceType: p.service,
       description: p.answer,
       provider: { "@id": BUSINESS_ID },
+      ...(product ? { offers: offerFor(product, url) } : {}),
       areaServed: [
         { "@type": "City", name: "Navi Mumbai" },
         { "@type": "City", name: "Mumbai" },
@@ -98,9 +101,50 @@ export default async function HirePage({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
+      {product && (
+        <section className="section hire__block" aria-labelledby="price">
+          <div className="label-row mono">
+            <span>(01) Pricing</span>
+            <span className="dim">Updated {PRICES_UPDATED}</span>
+          </div>
+          <h2 className="hire__h2" id="price">
+            {product.name} — {priceLabel(product)}
+          </h2>
+          <div className="hire__price" data-reveal>
+            <p className="hire__price-lede">{product.short}</p>
+            <dl className="hire__price-facts">
+              <div>
+                <dt>Starting price</dt>
+                <dd>
+                  {inr(product.from)}
+                  {product.perMonth ? " / month" : ""}
+                </dd>
+              </div>
+              <div>
+                <dt>Typical timeline</dt>
+                <dd>{product.timeline}</dd>
+              </div>
+              <div>
+                <dt>Best for</dt>
+                <dd>{product.bestFor}</dd>
+              </div>
+            </dl>
+            <ul className="hire__included">
+              {product.includes.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
+            </ul>
+            <p className="hire__price-note dim">
+              Prices are starting points in Indian rupees and exclude the domain name and third-party fees. You get a
+              written quote before any work begins. <Link href="/pricing" className="u-link">See all prices</Link>.
+            </p>
+          </div>
+        </section>
+      )}
+
       <section className="section hire__block" aria-labelledby="builds">
         <div className="label-row mono">
-          <span>(01) What you get</span>
+          <span>({product ? "02" : "01"}) What you get</span>
         </div>
         <h2 className="hire__h2" id="builds">
           What I build
@@ -122,7 +166,7 @@ export default async function HirePage({ params }: { params: Promise<{ slug: str
 
       <section className="section hire__block" aria-labelledby="proof">
         <div className="label-row mono">
-          <span>(02) Proof</span>
+          <span>({product ? "03" : "02"}) Proof</span>
         </div>
         <h2 className="hire__h2" id="proof">
           Relevant projects
@@ -145,7 +189,7 @@ export default async function HirePage({ params }: { params: Promise<{ slug: str
 
       <section className="section hire__block" aria-labelledby="faq">
         <div className="label-row mono">
-          <span>(03) Questions</span>
+          <span>({product ? "04" : "03"}) Questions</span>
         </div>
         <h2 className="hire__h2" id="faq">
           Frequently asked questions

@@ -2,6 +2,7 @@ import { EMAIL, PHONE } from "@/lib/site";
 import { PROFILES, SITE_URL } from "@/lib/seo";
 import { hirePages } from "@/utils/hire";
 import { work } from "@/utils/work";
+import { EXTRA_PAGE, PRICES_UPDATED, inr, priceLabel, products } from "@/utils/pricing";
 import { blogPosts } from "../(main)/blogs/index";
 
 export const dynamic = "force-static";
@@ -13,6 +14,11 @@ export function GET() {
 
 ## Hire
 ${hirePages.map((p) => `- [${p.title}](${SITE_URL}/hire/${p.slug}): ${p.description}`).join("\n")}
+
+## Pricing (INR, starting prices, updated ${PRICES_UPDATED})
+${products.map((p) => `- ${p.name}: ${priceLabel(p)} — ${p.short} Typical timeline: ${p.timeline}. [Details](${SITE_URL}/hire/${p.page})`).join("\n")}
+- Full pricing and estimate calculator: ${SITE_URL}/pricing
+- Extra pages on a business website: ${inr(EXTRA_PAGE)} each. Domain and third-party fees are extra.
 
 ## Contact
 - Email: ${EMAIL}

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
 };
 
 const details: Record<string, { category: string; readTime: string }> = {
+  "website-cost-in-india": { category: "Pricing guide", readTime: "6 min" },
+  "mobile-app-cost-in-india": { category: "Pricing guide", readTime: "6 min" },
+  "hire-freelance-developer-navi-mumbai": { category: "Hiring guide", readTime: "5 min" },
   "expense-tracker-sms-automation": { category: "Mobile development", readTime: "8 min" },
   "nativewind-not-working": { category: "Debugging", readTime: "5 min" },
   "movie-watchlist-app": { category: "Build story", readTime: "6 min" },

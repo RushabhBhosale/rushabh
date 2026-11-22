@@ -1,3 +1,7 @@
+import { getProduct, inr } from "./pricing";
+
+const price = (id: string) => inr(getProduct(id)!.from);
+
 // Service / location landing pages. Each one answers a search someone would actually type
 // ("freelance react developer in navi mumbai") and links to real projects from utils/work.ts.
 // Keep claims grounded in work.ts and experience.ts — AI search engines cross-check them.
@@ -21,6 +25,8 @@ export type HirePage = {
   faqs: { q: string; a: string }[];
   /** Service name for schema.org. */
   service: string;
+  /** Id from utils/pricing.ts; adds a price box and an Offer to the schema. */
+  product?: string;
   keywords: string[];
 };
 
@@ -47,6 +53,7 @@ export const hirePages: HirePage[] = [
     stack: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "React Native", "Tailwind CSS"],
     proof: ["rajesh-renewed", "healthnovo", "animesparks", "peracto-hrms"],
     service: "Freelance full stack software development",
+    product: "business-website",
     keywords: [
       "freelance software developer Navi Mumbai",
       "hire developer Navi Mumbai",
@@ -96,6 +103,7 @@ export const hirePages: HirePage[] = [
     stack: ["React", "Next.js (App Router)", "TypeScript", "Tailwind CSS", "Zustand", "Zod", "Framer Motion", "GSAP"],
     proof: ["rajesh-renewed", "peracto-hrms", "one-more-episode", "travel-archive"],
     service: "React and Next.js web development",
+    product: "web-app",
     keywords: [
       "React developer Mumbai",
       "Next.js developer Mumbai",
@@ -144,6 +152,7 @@ export const hirePages: HirePage[] = [
     stack: ["React Native", "Expo", "Ionic", "Angular", "Kotlin", "Firebase", "TanStack Query", "SQLite"],
     proof: ["healthnovo", "ai-travel-planner", "expense-tracker", "activex"],
     service: "React Native cross-platform mobile app development",
+    product: "mobile-app",
     keywords: [
       "mobile app developer Mumbai",
       "React Native developer Mumbai",
@@ -192,6 +201,7 @@ export const hirePages: HirePage[] = [
     stack: ["MongoDB", "Express.js", "React", "Node.js", "Next.js", "TypeScript", "REST APIs", "Cloudflare"],
     proof: ["peracto-hrms", "rajesh-renewed", "animesparks", "expense-tracker"],
     service: "Full stack MERN web development",
+    product: "web-app",
     keywords: [
       "full stack developer India",
       "MERN stack developer India",
@@ -240,6 +250,7 @@ export const hirePages: HirePage[] = [
     stack: ["n8n", "OpenRouter", "LLM APIs", "Node.js", "Next.js", "Playwright", "Markdown"],
     proof: ["blog-automation", "ai-travel-planner", "expense-tracker", "site-inspector"],
     service: "AI workflow and n8n automation development",
+    product: "automation",
     keywords: [
       "n8n developer India",
       "AI automation developer India",
@@ -288,6 +299,7 @@ export const hirePages: HirePage[] = [
     stack: ["Next.js", "Astro", "Technical SEO", "Schema.org JSON-LD", "Google Search Console", "Cloudflare"],
     proof: ["animesparks", "site-inspector", "travel-archive", "rajesh-renewed"],
     service: "SEO-friendly web development and technical SEO",
+    product: "business-website",
     keywords: [
       "SEO friendly website developer Mumbai",
       "technical SEO developer Mumbai",
@@ -311,6 +323,149 @@ export const hirePages: HirePage[] = [
         q: "Can you migrate my site without losing traffic?",
         a: "Yes. I map every old URL to a new one with permanent redirects and monitor indexing after launch.",
       },
+    ],
+  },
+  {
+    slug: "ecommerce-website-developer-navi-mumbai",
+    title: "E-commerce website developer in Navi Mumbai",
+    metaTitle: `E-commerce Website Developer in Navi Mumbai | From ${price("ecommerce")}`,
+    description: `Custom online store with Razorpay payments, order emails and an admin panel, from ${price("ecommerce")}. Freelance e-commerce developer in Navi Mumbai serving Mumbai and India.`,
+    answer: `Rushabh Bhosale builds custom e-commerce websites in Navi Mumbai, with product catalogue, cart, Razorpay payments, order emails and an admin panel, starting from ${price("ecommerce")}.`,
+    paragraphs: [
+      "A store needs more than a product grid. It needs reliable checkout, order tracking for you and your customers, and a way to manage products without calling a developer. I build all three.",
+      "My own e-commerce project is a Next.js store with MongoDB, Razorpay, Zustand for the cart, Zod validation and Nodemailer for order emails, with an admin area for products and orders.",
+      "Pages are server-rendered with clean metadata and product structured data, so your products can appear in Google results.",
+    ],
+    builds: [
+      { title: "Catalogue and search", text: "Categories, product pages, variants and fast search." },
+      { title: "Checkout and payments", text: "Cart, address capture and Razorpay with UPI, cards and netbanking." },
+      { title: "Admin panel", text: "Add products, manage orders and see sales without touching code." },
+      { title: "Order emails", text: "Confirmation and status emails sent automatically." },
+    ],
+    stack: ["Next.js", "TypeScript", "MongoDB", "Razorpay", "Tailwind CSS", "Zustand", "Zod", "Nodemailer"],
+    proof: ["rajesh-renewed", "healthnovo", "peracto-hrms"],
+    service: "E-commerce website development",
+    product: "ecommerce",
+    keywords: ["ecommerce website developer Navi Mumbai", "online store developer Mumbai", "Razorpay integration developer India", "Next.js ecommerce developer", "build online store India cost"],
+    faqs: [
+      { q: "How much does an e-commerce website cost?", a: `A custom online store with catalogue, cart, Razorpay checkout, order emails and an admin panel starts from ${price("ecommerce")}. The final price depends on the number of products, variants, integrations such as shipping, and custom features. You get a written quote before work starts.` },
+      { q: "How long does it take to build an online store?", a: "A standard store typically takes two to four weeks, depending on how quickly product data and feedback arrive." },
+      { q: "Can customers pay by UPI and cards?", a: "Yes. I integrate Razorpay, which supports UPI, cards and netbanking." },
+      { q: "Can I manage products myself?", a: "Yes. The admin panel lets you add and edit products and manage orders without a developer." },
+      { q: "Do you also build stores for clients outside Navi Mumbai?", a: "Yes. I work with brands across Mumbai and India, in person in Navi Mumbai and Mumbai and remotely elsewhere." },
+    ],
+  },
+  {
+    slug: "landing-page-developer-navi-mumbai",
+    title: "Landing page developer in Navi Mumbai",
+    metaTitle: `Landing Page Developer in Navi Mumbai | From ${price("landing-page")}`,
+    description: `Fast, ad-ready landing pages that turn visitors into enquiries, from ${price("landing-page")}. Built with Next.js by a freelance developer in Navi Mumbai.`,
+    answer: `Rushabh Bhosale builds fast, mobile-first landing pages in Navi Mumbai for Google Ads, Instagram campaigns and service launches, starting from ${price("landing-page")}.`,
+    paragraphs: [
+      "A landing page has one job: get a visitor to act. I keep the page focused, quick to load on mobile networks, and wired to a form or WhatsApp button so enquiries reach you immediately.",
+      "Each page gets proper titles, descriptions, a share image and Google Analytics events so you can see which button or campaign brings people in.",
+    ],
+    builds: [
+      { title: "Campaign pages", text: "One focused page per ad group or offer." },
+      { title: "Enquiry capture", text: "Forms and WhatsApp click-to-chat, with every enquiry tracked." },
+      { title: "Speed", text: "Lightweight pages that load fast on mobile." },
+      { title: "Tracking", text: "Analytics events for form submits, calls and WhatsApp clicks." },
+    ],
+    stack: ["Next.js", "React", "Tailwind CSS", "Google Analytics", "Framer Motion"],
+    proof: ["travel-archive", "one-more-episode", "animesparks"],
+    service: "Landing page development",
+    product: "landing-page",
+    keywords: ["landing page developer Navi Mumbai", "landing page design Mumbai", "ad landing page developer India", "cheap landing page India"],
+    faqs: [
+      { q: "How much does a landing page cost?", a: `A single landing page starts from ${price("landing-page")}. Custom animation, multiple language versions or integrations can add to that, and I confirm the total in writing first.` },
+      { q: "How fast can you deliver?", a: "Typically two to four working days once I have your content and branding." },
+      { q: "Can you connect it to WhatsApp?", a: "Yes. I add a click-to-chat button and track every click." },
+      { q: "Will it work for Google Ads?", a: "Yes. Pages are built for speed and clarity, which helps conversion and ad quality. I can add conversion tracking." },
+    ],
+  },
+  {
+    slug: "admin-panel-crm-developer-india",
+    title: "Admin panel and CRM developer in India",
+    metaTitle: `Admin Panel & CRM Developer in India | From ${price("admin-panel")}`,
+    description: `Replace spreadsheets with a secure admin panel or custom CRM, from ${price("admin-panel")}. Built with React, Node.js and MongoDB by a developer in Navi Mumbai.`,
+    answer: `Rushabh Bhosale builds secure admin panels and custom CRMs in India with logins, user roles, searchable records and reports, starting from ${price("admin-panel")}.`,
+    paragraphs: [
+      "If your business runs on Excel sheets and WhatsApp messages, an admin panel puts everything in one place: orders, leads, customers, staff or inventory, with the right people seeing the right things.",
+      "I build dashboards on React, Node.js and MongoDB. At work I contribute to an enterprise HR management platform, so role-based access, records and reports are familiar territory.",
+    ],
+    builds: [
+      { title: "Logins and roles", text: "Admins, staff and clients each see only what they should." },
+      { title: "Records and search", text: "Create, edit, filter and export data." },
+      { title: "Reports", text: "Totals and charts for the numbers you check daily." },
+      { title: "Notifications", text: "Email or WhatsApp alerts when something needs attention." },
+    ],
+    stack: ["React", "Next.js", "Node.js", "Express.js", "MongoDB", "TypeScript", "REST APIs"],
+    proof: ["peracto-hrms", "rajesh-renewed", "expense-tracker"],
+    service: "Admin panel and CRM development",
+    product: "admin-panel",
+    keywords: ["admin panel developer India", "custom CRM developer Mumbai", "replace Excel with software", "dashboard developer Navi Mumbai"],
+    faqs: [
+      { q: "How much does an admin panel cost?", a: `A basic admin panel with login, roles, records and exports starts from ${price("admin-panel")}. A full CRM with workflows, reports and integrations costs more, and I quote it in writing after understanding your process.` },
+      { q: "Can it replace my Excel sheets?", a: "Yes. I can import your existing data and rebuild the workflow so your team enters it once in one place." },
+      { q: "Is the data secure?", a: "Access is controlled by logins and roles, and passwords are never stored in plain text." },
+      { q: "Can staff use it on their phones?", a: "Yes. Dashboards are built to work on mobile screens." },
+    ],
+  },
+  {
+    slug: "web-app-mvp-developer-india",
+    title: "Web app and MVP developer in India",
+    metaTitle: `Web App & MVP Developer in India | From ${price("web-app")}`,
+    description: `Turn your idea into a working product. Custom web apps and startup MVPs on React, Next.js, Node.js and MongoDB, from ${price("web-app")}, by a developer in Navi Mumbai.`,
+    answer: `Rushabh Bhosale builds custom web apps and startup MVPs in India on React, Next.js, Node.js and MongoDB, starting from ${price("web-app")}, with a written scope before any work begins.`,
+    paragraphs: [
+      "An MVP should prove one idea quickly, not build everything. I start by writing down what the first version must do, then build exactly that, end to end: interface, API, database, login and deployment.",
+      "I’ve built and shipped independent products including a content platform, a developer tool that analyses any website, and a scroll-driven viewing journal, alongside professional work on enterprise software.",
+    ],
+    builds: [
+      { title: "Scoping", text: "A written plan of what version one includes and what waits." },
+      { title: "Full build", text: "Frontend, backend, database and authentication." },
+      { title: "Integrations", text: "Payments, email, maps and third-party APIs." },
+      { title: "Launch", text: "Deployment, domain and monitoring." },
+    ],
+    stack: ["React", "Next.js", "TypeScript", "Node.js", "MongoDB", "Playwright", "Cloudflare"],
+    proof: ["site-inspector", "animesparks", "one-more-episode", "peracto-hrms"],
+    service: "Custom web application and MVP development",
+    product: "web-app",
+    keywords: ["MVP developer India", "web app developer Mumbai", "startup developer Navi Mumbai", "custom web application development India", "hire developer for startup idea"],
+    faqs: [
+      { q: "How much does an MVP cost?", a: `Web apps and MVPs start from ${price("web-app")}. The price depends on the number of screens, user roles and integrations. I give a fixed written quote after scoping.` },
+      { q: "How long does it take?", a: "Typically three to eight weeks for a first version, depending on scope." },
+      { q: "Do I own the code?", a: "Yes. The code and accounts are handed over to you at the end of the project." },
+      { q: "Can you also build the mobile app later?", a: "Yes. I build React Native apps, so the mobile version can reuse your API." },
+    ],
+  },
+  {
+    slug: "seo-aeo-geo-services-india",
+    title: "SEO, AEO and GEO services in India",
+    metaTitle: `SEO, AEO & GEO Services in India | From ${price("seo-aeo-geo")}/month`,
+    description: `Technical SEO plus answer-engine (AEO) and AI-search (GEO) optimisation so Google, ChatGPT and Perplexity can find and quote your business. From ${price("seo-aeo-geo")} a month.`,
+    answer: `Rushabh Bhosale offers technical SEO, answer engine optimisation (AEO) and generative engine optimisation (GEO) for Indian businesses, starting from ${price("seo-aeo-geo")} a month, so that Google, AI Overviews, ChatGPT and Perplexity can understand and quote their websites.`,
+    paragraphs: [
+      "SEO gets your pages indexed and ranking. AEO structures them so a search engine can lift a direct answer. GEO makes your business easy for AI assistants to identify, describe and recommend. They overlap, and I handle them together.",
+      "I started in SEO, and I apply it to my own publication, AnimeSparks, using Search Console data. The case study shows what changed and what still falls short.",
+      "No honest provider can promise a ranking or a recommendation from ChatGPT. What I can do is fix the technical foundations, structure your answers clearly, add schema, and measure the results.",
+    ],
+    builds: [
+      { title: "Technical SEO", text: "Crawlability, speed, canonicals, sitemaps and indexing fixes." },
+      { title: "AEO", text: "Direct-answer sections, FAQs and question-led page structure." },
+      { title: "GEO", text: "Clear entity facts, schema markup, crawler access and consistent profiles." },
+      { title: "Reporting", text: "Search Console and tracking, with a plain-language monthly summary." },
+    ],
+    stack: ["Technical SEO", "Schema.org JSON-LD", "Google Search Console", "Bing Webmaster Tools", "Next.js", "Astro"],
+    proof: ["animesparks", "site-inspector", "blog-automation"],
+    service: "SEO, answer engine and generative engine optimisation",
+    product: "seo-aeo-geo",
+    keywords: ["SEO services India", "AEO services", "GEO services India", "generative engine optimisation India", "AI search optimisation", "rank in ChatGPT", "SEO Navi Mumbai"],
+    faqs: [
+      { q: "What are AEO and GEO?", a: "AEO (answer engine optimisation) structures content so search engines and voice assistants can quote a direct answer. GEO (generative engine optimisation) makes a business easy for AI tools such as ChatGPT, Gemini and Perplexity to identify and recommend." },
+      { q: "How much do your SEO, AEO and GEO services cost?", a: `They start from ${price("seo-aeo-geo")} a month. The first month includes an audit, and the price depends on the size of the website.` },
+      { q: "Can you get my business recommended by ChatGPT?", a: "I can’t guarantee it, and nobody honestly can. I can make your site crawlable, add structured data and clear facts, and improve your external profiles, which raises the likelihood." },
+      { q: "How long before I see results?", a: "Technical fixes can show up in weeks. Ranking and AI visibility generally take a few months to build." },
     ],
   },
 ];

@@ -1,5 +1,26 @@
 export const blogPosts = [
   {
+    slug: "website-cost-in-india",
+    title: "How Much Does a Website Cost in India? A Developer’s Price Guide",
+    date: "2026-11-22",
+    description:
+      "What a landing page, business website, online store and web app cost in India, what drives the price, and what to ask before you pay. Includes my own starting prices.",
+  },
+  {
+    slug: "mobile-app-cost-in-india",
+    title: "How Much Does a Mobile App Cost in India? Android and iOS Price Guide",
+    date: "2026-11-22",
+    description:
+      "What drives the cost of an Android and iOS app in India, why React Native lowers it, and my starting price for cross-platform apps.",
+  },
+  {
+    slug: "hire-freelance-developer-navi-mumbai",
+    title: "How to Hire a Freelance Developer in Navi Mumbai: 12 Questions to Ask",
+    date: "2026-11-22",
+    description:
+      "A practical checklist for hiring a freelance web or mobile developer in Navi Mumbai or Mumbai: what to ask, what to check and the warning signs.",
+  },
+  {
     slug: "expense-tracker-sms-automation",
     title: "How I Built an Expense Tracker That Automatically Detects Bank SMS",
     date: "2026-07-25",

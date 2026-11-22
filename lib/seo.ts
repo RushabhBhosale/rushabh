@@ -1,4 +1,5 @@
 import { EMAIL, PHONE } from "./site";
+import { offerFor, products } from "../utils/pricing";
 
 export const SITE_URL = "https://rushabh.in";
 export const PERSON_ID = `${SITE_URL}/#person`;
@@ -83,7 +84,9 @@ export const serviceNode = {
     "Independent software developer in Navi Mumbai building websites, web applications, mobile apps and workflow automations for startups and businesses across Mumbai and India.",
   telephone: PHONE,
   email: EMAIL,
-  priceRange: "$$",
+  priceRange: "₹2,999+",
+  currenciesAccepted: "INR",
+  paymentAccepted: "UPI, Bank transfer",
   address: personNode.address,
   areaServed: AREAS_SERVED,
   founder: { "@id": PERSON_ID },
@@ -93,15 +96,11 @@ export const serviceNode = {
   availableLanguage: ["English", "Hindi", "Marathi"],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Software development services",
-    itemListElement: [
-      "Freelance full stack web development",
-      "React and Next.js website and web app development",
-      "React Native mobile app development",
-      "Node.js and MongoDB backend and API development",
-      "n8n and AI workflow automation",
-      "Technical SEO for Next.js websites",
-    ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+    name: "Software development services and starting prices",
+    itemListElement: products.map((p) => ({
+      ...offerFor(p, `${SITE_URL}/hire/${p.page}`),
+      itemOffered: { "@type": "Service", name: p.name, description: p.short },
+    })),
   },
 };
 
