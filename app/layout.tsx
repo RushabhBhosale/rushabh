@@ -114,6 +114,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta name="google-site-verification" content="92-gzlVmk3f427ii9zdCK6iixsRVgTSJcE1Udv0K25o" />
         <script id="rb-boot" dangerouslySetInnerHTML={{ __html: bootScript }} />
         <script
           id="ld-person-website"
