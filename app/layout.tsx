@@ -8,7 +8,7 @@ import "../styles/home.css";
 import "../styles/work.css";
 import "../styles/pages.css";
 import { RightClickMenu } from "@/components/RightClickMenu";
-import { jsonLd, personNode, serviceNode, websiteNode } from "@/lib/seo";
+import { jsonLd, personNode, serviceNode, SITE_URL, websiteNode } from "@/lib/seo";
 
 const display = Archivo({
   variable: "--font-display",
@@ -39,7 +39,7 @@ const serif = Instrument_Serif({
 const bootScript = `(function(){try{var d=document.documentElement;var t='dark';try{t=localStorage.getItem('rb-theme')==='light'?'light':'dark'}catch(e){}d.dataset.theme=t;d.classList.toggle('dark',t==='dark');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js-anim');var seen=false;try{seen=!!sessionStorage.getItem('rb-loaded')}catch(e){}if(!seen)d.setAttribute('data-loader','on');setTimeout(function(){if(!window.__rbBooted){d.classList.remove('js-anim');d.removeAttribute('data-loader')}},6000)}catch(e){}})();`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rushabh.in"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai",
     template: "%s",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   description:
     "Rushabh Bhosale is a freelance full stack software developer in Navi Mumbai, India. Web apps, mobile apps and automations with React, Next.js, React Native and Node.js for clients across Mumbai and India.",
   applicationName: "Rushabh Bhosale",
-  authors: [{ name: "Rushabh Bhosale", url: "https://rushabh.in" }],
+  authors: [{ name: "Rushabh Bhosale", url: SITE_URL }],
   creator: "Rushabh Bhosale",
   category: "technology",
   keywords: [
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     title: "Rushabh Bhosale | Freelance Software Developer in Navi Mumbai",
     description:
       "Freelance full stack developer in Navi Mumbai building web apps, mobile apps and automations with React, Next.js, React Native and Node.js.",
-    url: "https://rushabh.in",
+    url: SITE_URL,
     siteName: "Rushabh Bhosale",
     locale: "en_IN",
     images: [

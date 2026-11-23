@@ -1,7 +1,7 @@
 import { EMAIL, PHONE } from "./site";
 import { offerFor, products } from "../utils/pricing";
 
-export const SITE_URL = "https://rushabh.in";
+export const SITE_URL = "https://rushabh-dev.vercel.app";
 export const PERSON_ID = `${SITE_URL}/#person`;
 export const BUSINESS_ID = `${SITE_URL}/#service`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
